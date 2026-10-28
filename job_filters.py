@@ -291,16 +291,43 @@ def profile_role_keywords(profile: dict) -> list[str]:
     return [unicodedata.normalize("NFKC", str(word)).casefold() for word in words if str(word).strip()]
 
 
+def _profile_patterns(profile: dict, field: str) -> list[re.Pattern]:
+    visibility = profile.get("direction_visibility") or {}
+    return [re.compile(str(pattern), re.I) for pattern in visibility.get(field, [])]
+
+
+def _matches_profile_pattern(profile: dict, field: str, text: str) -> bool:
+    return any(pattern.search(text) for pattern in _profile_patterns(profile, field))
+
+
 def is_direction_out_job(job: dict, profile: dict | None = None) -> bool:
     profile = profile if profile is not None else current_profile()
     if is_job_record_noise(job):
         return True
-    title = unicodedata.normalize("NFKC", str(job.get("title") or "")).casefold()
-    if any(unicodedata.normalize("NFKC", str(word)).casefold() in title for word in profile.get("excluded_title_keywords", [])):
+    title = unicodedata.normalize("NFKC", str(job.get("title") or ""))
+    body = unicodedata.normalize("NFKC", str(job.get("jd_raw") or ""))
+    folded_title = title.casefold()
+    # Explicit profile exclusions are absolute. Broader regex families below
+    # may still be rescued by genuine chemical/material/process evidence.
+    if any(unicodedata.normalize("NFKC", str(word)).casefold() in folded_title
+           for word in profile.get("excluded_title_keywords", [])):
+        return True
+    if _matches_profile_pattern(profile, "strong_title_patterns", title):
+        return False
+    has_strong_evidence = _matches_profile_pattern(
+        profile, "strong_evidence_patterns", f"{title}\n{body}"
+    )
+    title_has_domain_anchor = re.search(
+        r"化学|材料|催化|化工|工艺|配方|电池|电芯|环保|水处理|污染治理|日化",
+        title,
+        re.I,
+    ) is not None
+    if (_matches_profile_pattern(profile, "excluded_title_patterns", title)
+            and not (title_has_domain_anchor and has_strong_evidence)):
         return True
     # The candidate's configured roles take precedence over generic negatives,
     # including production operations, technical support and technical management.
-    if any(word in title for word in profile_role_keywords(profile)):
+    if any(word in folded_title for word in profile_role_keywords(profile)):
         return False
     return _legacy_direction_out_job(job)
 

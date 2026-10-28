@@ -76,7 +76,7 @@ def run(db_path: Path, reports_dir: Path, hydrate: bool = True) -> dict:
             "pending_before": len(pending_before),
             "analyzed_this_run": len(results),
             "purged_nonformal": purged_nonformal,
-            "purged_direction": purged_direction,
+            "hidden_direction_count": purged_direction,
             "purged_incomplete_analysis": purged_incomplete_analysis,
             "pending_after": pending_after,
         }

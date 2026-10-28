@@ -247,7 +247,7 @@ def main():
     if purged:
         logger.info("已清理 %d 条历史实习/提前批/社招岗位及其分析", purged)
     if purged_direction_out:
-        logger.info("已清理 %d 条历史明确方向外岗位及其分析", purged_direction_out)
+        logger.info("报告将隐藏 %d 条历史方向外岗位；数据库历史保持不变", purged_direction_out)
     if purged_incomplete_analysis:
         logger.info("已清理 %d 条缺少完整 JD 的历史评分", purged_incomplete_analysis)
     logger.info(
@@ -445,7 +445,7 @@ def main():
     if post_hydration_nonformal:
         logger.info("JD 补全后二次清理 %d 个非正式校招岗位", post_hydration_nonformal)
     if post_hydration_direction:
-        logger.info("JD 补全后二次清理 %d 个方向外岗位", post_hydration_direction)
+        logger.info("JD 补全后报告将隐藏 %d 个方向外岗位；数据库历史保持不变", post_hydration_direction)
     if post_hydration_incomplete:
         logger.info("JD 验收后二次清理 %d 条无完整正文的评分", post_hydration_incomplete)
     if post_hydration_noncurrent:

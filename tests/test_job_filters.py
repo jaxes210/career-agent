@@ -263,20 +263,20 @@ def test_direction_filter_drops_branded_product_role_from_jd():
     assert job_filters.is_direction_out_job(job)
 
 
-def test_direction_filter_keeps_engineer_who_collaborates_with_product_team():
+def test_profile_hides_ai_engineer_who_collaborates_with_product_team():
     job = {
         "title": "AI平台开发工程师",
         "jd_raw": "与产品经理合作，负责AI平台功能开发、测试和性能优化。",
     }
-    assert not job_filters.is_direction_out_job(job)
+    assert job_filters.is_direction_out_job(job)
 
 
-def test_direction_filter_keeps_technical_research_role_with_product_planning_jd():
+def test_profile_hides_software_research_role_with_product_planning_jd():
     job = {
         "title": "基础产品研究岗（软件设计方向）",
         "jd_raw": "负责基础产品的规划与设计，开展软件架构研究和核心代码开发。",
     }
-    assert not job_filters.is_direction_out_job(job)
+    assert job_filters.is_direction_out_job(job)
 
 
 def test_direction_filter_keeps_technical_roles_with_business_context():
@@ -293,6 +293,62 @@ def test_direction_filter_keeps_technical_roles_with_business_context():
     kept, dropped = job_filters.filter_target_direction_jobs(jobs, profile={})
     assert [job["title"] for job in kept] == [job["title"] for job in jobs]
     assert dropped == []
+
+
+def test_profile_visibility_hides_digital_roles_without_chemical_evidence():
+    profile = job_filters.current_profile()
+    jobs = [
+        {"title": "算法优化工程师", "jd_raw": "负责模型训练与推理性能优化"},
+        {"title": "机器人视觉算法工程师", "jd_raw": "负责SLAM与感知算法"},
+        {"title": "游戏客户端开发工程师", "jd_raw": "负责游戏软件开发"},
+        {"title": "芯片硬件工程师", "jd_raw": "负责数字电路设计"},
+    ]
+    kept, dropped = job_filters.filter_target_direction_jobs(jobs, profile)
+    assert kept == []
+    assert dropped == jobs
+
+
+def test_profile_visibility_keeps_strong_chemical_and_material_titles():
+    profile = job_filters.current_profile()
+    titles = [
+        "工业催化研发工程师", "化工工艺工程师", "催化材料研发工程师",
+        "日化配方工程师", "理化分析检测工程师", "生产技术工程师",
+        "环保水处理工程师",
+    ]
+    kept, dropped = job_filters.filter_target_direction_jobs(
+        [{"title": title, "jd_raw": ""} for title in titles], profile
+    )
+    assert [job["title"] for job in kept] == titles
+    assert dropped == []
+
+
+def test_automation_and_optimization_do_not_cross_match_chemical_terms():
+    profile = job_filters.current_profile()
+    assert job_filters.is_direction_out_job(
+        {"title": "自动化工程师", "jd_raw": "负责PLC控制与电气系统"}, profile
+    )
+    assert job_filters.is_direction_out_job(
+        {"title": "算法优化工程师", "jd_raw": "负责模型推理"}, profile
+    )
+    assert not job_filters.is_direction_out_job(
+        {"title": "化工工艺优化工程师", "jd_raw": "负责反应工艺优化"}, profile
+    )
+
+
+def test_digital_title_with_real_material_evidence_is_retained():
+    profile = job_filters.current_profile()
+    assert not job_filters.is_direction_out_job({
+        "title": "材料算法工程师",
+        "jd_raw": "负责催化材料表征数据建模与催化剂配方优化",
+    }, profile)
+
+
+def test_digital_title_is_not_rescued_by_incidental_jd_chemical_terms():
+    profile = job_filters.current_profile()
+    assert job_filters.is_direction_out_job({
+        "title": "AI平台开发工程师",
+        "jd_raw": "平台服务于材料研发团队，负责软件系统、模型训练和数据配方。",
+    }, profile)
 
 
 def test_job_category_uses_specific_rules_before_general_software_terms():

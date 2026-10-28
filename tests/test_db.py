@@ -387,7 +387,7 @@ def test_purge_incomplete_jd_analyses_keeps_job_but_removes_score():
     conn.close()
 
 
-def test_purge_direction_out_jobs_removes_job_and_analysis():
+def test_purge_direction_out_jobs_is_non_destructive_report_count():
     conn = db.init_db(TEST_DB)
     technical = {"company": "甲", "title": "化工工艺工程师", "city": "北京", "job_type": "校招",
                  "jd_url": "https://example.com/technical", "jd_raw": "", "published_at": "", "source": "甲"}
@@ -401,9 +401,9 @@ def test_purge_direction_out_jobs_removes_job_and_analysis():
 
     try:
         assert db.purge_direction_out_jobs(conn) == 1
-        remaining_ids = [row["id"] for row in conn.execute("SELECT id FROM jobs")]
-        assert remaining_ids == [technical_id]
-        assert not db.has_analysis(conn, non_target_id)
+        remaining_ids = [row["id"] for row in conn.execute("SELECT id FROM jobs ORDER BY id")]
+        assert remaining_ids == [technical_id, non_target_id]
+        assert db.has_analysis(conn, non_target_id)
     finally:
         conn.close()
 

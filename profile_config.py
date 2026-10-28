@@ -52,6 +52,19 @@ def load_profile(path: str | Path = "profile.yaml") -> dict:
     for field in ("technique_experience", "scoring_policy"):
         if field in profile and not isinstance(profile[field], dict):
             raise ValueError(f"{field} 必须是映射")
+    visibility = profile.get("direction_visibility") or {}
+    if not isinstance(visibility, dict) or any(
+        not isinstance(visibility.get(field, []), list)
+        for field in ("strong_title_patterns", "strong_evidence_patterns", "excluded_title_patterns")
+    ):
+        raise ValueError("direction_visibility 必须包含正则表达式列表")
+    import re
+    for field in ("strong_title_patterns", "strong_evidence_patterns", "excluded_title_patterns"):
+        for pattern in visibility.get(field, []):
+            try:
+                re.compile(str(pattern), re.I)
+            except re.error as exc:
+                raise ValueError(f"direction_visibility.{field} 包含无效正则: {exc}") from exc
     preferences = profile.get("employer_preferences") or {}
     if not isinstance(preferences, dict) or any(
         not isinstance(preferences.get(field, []), list)

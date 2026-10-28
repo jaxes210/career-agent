@@ -1130,10 +1130,10 @@ def _render_sidebar() -> str:
     return f"""
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-icon">🤖</div>
+    <div class="brand-icon">⚗️</div>
     <div class="brand-text">
-      <div class="brand-title">AI 秋招情报</div>
-      <div class="brand-sub">智能匹配 · 精准推荐</div>
+      <div class="brand-title">工业催化招聘监测</div>
+      <div class="brand-sub">校招岗位 · 资格核实</div>
     </div>
   </div>
   {"".join(blocks)}
@@ -2321,7 +2321,7 @@ def render_html(date_str: str, report_data: dict, editable: bool = False,
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI 秋招情报 · {html.escape(date_str)}</title>
+<title>工业催化硕士招聘监测 · {html.escape(date_str)}</title>
 <style>{_CSS}</style>
 </head>
 <body>

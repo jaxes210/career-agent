@@ -279,6 +279,22 @@ def test_report_hides_internship_and_early_batch_rows():
     assert hidden == 2
 
 
+def test_report_uses_industrial_catalysis_title_and_hides_software(tmp_path):
+    data = {"items": [
+        {"job": {"company": "甲", "title": "2027届化工工艺工程师", "job_type": "校招",
+                 "jd_url": "https://example.com/chemical", "jd_raw": "", "cohort": 2027,
+                 "cohort_status": "confirmed"}, "analysis": None},
+        {"job": {"company": "乙", "title": "2027届软件开发工程师", "job_type": "校招",
+                 "jd_url": "https://example.com/software", "jd_raw": "", "cohort": 2027,
+                 "cohort_status": "confirmed"}, "analysis": None},
+    ], "applications": []}
+    content = Path(reporter.generate_report("2026-10-28", data, str(tmp_path), "index")).read_text()
+    assert "工业催化硕士招聘监测" in content
+    assert "工业催化招聘监测" in content
+    assert "2027届化工工艺工程师" in content
+    assert "2027届软件开发工程师" not in content
+
+
 def test_previous_cohort_sorts_by_match_score_descending():
     items = [
         {"job": {"company": "低分", "title": "26届春招-C++", "jd_url": "u1"},
