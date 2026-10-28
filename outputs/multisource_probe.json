@@ -1,100 +1,113 @@
 {
+  "schema_version": 1,
+  "runner": "github-actions",
+  "run_id": "40658013055",
   "sources": [
     {
       "status": "BLOCKED",
-      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "reason": "login/captcha/access challenge",
       "leads": [],
       "requests": [
         {
           "url": "https://zhaopin.chnenergy.com.cn/recTypeSerch?kinds=1&schType=2",
           "status": "BLOCKED",
-          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+          "reason": "login/captcha/access challenge"
         }
       ],
       "id": "chnenergy_announcements",
       "category": "group",
       "source_url": "https://zhaopin.chnenergy.com.cn/recTypeSerch?kinds=1&schType=2",
-      "checked_at": "2026-10-28T08:15:38Z"
+      "checked_at": "2026-10-28T08:37:20Z"
     },
     {
       "status": "BLOCKED",
-      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "reason": "login/captcha/access challenge",
       "leads": [],
       "requests": [
         {
           "url": "https://norincogroupzhaopin.zhiye.com/campus/jobs",
           "status": "BLOCKED",
-          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+          "reason": "login/captcha/access challenge"
         }
       ],
       "id": "norinco_campus",
       "category": "group",
       "source_url": "https://norincogroupzhaopin.zhiye.com/campus/jobs",
-      "checked_at": "2026-10-28T08:15:38Z"
+      "checked_at": "2026-10-28T08:37:24Z"
     },
     {
-      "status": "BLOCKED",
-      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "status": "NO_PARSED_LEADS",
       "leads": [],
       "requests": [
         {
           "url": "https://www.ecust.edu.cn/",
-          "status": "BLOCKED",
-          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+          "status": "OK",
+          "reason": ""
         }
       ],
+      "reason": "No matching public announcement parsed; may need a site-specific adapter",
       "id": "ecust_portal_probe",
       "category": "university",
       "source_url": "https://www.ecust.edu.cn/",
-      "checked_at": "2026-10-28T08:15:38Z"
+      "checked_at": "2026-10-28T08:37:25Z"
     },
     {
-      "status": "BLOCKED",
-      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "status": "NO_PARSED_LEADS",
       "leads": [],
       "requests": [
         {
           "url": "https://www.buct.edu.cn/",
-          "status": "BLOCKED",
-          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+          "status": "OK",
+          "reason": ""
+        },
+        {
+          "url": "https://www.buct.edu.cn/twgzbys/list.htm",
+          "status": "OK",
+          "reason": ""
+        },
+        {
+          "url": "https://www.buct.edu.cn/twgzbys_11458/list.htm",
+          "status": "OK",
+          "reason": ""
         }
       ],
+      "reason": "No matching public announcement parsed; may need a site-specific adapter",
       "id": "buct_portal_probe",
       "category": "university",
       "source_url": "https://www.buct.edu.cn/",
-      "checked_at": "2026-10-28T08:15:38Z"
+      "checked_at": "2026-10-28T08:37:29Z"
     },
     {
-      "status": "BLOCKED",
-      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "status": "NO_PARSED_LEADS",
       "leads": [],
       "requests": [
         {
           "url": "https://sdic1.iguopin.com/jobCampus",
-          "status": "BLOCKED",
-          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+          "status": "OK",
+          "reason": ""
         }
       ],
+      "reason": "No matching public announcement parsed; may need a site-specific adapter",
       "id": "iguopin_sdic",
       "category": "platform",
       "source_url": "https://sdic1.iguopin.com/jobCampus",
-      "checked_at": "2026-10-28T08:15:38Z"
+      "checked_at": "2026-10-28T08:37:33Z"
     },
     {
-      "status": "BLOCKED",
-      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "status": "NO_PARSED_LEADS",
       "leads": [],
       "requests": [
         {
           "url": "https://cetc.iguopin.com/job-campus",
-          "status": "BLOCKED",
-          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+          "status": "OK",
+          "reason": ""
         }
       ],
+      "reason": "No matching public announcement parsed; may need a site-specific adapter",
       "id": "iguopin_cetc",
       "category": "platform",
       "source_url": "https://cetc.iguopin.com/job-campus",
-      "checked_at": "2026-10-28T08:15:38Z"
+      "checked_at": "2026-10-28T08:37:34Z"
     }
   ],
   "lead_count": 0,
