@@ -92,3 +92,6 @@
 - 离线测试333 passed；说明docs/DEEPSEEK_READINESS.md。同步main后应先execute=false，再人工确认execute=true，不要用main.py做首次连通测试。
 - 8154565已成功非强制推送main（本地/远端SHA一致）；真实触发Tests 40642332641及Sync report 40642332642，网页确认执行8154565但因Python3.11旧f-string语法失败。
 - 修复company_pool HTML表达式反斜杠；独立安装临时Python3.11.17复现旧错误，修复后333 passed、预检dry-run0调用、池报告生成成功。继续推送修复并检查新CI；不要误以为本地3.12通过即可证明云端3.11可用。
+- 已同步main至3bb3c9f（应用代码），随后仅补文档。真实云端Tests通过、Sync report 40646915509成功、Pages40646958440成功。
+- 通过新增push触发的零API预检40646987765，runner明确报DEEPSEEK_API_KEY is not configured for this workflow。已确认不是仅本地变量缺失，当前工作流拿不到Secret，需用户设置仓库级Secret或授权组织级Secret。未读取密钥值，未发起付费API。
+- 下一步用户配置Secret后手动Controlled DeepSeek preflight execute=false，然后才execute=true。模型深度型号支持、余额和实际响应仍待受控验证。生产库SHA256保持原值，67家池不变。
