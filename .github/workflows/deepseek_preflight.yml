@@ -1,5 +1,10 @@
 name: Controlled DeepSeek preflight
 on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/deepseek_preflight.py
+      - .github/workflows/deepseek_preflight.yml
   workflow_dispatch:
     inputs:
       execute:
@@ -37,6 +42,15 @@ jobs:
           else
             python scripts/deepseek_preflight.py
           fi
+      - name: Verify repository secret presence (no API)
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          if [ -z "$DEEPSEEK_API_KEY" ]; then
+            echo "::error::DEEPSEEK_API_KEY is not configured for this workflow"
+            exit 1
+          fi
+          echo "DEEPSEEK_API_KEY is present (value hidden)"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
