@@ -116,3 +116,12 @@
 - 尝试使用 `gh workflow run company_pool_discovery.yml --ref main -f validation_limit=3`，GitHub API 返回 `Forbidden`，没有创建运行记录；当前云环境的 `GH_TOKEN` 无效，移除该变量后也没有已登录账户。Git推送可用不代表具有Actions API调度权限。
 - 因未产生GitHub runner运行，本轮不能声称6入口在Actions中可访问，也没有新线索、新企业、官方验证或企业配置PR。用户需在 Actions 页面选择该工作流，点击 Run workflow，分支 `main`、`validation_limit=3`、保留 pending probe 开启；全程不调用DeepSeek或每日全量采集。
 - 本轮新增回归后Python3.11为344 passed，工作流YAML可解析，`git diff --check`通过。正式67家配置、jobs.db、投递记录、历史分析及API费用上限未改。
+
+## 2026-10-28 GitHub Actions 首次真实联网结果
+
+- 用户手动运行 `Discover and validate employer sources #1`：`https://github.com/jaxes210/career-agent/actions/runs/40657312891`。探测步骤实际覆盖6/6入口，证明GitHub runner不存在Codex环境的全域CONNECT 403；运行最终Failure发生在后续Git持久化步骤，exit 128，不是联网或解析步骤失败。
+- 国家能源招聘页和兵器集团北森页均已建立网络连接，但页面内容触发 `login/captcha/access challenge`，状态BLOCKED；这是目标页面访问挑战，不能判定无招聘，也不绕过。
+- 华东理工、北京化工门户及国投/电科国聘页面均可访问，状态 `NO_PARSED_LEADS`。高校地址只是门户首页，不是已核实就业公告列表；两个国聘页面大概率为SPA，通用静态HTML解析没有岗位。四项均不能解释为企业没有招聘。
+- 真实结果为0条招聘线索、0家新企业、0家官方/2027届资格验证、0个企业配置PR。6个来源继续保持pending/disabled。
+- exit 128原因：手动探测改写已跟踪的 `outputs/multisource_probe.json`，持久化步骤只暂存池状态和报告，留下未暂存修改后执行 `git pull --rebase`。修复为把诊断JSON一并纳入状态提交，并增加工作流回归断言；artifact上传仍保留。
+- `actions/upload-artifact@v4` 的Node.js 20弃用信息和ubuntu-latest迁移信息均为runner警告，不是本次失败原因。下一次手动探测用于验证持久化修复；在国聘专用适配器和真实高校就业入口完成前，不启用这6个来源做长期生产发现。

@@ -52,10 +52,17 @@
 
 Python 3.11下342项测试通过，涵盖HTML/RSS提取、独立子单位去重、国聘查询ID、未知届别保留、验证码/连接失败分类及来源重试节流。配置、招聘数据库和投递记录字节核对通过。
 
-## GitHub Actions 复验状态
+## GitHub Actions 真实复验结果
 
-2026-10-28检查公开工作流页面：`Discover and validate employer sources` 已存在且支持手动触发，但页面明确显示尚无历史运行。当前Codex云环境执行 `gh workflow run company_pool_discovery.yml --ref main -f validation_limit=3` 时，GitHub API返回 `Forbidden`，没有创建运行，不能用本地CONNECT 403结果代替GitHub runner结论。
+2026-10-28用户手动运行 [Discover and validate employer sources #1](https://github.com/jaxes210/career-agent/actions/runs/40657312891)，实际探测6个入口。国家能源与兵器集团页面完成网络连接后返回登录/验证码/访问挑战；华东理工、北京化工门户和国投、电科国聘页均成功返回页面，但通用HTML解析未发现匹配公告。由此可确认此前全量CONNECT 403属于Codex云环境，GitHub runner能够访问其中至少4个入口；BLOCKED的2个入口属于目标页面挑战。
 
-工作流已补充手动触发专用的6入口探测步骤，默认启用，定时任务不运行pending探测。artifact包含逐请求状态的 `outputs/multisource_probe.json`；Actions摘要直接显示6个来源的状态、原因、线索数和新企业数。异常原因现可区分 `proxy_connect_403`、目标HTTP 403、DNS/连接、TLS、超时、验证码/登录、正常访问但无匹配线索及页面解析错误。更新后Python 3.11测试为344 passed。
+| 类别 | 来源 | GitHub runner结果 | 解释 |
+| --- | --- | --- | --- |
+| 央企 | 国家能源招聘页 | BLOCKED | 页面为登录/验证码/访问挑战，不判定无招聘 |
+| 央企 | 兵器集团北森页 | BLOCKED | 页面为登录/验证码/访问挑战，不绕过 |
+| 高校 | 华东理工门户 | NO_PARSED_LEADS | 门户可访问，但不是已核实的就业公告列表 |
+| 高校 | 北京化工门户 | NO_PARSED_LEADS | 门户可访问，但不是已核实的就业公告列表 |
+| 国聘 | 国投招聘页 | NO_PARSED_LEADS | 页面可访问；疑似SPA，需国聘专用适配器 |
+| 国聘 | 电科招聘页 | NO_PARSED_LEADS | 页面可访问；疑似SPA，需国聘专用适配器 |
 
-具备仓库Actions写权限的账号可在网页手动选择 `main`、`validation_limit=3` 并保留“限量探测6个待验证公开入口”开启。该运行不调用DeepSeek、不执行每日全量岗位采集、不直接修改正式企业配置；发现的线索先进入候选状态，只有既有官方身份、完整真实岗位和2027届门槛全部通过时才生成待审核PR。
+本次真实结果为0条招聘线索、0家新企业、0家完成官方/2027届资格验证、0个企业配置PR。最终工作流Failure来自探测后的Git状态持久化：已跟踪的 `outputs/multisource_probe.json` 未暂存，后续rebase以exit 128退出；并非联网探测失败。现已把该诊断文件加入状态提交并增加回归检查。Node.js与Ubuntu runner提示只是警告。

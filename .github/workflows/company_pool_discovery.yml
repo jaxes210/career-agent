@@ -77,7 +77,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/company_pool.json outputs/company_pool_report.md outputs/company_integration_status.md
+          git add data/company_pool.json outputs/company_pool_report.md outputs/company_integration_status.md outputs/multisource_probe.json
           if git diff --staged --quiet; then
             echo "No employer-pool state changes"
           else

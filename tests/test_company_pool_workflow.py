@@ -11,3 +11,7 @@ def test_manual_discovery_workflow_runs_bounded_pending_probe():
     assert "github.event_name == 'workflow_dispatch' && inputs.probe_pending_sources" in workflow
     assert 'python scripts/test_discovery_sources.py' in workflow
     assert 'outputs/multisource_probe.json' in workflow
+    assert (
+        'git add data/company_pool.json outputs/company_pool_report.md '
+        'outputs/company_integration_status.md outputs/multisource_probe.json'
+    ) in workflow
