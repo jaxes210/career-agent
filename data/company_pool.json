@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-28T05:53:17Z",
+  "updated_at": "2026-10-28T06:03:41Z",
   "records": [
     {
       "name": "MDPI",
@@ -32,6 +32,54 @@
       "platform": "待识别"
     },
     {
+      "name": "万华化学",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://www.whchem.com/column/164/",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:41Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:41Z",
+      "careers_url": "https://www.whchem.com/column/164/",
+      "crawler": "render",
+      "platform": "企业自建/渲染",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": []
+      },
+      "cohort_status": "pending",
+      "validation": {
+        "name": "万华化学",
+        "careers_url": "https://www.whchem.com/column/164/",
+        "crawler": "render",
+        "count": 0,
+        "formal_target_count": 0,
+        "samples": [],
+        "field_coverage": {
+          "title": 0,
+          "location": 0,
+          "original_url": 0,
+          "requirements": 0
+        },
+        "promotion_ready": false,
+        "social_ratio": 0.0,
+        "campus_url": true,
+        "verdict": "BLOCKED",
+        "reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决"
+      },
+      "last_validated_at": "2026-10-28T06:02:10Z"
+    },
+    {
       "name": "三环集团",
       "pool_status": "candidate",
       "first_discovered_at": "2026-10-28T05:39:54Z",
@@ -59,6 +107,129 @@
       },
       "status_reason": "render 返回 0 个岗位",
       "platform": "待识别"
+    },
+    {
+      "name": "东方电气",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://dec2026.iguopin.com/job",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:40Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:40Z",
+      "careers_url": "https://dec2026.iguopin.com/job",
+      "crawler": "iguopin",
+      "platform": "国聘",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "叶片工艺工程师",
+            "jd_url": "https://www.iguopin.com/job/detail?id=164824733290860169"
+          },
+          {
+            "title": "电气产品工艺",
+            "jd_url": "https://www.iguopin.com/job/detail?id=211537795393522431"
+          },
+          {
+            "title": "安全环保岗",
+            "jd_url": "https://www.iguopin.com/job/detail?id=163847400648084738"
+          }
+        ]
+      },
+      "cohort_status": "pending"
+    },
+    {
+      "name": "东风汽车",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://dfmc.hotjob.cn/SU60cc3c9cbef57c51986a8ca0/pb/school.html",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:40Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:40Z",
+      "careers_url": "https://dfmc.hotjob.cn/SU60cc3c9cbef57c51986a8ca0/pb/school.html",
+      "crawler": "hotjob",
+      "platform": "Hotjob/e成",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "项目质量工程师-智新科技（春招）",
+            "jd_url": "https://dfmc.hotjob.cn/SU60cc3c9cbef57c51986a8ca0/pb/posDetail.html?postId=69afbd9e10919a570b6788ca&postType=campus"
+          },
+          {
+            "title": "项目质量/质量改进工程师-智新科技",
+            "jd_url": "https://dfmc.hotjob.cn/SU60cc3c9cbef57c51986a8ca0/pb/posDetail.html?postId=69afbd9fbe908548be33b1a3&postType=campus"
+          },
+          {
+            "title": "装配/EOL/机加/铸造工艺/机加质量工程师-智新科技-春招",
+            "jd_url": "https://dfmc.hotjob.cn/SU60cc3c9cbef57c51986a8ca0/pb/posDetail.html?postId=698d69328e515379dcf02f8b&postType=campus"
+          }
+        ]
+      },
+      "cohort_status": "pending"
+    },
+    {
+      "name": "中国一汽",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://faw-zhaopin.hotjob.cn/SU603374380dcad4635b836531/pb/school.html",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:40Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:40Z",
+      "careers_url": "https://faw-zhaopin.hotjob.cn/SU603374380dcad4635b836531/pb/school.html",
+      "crawler": "hotjob",
+      "platform": "Hotjob/e成",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "电芯材料开发岗",
+            "jd_url": "https://faw-zhaopin.hotjob.cn/SU603374380dcad4635b836531/pb/posDetail.html?postId=6a2fada9c7606e0d83bf4bf1&postType=campus"
+          },
+          {
+            "title": "【2026】研发-材料技术开发工程师",
+            "jd_url": "https://faw-zhaopin.hotjob.cn/SU603374380dcad4635b836531/pb/posDetail.html?postId=6a1d002e3d5b657f38b0be48&postType=campus"
+          },
+          {
+            "title": "工艺开发岗",
+            "jd_url": "https://faw-zhaopin.hotjob.cn/SU603374380dcad4635b836531/pb/posDetail.html?postId=6a0ab8d11f17c3725138df4e&postType=campus"
+          }
+        ]
+      },
+      "cohort_status": "pending"
     },
     {
       "name": "中国通信服务广东公司",
@@ -90,6 +261,69 @@
       "platform": "待识别"
     },
     {
+      "name": "中科曙光",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://sugon.zhiye.com/campus/jobs",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:40Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:40Z",
+      "careers_url": "https://sugon.zhiye.com/campus/jobs",
+      "crawler": "beisen",
+      "platform": "北森",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "【2026】应用研发工程师- 材料方向 - 郑州(J13109)",
+            "jd_url": "https://sugon.zhiye.com/campus/detail?jobAdId=8f3d061f-f606-4337-9281-f014445fc51f"
+          },
+          {
+            "title": "【2026】数学库优化工程师-青岛(J13112)",
+            "jd_url": "https://sugon.zhiye.com/campus/detail?jobAdId=1c82b2b3-3b9a-4cbc-b038-aff12ac39ea8"
+          },
+          {
+            "title": "【2026】数学库优化工程师-南京(J13113)",
+            "jd_url": "https://sugon.zhiye.com/campus/detail?jobAdId=95da7692-566b-4566-9a4d-691034a50e52"
+          }
+        ]
+      },
+      "cohort_status": "pending",
+      "validation": {
+        "name": "中科曙光",
+        "careers_url": "https://sugon.zhiye.com/campus/jobs",
+        "crawler": "beisen",
+        "count": 0,
+        "formal_target_count": 0,
+        "samples": [],
+        "field_coverage": {
+          "title": 0,
+          "location": 0,
+          "original_url": 0,
+          "requirements": 0
+        },
+        "promotion_ready": false,
+        "social_ratio": 0.0,
+        "campus_url": true,
+        "verdict": "BLOCKED",
+        "reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决"
+      },
+      "last_validated_at": "2026-10-28T06:01:46Z",
+      "status_reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决",
+      "next_retry_at": "2026-10-31T06:01:46Z"
+    },
+    {
       "name": "之江实验室",
       "pool_status": "candidate",
       "first_discovered_at": "2026-10-28T05:39:54Z",
@@ -117,6 +351,47 @@
       },
       "status_reason": "render 返回 0 个岗位",
       "platform": "待识别"
+    },
+    {
+      "name": "卓胜微电子",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://maxscend.zhiye.com/campus/jobs?shareId=538ec1bd-204d-4562-828f-4915ebe319a0&shareSource=2",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:41Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:41Z",
+      "careers_url": "https://maxscend.zhiye.com/campus/jobs?shareId=538ec1bd-204d-4562-828f-4915ebe319a0&shareSource=2",
+      "crawler": "beisen",
+      "platform": "北森",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "【27届校招】质量工程师",
+            "jd_url": "https://maxscend.zhiye.com/campus/detail?jobAdId=6bf35c0b-2972-4c3d-ae1f-23abe4de8ea0"
+          },
+          {
+            "title": "【27届校招】PQE产品质量管理工程师",
+            "jd_url": "https://maxscend.zhiye.com/campus/detail?jobAdId=7a947604-aee0-4dd5-822a-7d6a4e0ce6cf"
+          },
+          {
+            "title": "【27届校招】水处理工程师",
+            "jd_url": "https://maxscend.zhiye.com/campus/detail?jobAdId=078816e0-30fc-4ab8-be17-9f20583b9101"
+          }
+        ]
+      },
+      "cohort_status": "pending"
     },
     {
       "name": "友塔游戏",
@@ -207,6 +482,69 @@
       "platform": "北森"
     },
     {
+      "name": "小米",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://xiaomi.jobs.f.mioffice.cn/",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:40Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:40Z",
+      "careers_url": "https://xiaomi.jobs.f.mioffice.cn/",
+      "crawler": "xiaomi",
+      "platform": "待识别",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "材料工艺工程师（金属方向）",
+            "jd_url": "https://xiaomi.jobs.f.mioffice.cn/campus/position/7671295097472174387/detail"
+          },
+          {
+            "title": "材料工艺工程师（高分子方向）",
+            "jd_url": "https://xiaomi.jobs.f.mioffice.cn/campus/position/7671294846350641418/detail"
+          },
+          {
+            "title": "工艺工程师-手机",
+            "jd_url": "https://xiaomi.jobs.f.mioffice.cn/campus/position/7671294824947337514/detail"
+          }
+        ]
+      },
+      "cohort_status": "pending",
+      "validation": {
+        "name": "小米",
+        "careers_url": "https://xiaomi.jobs.f.mioffice.cn/",
+        "crawler": "xiaomi",
+        "count": 0,
+        "formal_target_count": 0,
+        "samples": [],
+        "field_coverage": {
+          "title": 0,
+          "location": 0,
+          "original_url": 0,
+          "requirements": 0
+        },
+        "promotion_ready": false,
+        "social_ratio": 0.0,
+        "campus_url": true,
+        "verdict": "BLOCKED",
+        "reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决"
+      },
+      "last_validated_at": "2026-10-28T06:01:46Z",
+      "status_reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决",
+      "next_retry_at": "2026-10-31T06:01:46Z"
+    },
+    {
       "name": "帆软",
       "pool_status": "candidate",
       "first_discovered_at": "2026-10-28T05:39:54Z",
@@ -234,6 +572,88 @@
       },
       "status_reason": "render 返回 0 个岗位",
       "platform": "待识别"
+    },
+    {
+      "name": "开立医疗",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://app.mokahr.com/campus-recruitment/sonoscape/94392",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:41Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:41Z",
+      "careers_url": "https://app.mokahr.com/campus-recruitment/sonoscape/94392",
+      "crawler": "moka",
+      "platform": "Moka",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "高分子材料研发工程师",
+            "jd_url": "https://app.mokahr.com/campus-recruitment/sonoscape/94392#/job/0b84669a-8f23-4542-9c3d-54b3ec0ccc1f"
+          },
+          {
+            "title": "材料工程师-博士",
+            "jd_url": "https://app.mokahr.com/campus-recruitment/sonoscape/94392#/job/fae40f40-80f7-43c1-aa10-335abd91f9b4"
+          },
+          {
+            "title": "材料工程师（上海爱声）",
+            "jd_url": "https://app.mokahr.com/campus-recruitment/sonoscape/94392#/job/f2735747-2e5e-4992-bae0-c469da0d7bdb"
+          }
+        ]
+      },
+      "cohort_status": "pending"
+    },
+    {
+      "name": "思摩尔",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://app.mokahr.com/campus_apply/smoore/150918?recommendCode=DS8x9P6R#/jobs",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:41Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:41Z",
+      "careers_url": "https://app.mokahr.com/campus_apply/smoore/150918?recommendCode=DS8x9P6R#/jobs",
+      "crawler": "moka",
+      "platform": "Moka",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "材料工程师（表面/界面方向）",
+            "jd_url": "https://app.mokahr.com/campus_apply/smoore/150918#/job/c8ed63c6-210b-404a-905b-49ecd0f6d1c6"
+          },
+          {
+            "title": "调香助理工程师",
+            "jd_url": "https://app.mokahr.com/campus_apply/smoore/150918#/job/73d7d35b-06bd-4093-b0b0-542fe76c5a4f"
+          },
+          {
+            "title": "材料助理工程师（金属浆料方向）",
+            "jd_url": "https://app.mokahr.com/campus_apply/smoore/150918#/job/e9977575-4763-4a60-8e08-517e5cd0794a"
+          }
+        ]
+      },
+      "cohort_status": "pending"
     },
     {
       "name": "昂科技术",
@@ -292,6 +712,132 @@
       },
       "status_reason": "render 返回 0 个岗位",
       "platform": "待识别"
+    },
+    {
+      "name": "瑞沃德",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://rwdls.zhiye.com/campus/jobs",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:40Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:40Z",
+      "careers_url": "https://rwdls.zhiye.com/campus/jobs",
+      "crawler": "beisen",
+      "platform": "北森",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "【2027校招】质量工程师",
+            "jd_url": "https://rwdls.zhiye.com/campus/detail?jobAdId=a15cccb4-f81f-484f-9b5f-1631faa488b5"
+          },
+          {
+            "title": "【2027校招】研发质量工程师",
+            "jd_url": "https://rwdls.zhiye.com/campus/detail?jobAdId=99c0adb4-d345-4584-8e93-4104c28ff35c"
+          },
+          {
+            "title": "【2027校招】供应商质量工程师",
+            "jd_url": "https://rwdls.zhiye.com/campus/detail?jobAdId=e0345b0e-bc62-4ccb-9932-4cdc8071ecd3"
+          }
+        ]
+      },
+      "cohort_status": "pending",
+      "validation": {
+        "name": "瑞沃德",
+        "careers_url": "https://rwdls.zhiye.com/campus/jobs",
+        "crawler": "beisen",
+        "count": 0,
+        "formal_target_count": 0,
+        "samples": [],
+        "field_coverage": {
+          "title": 0,
+          "location": 0,
+          "original_url": 0,
+          "requirements": 0
+        },
+        "promotion_ready": false,
+        "social_ratio": 0.0,
+        "campus_url": true,
+        "verdict": "BLOCKED",
+        "reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决"
+      },
+      "last_validated_at": "2026-10-28T06:01:46Z",
+      "status_reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决",
+      "next_retry_at": "2026-10-31T06:01:46Z"
+    },
+    {
+      "name": "禾赛科技",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://kwh0jtf778.jobs.feishu.cn/229043/position/application",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:40Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:40Z",
+      "careers_url": "https://kwh0jtf778.jobs.feishu.cn/229043/position/application",
+      "crawler": "feishu",
+      "platform": "飞书招聘",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "集成工艺工程师（机器人驱动）",
+            "jd_url": "https://kwh0jtf778.jobs.feishu.cn/229043/position/7654527016964245814/detail"
+          },
+          {
+            "title": "材料工程师（机器人驱动，高分子方向）",
+            "jd_url": "https://kwh0jtf778.jobs.feishu.cn/229043/position/7654524976071133446/detail"
+          },
+          {
+            "title": "材料工程师（机器人驱动，金属方向）",
+            "jd_url": "https://kwh0jtf778.jobs.feishu.cn/229043/position/7654522338834286857/detail"
+          }
+        ]
+      },
+      "cohort_status": "pending",
+      "validation": {
+        "name": "禾赛科技",
+        "careers_url": "https://kwh0jtf778.jobs.feishu.cn/229043/position/application",
+        "crawler": "feishu",
+        "count": 0,
+        "formal_target_count": 0,
+        "samples": [],
+        "field_coverage": {
+          "title": 0,
+          "location": 0,
+          "original_url": 0,
+          "requirements": 0
+        },
+        "promotion_ready": false,
+        "social_ratio": 0.0,
+        "campus_url": true,
+        "verdict": "BLOCKED",
+        "reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决"
+      },
+      "last_validated_at": "2026-10-28T06:01:46Z",
+      "status_reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决",
+      "next_retry_at": "2026-10-31T06:01:46Z"
     },
     {
       "name": "网易互联网",
@@ -381,6 +927,69 @@
       "platform": "待识别"
     },
     {
+      "name": "韶音科技",
+      "pool_status": "candidate",
+      "first_discovered_at": "2026-10-28T06:01:46Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [
+        {
+          "source_id": "upstream_industrial_audit",
+          "source_url": "https://github.com/mengxi111/career-agent/blob/e169ebc35a11715fbb452cffaa7632c7604c6ce3/config.yaml",
+          "lead_url": "https://app.mokahr.com/campus-recruitment/aftershokzhr/36940",
+          "first_seen_at": "2026-10-28T06:01:46Z",
+          "last_seen_at": "2026-10-28T06:03:40Z",
+          "evidence": "上游配置原始入口，仅作为线索；需当前官方身份、2027届与真实岗位验证"
+        }
+      ],
+      "promotion_ready": false,
+      "last_discovered_at": "2026-10-28T06:03:40Z",
+      "careers_url": "https://app.mokahr.com/campus-recruitment/aftershokzhr/36940",
+      "crawler": "moka",
+      "platform": "Moka",
+      "employer_review": {
+        "category": "候选观察",
+        "reason": "专业迁移线索，当前招聘与平台未验证",
+        "historical_samples": [
+          {
+            "title": "工艺工程师（base坪山）",
+            "jd_url": "https://app.mokahr.com/campus-recruitment/aftershokzhr/36940#/job/dfe598f0-abe1-4bdb-9149-ce65e643a377"
+          },
+          {
+            "title": "26/27届-可穿戴产品材料工程师",
+            "jd_url": "https://app.mokahr.com/campus-recruitment/aftershokzhr/36940#/job/6e31bed2-bb78-4eaf-ba4d-4d8a60e04a89"
+          },
+          {
+            "title": "27届正式批-工艺开发工程师",
+            "jd_url": "https://app.mokahr.com/campus-recruitment/aftershokzhr/36940#/job/b0453abe-aabf-46c4-a9ac-7546ccc73dd0"
+          }
+        ]
+      },
+      "cohort_status": "pending",
+      "validation": {
+        "name": "韶音科技",
+        "careers_url": "https://app.mokahr.com/campus-recruitment/aftershokzhr/36940",
+        "crawler": "moka",
+        "count": 0,
+        "formal_target_count": 0,
+        "samples": [],
+        "field_coverage": {
+          "title": 0,
+          "location": 0,
+          "original_url": 0,
+          "requirements": 0
+        },
+        "promotion_ready": false,
+        "social_ratio": 0.0,
+        "campus_url": true,
+        "verdict": "BLOCKED",
+        "reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决"
+      },
+      "last_validated_at": "2026-10-28T06:01:46Z",
+      "status_reason": "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决",
+      "next_retry_at": "2026-10-31T06:01:46Z"
+    },
+    {
       "name": "TCL华星",
       "first_discovered_at": "2026-10-28T05:39:21Z",
       "failure_count": 0,
@@ -390,13 +999,17 @@
       "crawler": "hotjob",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "显示材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Hotjob/e成",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "三一集团",
@@ -408,13 +1021,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "装备制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "东莞新能德",
@@ -426,13 +1043,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电池与储能",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "东莞新能源科技",
@@ -444,13 +1065,17 @@
       "crawler": "hotjob",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电池与储能",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Hotjob/e成",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "中信科",
@@ -462,13 +1087,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "央企科研与制造",
       "company_nature": "央企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "中国中车",
@@ -480,13 +1109,17 @@
       "crawler": "hotjob",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "轨道交通装备",
       "company_nature": "央企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Hotjob/e成",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "中国兵器工业集团",
@@ -498,31 +1131,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "国防工业与化工材料",
       "company_nature": "央企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
-    },
-    {
-      "name": "中国星网网络应用研究院",
-      "first_discovered_at": "2026-10-28T05:39:21Z",
-      "failure_count": 0,
-      "failure_history": [],
-      "sources": [],
-      "careers_url": "https://cscnrczp.zhiye.com/campus/jobs",
-      "crawler": "beisen",
-      "pool_status": "formal",
-      "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
-      "industry": "央企科研院所",
-      "company_nature": "央企",
-      "parent_group": "",
-      "promotion_ready": false,
-      "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：高度匹配",
+        "reason": "行业直接相关且有技术岗位证据"
+      }
     },
     {
       "name": "中国汽车工程研究院",
@@ -534,13 +1153,17 @@
       "crawler": "hotjob",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "工业技术研究院",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Hotjob/e成",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "中国电科",
@@ -552,13 +1175,17 @@
       "crawler": "iguopin",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "央企科研与电子材料",
       "company_nature": "央企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "国聘",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "中国网安/30所",
@@ -570,13 +1197,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "科研院所",
       "company_nature": "央企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "中国联通",
@@ -588,13 +1219,17 @@
       "crawler": "iguopin",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "央企综合技术",
       "company_nature": "央企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "国聘",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "中控",
@@ -606,13 +1241,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "流程工业自动化",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "中航国际-深南电路",
@@ -624,13 +1263,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电子材料与制造",
       "company_nature": "国有控股",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "九牧集团",
@@ -642,13 +1285,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "水务产品与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "京东方",
@@ -660,13 +1307,17 @@
       "crawler": "boe",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "显示材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "企业自建",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "传音",
@@ -678,13 +1329,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电子制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "佰维存储",
@@ -696,13 +1351,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "半导体材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "先导科技",
@@ -714,13 +1373,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "先进材料",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：高度匹配",
+        "reason": "行业直接相关且有技术岗位证据"
+      }
     },
     {
       "name": "冠宇集团",
@@ -732,13 +1395,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电池与储能",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "北汽集团",
@@ -750,13 +1417,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "汽车制造",
       "company_nature": "国企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "华勤",
@@ -768,13 +1439,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电子制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "华大集团",
@@ -786,13 +1461,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "生命科学与分析检测",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "华测",
@@ -804,13 +1483,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "检测认证与环境技术",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "华虹集团",
@@ -822,13 +1505,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "半导体材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "博世",
@@ -840,13 +1527,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "汽车与工业制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "启源芯动力",
@@ -858,13 +1549,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "储能与新能源",
       "company_nature": "国有控股",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "国家开发投资集团",
@@ -876,13 +1571,17 @@
       "crawler": "iguopin",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "综合能源与投资",
       "company_nature": "央企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "国聘",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "均胜集团",
@@ -894,13 +1593,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "汽车制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "天赐材料",
@@ -912,13 +1615,17 @@
       "crawler": "hotjob",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "新能源化工材料",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Hotjob/e成",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：高度匹配",
+        "reason": "行业直接相关且有技术岗位证据"
+      }
     },
     {
       "name": "奇瑞",
@@ -930,13 +1637,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "汽车制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "奥克斯集团",
@@ -948,13 +1659,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "家电与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "威迈斯",
@@ -966,13 +1681,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "新能源汽车电源",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "广州金升阳",
@@ -984,13 +1703,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电源与电子制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "广汽研究院",
@@ -1002,13 +1725,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "工业技术研究院",
       "company_nature": "国企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "康龙化成",
@@ -1020,13 +1747,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "医药研发与化学分析",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：高度匹配",
+        "reason": "行业直接相关且有技术岗位证据"
+      }
     },
     {
       "name": "延锋",
@@ -1038,13 +1769,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "汽车材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "德州仪器",
@@ -1056,13 +1791,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "半导体材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "新能安",
@@ -1074,13 +1813,17 @@
       "crawler": "hotjob",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电池与储能",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Hotjob/e成",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "明阳智慧能源",
@@ -1092,13 +1835,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "风电与新能源",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "春风动力",
@@ -1110,13 +1857,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "装备制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "杰瑞集团",
@@ -1128,13 +1879,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "油气装备与环保技术",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "欣旺达",
@@ -1146,13 +1901,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电池与储能",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "汇川技术",
@@ -1164,13 +1923,17 @@
       "crawler": "inovance",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "工业自动化与新能源",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "企业自建",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "江波龙",
@@ -1182,13 +1945,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "半导体材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "江淮汽车",
@@ -1200,13 +1967,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "汽车制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "江苏海四达电源",
@@ -1218,13 +1989,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电池与储能",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "海信集团",
@@ -1236,13 +2011,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "家电与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "深科技",
@@ -1254,13 +2033,17 @@
       "crawler": "render",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电子制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "企业自建/渲染",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "牧原集团",
@@ -1272,13 +2055,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "农业环保与生产技术",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "特锐德",
@@ -1290,13 +2077,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "能源装备与充电基础设施",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "睿创微纳",
@@ -1308,13 +2099,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "先进材料与半导体",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：高度匹配",
+        "reason": "行业直接相关且有技术岗位证据"
+      }
     },
     {
       "name": "科华集团",
@@ -1326,13 +2121,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "储能与电力电子",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "联影",
@@ -1344,13 +2143,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "医疗器械与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "航天恒星科技",
@@ -1362,13 +2165,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "央企科研与制造",
       "company_nature": "国有控股",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "艾为电子",
@@ -1380,13 +2187,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "半导体材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "英威腾",
@@ -1398,13 +2209,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "工业自动化与新能源",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "豪威集团",
@@ -1416,13 +2231,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "半导体材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "赢合科技",
@@ -1434,13 +2253,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "新能源装备制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "迈瑞医疗",
@@ -1452,13 +2275,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "医疗器械与分析检测",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "远景科技",
@@ -1470,13 +2297,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "风电与储能",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "金发科技",
@@ -1488,13 +2319,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "高分子材料",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：高度匹配",
+        "reason": "行业直接相关且有技术岗位证据"
+      }
     },
     {
       "name": "长安",
@@ -1506,13 +2341,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "汽车制造",
       "company_nature": "央企",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "长鑫存储",
@@ -1524,13 +2363,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "半导体材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "阳光电源",
@@ -1542,13 +2385,17 @@
       "crawler": "moka",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "光伏与储能",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Moka",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "零跑汽车",
@@ -1560,13 +2407,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "新能源汽车",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "鹏芯微",
@@ -1578,13 +2429,17 @@
       "crawler": "beisen",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "半导体材料与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "北森",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
     },
     {
       "name": "麦米电气",
@@ -1596,13 +2451,47 @@
       "crawler": "hotjob",
       "pool_status": "formal",
       "recruiting_status": "monitored",
-      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "last_config_sync_at": "2026-10-28T06:03:41Z",
       "industry": "电力电子与制造",
       "company_nature": "",
       "parent_group": "",
       "promotion_ready": false,
       "platform": "Hotjob/e成",
-      "official_status": "existing_formal_source"
+      "official_status": "existing_formal_source",
+      "employer_review": {
+        "category": "保留：潜在匹配",
+        "reason": "存在可迁移工艺、材料、质量或相关专业岗位证据；资格逐岗核实"
+      }
+    },
+    {
+      "name": "中国星网网络应用研究院",
+      "first_discovered_at": "2026-10-28T05:39:21Z",
+      "failure_count": 0,
+      "failure_history": [],
+      "sources": [],
+      "careers_url": "https://cscnrczp.zhiye.com/campus/jobs",
+      "crawler": "beisen",
+      "pool_status": "history",
+      "recruiting_status": "removed_from_config",
+      "last_config_sync_at": "2026-10-28T05:53:17Z",
+      "industry": "央企科研院所",
+      "company_nature": "央企",
+      "parent_group": "",
+      "promotion_ready": false,
+      "platform": "北森",
+      "official_status": "existing_formal_source",
+      "status_reason": "历史14条岗位为AI/网络安全/航天控制/财资及博士后，未见化学材料工艺证据；基于已采集范围移出，非对单位未来招聘的永久否定",
+      "employer_review": {
+        "category": "移出正式监测",
+        "reason": "历史14条岗位为AI/网络安全/航天控制/财资及博士后，未见化学材料工艺证据；基于已采集范围移出，非对单位未来招聘的永久否定"
+      },
+      "archived_config": {
+        "name": "中国星网网络应用研究院",
+        "careers_url": "https://cscnrczp.zhiye.com/campus/jobs",
+        "crawler": "beisen",
+        "industry": "央企科研院所",
+        "company_nature": "央企"
+      }
     },
     {
       "name": "龙湖集团华西地区",

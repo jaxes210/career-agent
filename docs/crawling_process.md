@@ -293,3 +293,7 @@ python scripts/audit_company_integrations.py --workers 8
 一句话：Firecrawl 负责加速发现和解析长尾页面，项目 crawler 负责稳定生产抓取，状态文档负责全过程可追踪。
 
 自动提案另须记录 `official_status: verified` 与 `official_evidence_url`（企业官网指向招聘租户的原始证据），且最近岗位验证不超过7天。仅识别到平台域名不能证明官方身份；至少一个方向相关岗位必须同时有四项关键字段，分页不完整不得通过。
+
+## 工业催化企业池审查
+
+使用 `python scripts/audit_industrial_company_pool.py` 根据本轮备份基线生成历史证据审计；`--apply` 更新可恢复的企业分类和配置，`--live-limit` 最多验证5家上游线索。报告路径 `docs/COMPANY_POOL_AUDIT.md`。企业行业及工艺/质量历史岗位只用于监测排序，不能替代专业、学历、英语资格审核。自动接入必须在同一相关岗位取得完整字段和明确2027届证据；信息不足留候选。只有有具体证据并记录在 `data/company_relevance_policy.yaml` 的移除判定才能移出正式池；0条岗位/代理限制不构成移除理由。

@@ -1,291 +1,353 @@
 companies:
-- name: 国家开发投资集团
-  careers_url: https://sdic1.iguopin.com/jobCampus
-  crawler: iguopin
-  industry: 综合能源与投资
-  company_nature: 央企
-- name: 中国中车
-  careers_url: https://crrc.hotjob.cn/SU64d47c466202cc36e27a52d4/pb/school.html
-  crawler: hotjob
-  industry: 轨道交通装备
-  company_nature: 央企
 - name: 中国兵器工业集团
   careers_url: https://norincogroupzhaopin.zhiye.com/campus/jobs
   crawler: beisen
   industry: 国防工业与化工材料
   company_nature: 央企
-- name: 阳光电源
-  careers_url: https://app.mokahr.com/campus-recruitment/sungrow/94416
-  crawler: moka
-  industry: 光伏与储能
-- name: 中控
-  careers_url: https://app.mokahr.com/campus-recruitment/supcon/148189
-  crawler: moka
-  industry: 流程工业自动化
-- name: 华测
-  careers_url: https://huace.zhiye.com/campus/jobs
-  crawler: beisen
-  industry: 检测认证与环境技术
-- name: 明阳智慧能源
-  careers_url: https://mywind.zhiye.com/campus/jobs
-  crawler: beisen
-  industry: 风电与新能源
-- name: 中国汽车工程研究院
-  careers_url: https://wecruit.hotjob.cn/SU6603d5a01eb8054100c60436/pb/index.html
-  crawler: hotjob
-  industry: 工业技术研究院
-- name: 博世
-  careers_url: https://app.mokahr.com/campus-recruitment/bosch/73873
-  crawler: moka
-  industry: 汽车与工业制造
+  pool_category: 保留：高度匹配
 - name: 康龙化成
   careers_url: https://app.mokahr.com/m/campus_apply/pharmaron/45318?recommendCode=DSFv5WjR#/jobs
   crawler: moka
   industry: 医药研发与化学分析
+  pool_category: 保留：高度匹配
+- name: 金发科技
+  careers_url: https://kingfa.zhiye.com/campus/jobs
+  crawler: beisen
+  industry: 高分子材料
+  pool_category: 保留：高度匹配
+- name: 天赐材料
+  careers_url: https://wecruit.hotjob.cn/SU62c3ea6b2f9d241e4c8e45ba/mc/position/campus?acotycoCode=qsjehk&projectId=201701&recruitType=1&isLimitShowPostScope=1
+  crawler: hotjob
+  industry: 新能源化工材料
+  pool_category: 保留：高度匹配
+- name: 先导科技
+  careers_url: https://vital.zhiye.com/campus/jobs
+  crawler: beisen
+  industry: 先进材料
+  pool_category: 保留：高度匹配
+- name: 睿创微纳
+  careers_url: https://raytrontek.zhiye.com/campus/jobs
+  crawler: beisen
+  industry: 先进材料与半导体
+  pool_category: 保留：高度匹配
+- name: 国家开发投资集团
+  careers_url: https://sdic1.iguopin.com/jobCampus
+  crawler: iguopin
+  industry: 综合能源与投资
+  company_nature: 央企
+  pool_category: 保留：潜在匹配
+- name: 中国中车
+  careers_url: https://crrc.hotjob.cn/SU64d47c466202cc36e27a52d4/pb/school.html
+  crawler: hotjob
+  industry: 轨道交通装备
+  company_nature: 央企
+  pool_category: 保留：潜在匹配
+- name: 阳光电源
+  careers_url: https://app.mokahr.com/campus-recruitment/sungrow/94416
+  crawler: moka
+  industry: 光伏与储能
+  pool_category: 保留：潜在匹配
+- name: 中控
+  careers_url: https://app.mokahr.com/campus-recruitment/supcon/148189
+  crawler: moka
+  industry: 流程工业自动化
+  pool_category: 保留：潜在匹配
+- name: 华测
+  careers_url: https://huace.zhiye.com/campus/jobs
+  crawler: beisen
+  industry: 检测认证与环境技术
+  pool_category: 保留：潜在匹配
+- name: 明阳智慧能源
+  careers_url: https://mywind.zhiye.com/campus/jobs
+  crawler: beisen
+  industry: 风电与新能源
+  pool_category: 保留：潜在匹配
+- name: 中国汽车工程研究院
+  careers_url: https://wecruit.hotjob.cn/SU6603d5a01eb8054100c60436/pb/index.html
+  crawler: hotjob
+  industry: 工业技术研究院
+  pool_category: 保留：潜在匹配
+- name: 博世
+  careers_url: https://app.mokahr.com/campus-recruitment/bosch/73873
+  crawler: moka
+  industry: 汽车与工业制造
+  pool_category: 保留：潜在匹配
 - name: 奇瑞
   careers_url: https://chery.zhiye.com/campus/jobs
   crawler: beisen
   industry: 汽车制造
+  pool_category: 保留：潜在匹配
 - name: 京东方
   careers_url: https://campus.boe.com/campus/jobs
   crawler: boe
   industry: 显示材料与制造
+  pool_category: 保留：潜在匹配
 - name: 欣旺达
   careers_url: https://sunwodacampus.zhiye.com/campus/jobs
   crawler: beisen
   industry: 电池与储能
+  pool_category: 保留：潜在匹配
 - name: 北汽集团
   careers_url: https://baicgroup.zhiye.com/campus/jobs
   crawler: beisen
   industry: 汽车制造
   company_nature: 国企
+  pool_category: 保留：潜在匹配
 - name: 远景科技
   careers_url: https://www.envision-career.com/campus-recruitment/envisiongroup/43123/#/jobs?project%5B0%5D=100124183&page=1&anchorName=jobsList
   crawler: moka
   campaign_text: 2027届应届生
   industry: 风电与储能
+  pool_category: 保留：潜在匹配
 - name: 中国联通
   careers_url: https://zglt.iguopin.com/job
   crawler: iguopin
   industry: 央企综合技术
   company_nature: 央企
+  pool_category: 保留：潜在匹配
 - name: 中国电科
   careers_url: https://cetc.iguopin.com/job-campus
   crawler: iguopin
   industry: 央企科研与电子材料
   company_nature: 央企
+  pool_category: 保留：潜在匹配
 - name: 三一集团
   careers_url: https://sany.zhiye.com/campus/jobs
   crawler: beisen
   industry: 装备制造
+  pool_category: 保留：潜在匹配
 - name: 汇川技术
   careers_url: https://recruit.inovance.com/#/campus/jobs
   crawler: inovance
   industry: 工业自动化与新能源
-- name: 金发科技
-  careers_url: https://kingfa.zhiye.com/campus/jobs
-  crawler: beisen
-  industry: 高分子材料
+  pool_category: 保留：潜在匹配
 - name: TCL华星
   careers_url: https://wecruit.hotjob.cn/SU6491506a2f9d24316e91b81b/mc/position/campus?acotycoCode=ndwsgd&orgId=100801%2C104101&projectId=308501&recruitType=1&isLimitShowPostScope=1
   crawler: hotjob
   industry: 显示材料与制造
+  pool_category: 保留：潜在匹配
 - name: 中航国际-深南电路
   careers_url: https://avicsz.zhiye.com/campus/jobs
   crawler: beisen
   industry: 电子材料与制造
   company_nature: 国有控股
-- name: 天赐材料
-  careers_url: https://wecruit.hotjob.cn/SU62c3ea6b2f9d241e4c8e45ba/mc/position/campus?acotycoCode=qsjehk&projectId=201701&recruitType=1&isLimitShowPostScope=1
-  crawler: hotjob
-  industry: 新能源化工材料
+  pool_category: 保留：潜在匹配
 - name: 冠宇集团
   careers_url: https://cosmx.zhiye.com/campus/jobs?shareId=81f58b1a-e7be-43bf-87da-b2077ca1601e&shareSource=2
   crawler: beisen
   industry: 电池与储能
+  pool_category: 保留：潜在匹配
 - name: 长安
   careers_url: https://changan.zhiye.com/campus/jobs
   crawler: beisen
   industry: 汽车制造
   company_nature: 央企
+  pool_category: 保留：潜在匹配
 - name: 佰维存储
   careers_url: https://biwin1.zhiye.com/campus/jobs
   crawler: beisen
   industry: 半导体材料与制造
+  pool_category: 保留：潜在匹配
 - name: 新能安
   careers_url: https://wecruit.hotjob.cn/SU6618fd381eb8053acd5fc2b9/mc/position/campus?acotycoCode=uozkbk&projectId=505401%2C505501&recruitType=1&isLimitShowPostScope=1
   crawler: hotjob
   industry: 电池与储能
+  pool_category: 保留：潜在匹配
 - name: 华勤
   careers_url: https://app.mokahr.com/campus-recruitment/hq/44757
   crawler: moka
   industry: 电子制造
+  pool_category: 保留：潜在匹配
 - name: 杰瑞集团
   careers_url: https://future.jereh.com/campus/jobs?shareId=9c94dbea-93bf-4a5e-b2ad-eca3e586bd15&shareSource=2
   crawler: beisen
   industry: 油气装备与环保技术
+  pool_category: 保留：潜在匹配
 - name: 东莞新能德
   careers_url: https://nvtpower.zhiye.com/campus/jobs
   crawler: beisen
   industry: 电池与储能
+  pool_category: 保留：潜在匹配
 - name: 东莞新能源科技
   careers_url: https://wecruit.hotjob.cn/SU612e24992f9d247d0f41930e/pb/school.html
   crawler: hotjob
   industry: 电池与储能
+  pool_category: 保留：潜在匹配
 - name: 鹏芯微
   careers_url: https://career.pxwsemi.com/campus/jobs?shareId=b7ba1868-3017-4fbc-beb4-6fa0733a2d2d&shareSource=2
   crawler: beisen
   industry: 半导体材料与制造
+  pool_category: 保留：潜在匹配
 - name: 江波龙
   careers_url: https://longsys.zhiye.com/campus/jobs
   crawler: beisen
   industry: 半导体材料与制造
+  pool_category: 保留：潜在匹配
 - name: 华虹集团
   careers_url: https://app.mokahr.com/campus-recruitment/huahong/78009#/
   crawler: moka
   industry: 半导体材料与制造
+  pool_category: 保留：潜在匹配
 - name: 长鑫存储
   careers_url: https://cxmt.zhiye.com/campus/jobs
   crawler: beisen
   industry: 半导体材料与制造
-- name: 先导科技
-  careers_url: https://vital.zhiye.com/campus/jobs
-  crawler: beisen
-  industry: 先进材料
+  pool_category: 保留：潜在匹配
 - name: 特锐德
   careers_url: https://tgood.zhiye.com/campus/jobs?shareId=1eb59034-b367-4225-b950-c6366cff7d78&shareSource=2
   crawler: beisen
   industry: 能源装备与充电基础设施
+  pool_category: 保留：潜在匹配
 - name: 启源芯动力
   careers_url: https://spicqyxdl.zhiye.com/campus/jobs
   crawler: beisen
   industry: 储能与新能源
   company_nature: 国有控股
+  pool_category: 保留：潜在匹配
 - name: 江苏海四达电源
   careers_url: https://highstar.zhiye.com/campus/jobs?shareId=0619c7c1-77c4-40bd-808c-60d38fffdeac&shareSource=2
   crawler: beisen
   industry: 电池与储能
+  pool_category: 保留：潜在匹配
 - name: 赢合科技
   careers_url: https://yhwins2.zhiye.com/campus/jobs?shareId=8848ae0a-ca33-49f3-80a1-8e6153760225&shareSource=2&qr=1&memory=%7B%7D&silence=1
   crawler: beisen
   industry: 新能源装备制造
+  pool_category: 保留：潜在匹配
 - name: 广汽研究院
   careers_url: https://gacrnd.zhiye.com/campus/jobs
   crawler: beisen
   industry: 工业技术研究院
   company_nature: 国企
-- name: 中国星网网络应用研究院
-  careers_url: https://cscnrczp.zhiye.com/campus/jobs
-  crawler: beisen
-  industry: 央企科研院所
-  company_nature: 央企
+  pool_category: 保留：潜在匹配
 - name: 航天恒星科技
   careers_url: https://spacestar.zhiye.com/campus/jobs
   crawler: beisen
   industry: 央企科研与制造
   company_nature: 国有控股
+  pool_category: 保留：潜在匹配
 - name: 中信科
   careers_url: https://cictmobile.zhiye.com/campus/jobs
   crawler: beisen
   industry: 央企科研与制造
   company_nature: 央企
+  pool_category: 保留：潜在匹配
 - name: 广州金升阳
   careers_url: https://mornsun.zhiye.com/campus/jobs
   crawler: beisen
   industry: 电源与电子制造
+  pool_category: 保留：潜在匹配
 - name: 奥克斯集团
   careers_url: https://auxgroup.zhiye.com/campus/jobs?shareId=6275af13-0f7f-4634-b26f-7f02dea33054&shareSource=2
   crawler: beisen
   industry: 家电与制造
+  pool_category: 保留：潜在匹配
 - name: 牧原集团
   careers_url: https://app.mokahr.com/campus_apply/muyuan/70116?recommendCode=DSCHtb4w#/jobs
   crawler: moka
   industry: 农业环保与生产技术
+  pool_category: 保留：潜在匹配
 - name: 九牧集团
   careers_url: https://app.mokahr.com/m/campus-recruitment/jomoo/142937?recommendCode=DSYnYM2x#/jobs
   crawler: moka
   industry: 水务产品与制造
+  pool_category: 保留：潜在匹配
 - name: 英威腾
   careers_url: https://invt.zhiye.com/campus/jobs
   crawler: beisen
   industry: 工业自动化与新能源
+  pool_category: 保留：潜在匹配
 - name: 深科技
   careers_url: https://zhaopin.kaifa.cn/Campus/Positions
   crawler: render
   industry: 电子制造
+  pool_category: 保留：潜在匹配
 - name: 海信集团
   careers_url: https://jobs.hisense.com/campus/jobs
   crawler: beisen
   industry: 家电与制造
+  pool_category: 保留：潜在匹配
 - name: 延锋
   careers_url: https://app.mokahr.com/m/campus-recruitment/yanfeng/45086
   crawler: moka
   industry: 汽车材料与制造
+  pool_category: 保留：潜在匹配
 - name: 零跑汽车
   careers_url: https://leapmotor1.zhiye.com/campus/jobs
   crawler: beisen
   industry: 新能源汽车
+  pool_category: 保留：潜在匹配
 - name: 威迈斯
   careers_url: https://vmax.zhiye.com/campus/jobs
   crawler: beisen
   industry: 新能源汽车电源
+  pool_category: 保留：潜在匹配
 - name: 均胜集团
   careers_url: https://app.mokahr.com/campus-recruitment/joyson/94311
   crawler: moka
   industry: 汽车制造
+  pool_category: 保留：潜在匹配
 - name: 春风动力
   careers_url: https://cfmoto.zhiye.com/campus/jobs?shareId=d6e4e863-ab41-4ef3-b95c-e5625950bedc&shareSource=2
   crawler: beisen
   industry: 装备制造
+  pool_category: 保留：潜在匹配
 - name: 科华集团
   careers_url: https://app.mokahr.com/campus_apply/kehua/92510?recommendCode=DSHV5wbF#/jobs
   crawler: moka
   industry: 储能与电力电子
+  pool_category: 保留：潜在匹配
 - name: 江淮汽车
   careers_url: https://jac.zhiye.com/campus/jobs
   crawler: beisen
   industry: 汽车制造
+  pool_category: 保留：潜在匹配
 - name: 迈瑞医疗
   careers_url: https://mindray.zhiye.com/campus/jobs
   crawler: beisen
   industry: 医疗器械与分析检测
+  pool_category: 保留：潜在匹配
 - name: 联影
   careers_url: https://united-imaging.zhiye.com/campus/jobs
   crawler: beisen
   industry: 医疗器械与制造
+  pool_category: 保留：潜在匹配
 - name: 豪威集团
   careers_url: https://ovt-omnivision.zhiye.com/campus/jobs
   crawler: beisen
   industry: 半导体材料与制造
+  pool_category: 保留：潜在匹配
 - name: 麦米电气
   careers_url: https://wecruit.hotjob.cn/SU6282075e0dcad413c09efe26/pb/school.html
   crawler: hotjob
   industry: 电力电子与制造
-- name: 睿创微纳
-  careers_url: https://raytrontek.zhiye.com/campus/jobs
-  crawler: beisen
-  industry: 先进材料与半导体
+  pool_category: 保留：潜在匹配
 - name: 中国网安/30所
   careers_url: https://app.mokahr.com/campus_apply/cetc30/36270
   crawler: moka
   industry: 科研院所
   company_nature: 央企
+  pool_category: 保留：潜在匹配
 - name: 华大集团
   careers_url: https://genomics.zhiye.com/campus/jobs
   crawler: beisen
   industry: 生命科学与分析检测
+  pool_category: 保留：潜在匹配
 - name: 传音
   careers_url: https://transsion.zhiye.com/campus/jobs
   crawler: beisen
   industry: 电子制造
+  pool_category: 保留：潜在匹配
 - name: 德州仪器
   careers_url: https://app.mokahr.com/su/vjlqkz
   crawler: moka
   industry: 半导体材料与制造
+  pool_category: 保留：潜在匹配
 - name: 艾为电子
   careers_url: https://awinic.zhiye.com/campus/jobs
   crawler: beisen
   industry: 半导体材料与制造
+  pool_category: 保留：潜在匹配
 deepseek:
   screening_model: deepseek-v4-flash
   analysis_model: deepseek-v4-pro

@@ -1,29 +1,41 @@
 # 招聘企业发现与监测池报告
 
-生成时间：2026-10-28T05:53:17Z
+生成时间：2026-10-28T06:03:41Z
 
-- 正式监测池：68 家
-- 候选企业池：13 家，其中 0 家可生成审核 PR
-- 失败来源：0 家；历史记录：1 家
+- 正式监测池：67 家
+- 候选企业池：25 家，其中 0 家可生成审核 PR
+- 失败来源：0 家；历史记录：2 家
 - 待开发平台适配器：12 个来源
-- 正式池历史抓取：68/68 家有岗位，累计 18063 条，其中 4599 条确认 2027 届
+- 正式池历史抓取：67/67 家有岗位，累计 18049 条，其中 4599 条确认 2027 届
 - 招聘数据库全量历史：496 家企业、35297 条岗位、15038 条确认 2027 届岗位
 
 | 企业 | 池状态 | 行业 | 平台 | 爬虫 | 最近裁决 | 届别 | 最近验证 | 下次重试 | 原因 | 招聘入口 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | MDPI | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://mdpi.cn/career/recruit/ca-recruit/position?email=3341436634@qq.com |
+| 万华化学 | candidate |  | 企业自建/渲染 | render | BLOCKED | pending | 2026-10-28T06:02:10Z | — |  | https://www.whchem.com/column/164/ |
 | 三环集团 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://hr.cctc.cc/school?sourceCode=869573&isRecommendCode=true |
+| 东方电气 | candidate |  | 国聘 | iguopin | — | pending | — | — |  | https://dec2026.iguopin.com/job |
+| 东风汽车 | candidate |  | Hotjob/e成 | hotjob | — | pending | — | — |  | https://dfmc.hotjob.cn/SU60cc3c9cbef57c51986a8ca0/pb/school.html |
+| 中国一汽 | candidate |  | Hotjob/e成 | hotjob | — | pending | — | — |  | https://faw-zhaopin.hotjob.cn/SU603374380dcad4635b836531/pb/school.html |
 | 中国通信服务广东公司 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://iter.stongyw.cn/web/schoolwx/job/index.html?RCode=260040 |
+| 中科曙光 | candidate |  | 北森 | beisen | BLOCKED | pending | 2026-10-28T06:01:46Z | 2026-10-31T06:01:46Z | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://sugon.zhiye.com/campus/jobs |
 | 之江实验室 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://talents.zhejianglab.com/SU6456170be84cd420e37a68c4/pb/school.html?postTypeCode=0%2F1227%2F37850530 |
+| 卓胜微电子 | candidate |  | 北森 | beisen | — | pending | — | — |  | https://maxscend.zhiye.com/campus/jobs?shareId=538ec1bd-204d-4562-828f-4915ebe319a0&shareSource=2 |
 | 友塔游戏 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://www.yottagames.com.cn/zh/internal-recommendation?token=480b3cd4a66863e82cb4e2bc1fd60a45-999602-1093058550&sub=077 |
 | 吉比特-雷霆游戏 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://hr.g-bits.com/web/index.html#/post-web/post-list/?referralCode=FH386S |
 | 嘉为蓝鲸（要先实习转正） | candidate |  | 北森 | beisen | LEGACY-UNRESOLVED | confirmed_2027 | — | — | beisen 返回 0 个岗位 | https://canway.m.zhiye.com/JobAd/List?jc=2&shareid=9054f207-bce6-4a12-aba9-315de554ddba&token=62669728473b41e5a55494ddb851158 |
+| 小米 | candidate |  | 待识别 | xiaomi | BLOCKED | pending | 2026-10-28T06:01:46Z | 2026-10-31T06:01:46Z | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://xiaomi.jobs.f.mioffice.cn/ |
 | 帆软 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://t6ixa9nyl6.jiandaoyun.com/f/65e1a1308ce7672fded0f0cf?ext=CDSXJ |
+| 开立医疗 | candidate |  | Moka | moka | — | pending | — | — |  | https://app.mokahr.com/campus-recruitment/sonoscape/94392 |
+| 思摩尔 | candidate |  | Moka | moka | — | pending | — | — |  | https://app.mokahr.com/campus_apply/smoore/150918?recommendCode=DS8x9P6R#/jobs |
 | 昂科技术 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://s.51job.com/2vSIuH |
 | 浪潮集团 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://wx64310b3064348282.hcmcloud.cn/recruit#/common_model_nav_anonymous/multi?c_model=_HB4_UmVsZWFzZUpvYk1ncg%253D%253D&meta_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&advance_filter_dict=%7B%22job_class%22:%22%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%22,%22select_depart%22:false%7D&key=_HB4_cmVjb21tZW5kX2pvYl9saXN0&model=_HB4_UmVjcnVpdFJlY29tbWVuZA%253D%253D&nav_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&custom_params=_HB4_eyJpbnRlcm5hbF9jb2RlIjoieEdpb0pBaCJ9&company_id=_HB4_OA%253D%253D |
+| 瑞沃德 | candidate |  | 北森 | beisen | BLOCKED | pending | 2026-10-28T06:01:46Z | 2026-10-31T06:01:46Z | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://rwdls.zhiye.com/campus/jobs |
+| 禾赛科技 | candidate |  | 飞书招聘 | feishu | BLOCKED | pending | 2026-10-28T06:01:46Z | 2026-10-31T06:01:46Z | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://kwh0jtf778.jobs.feishu.cn/229043/position/application |
 | 网易互联网 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://campus.163.com/bolehtml/home?projectId=103&type=99&boleId=e1dd4e319e73d68a&boleType=2&signature=133fad406699e30097ce17c376500d6c&isShare=1 |
 | 联合利华 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://xym.51job.com/VueData/neitui/user/#/?ehireid=8833740&prd=xyznt&ruid=162491&referrer=o0cn56rchou82EDTyJc1LYCY0txw |
 | 腾讯云智研发 | candidate |  | 待识别 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | render 返回 0 个岗位 | https://join.tencent-cloud.com |
+| 韶音科技 | candidate |  | Moka | moka | BLOCKED | pending | 2026-10-28T06:01:46Z | 2026-10-31T06:01:46Z | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://app.mokahr.com/campus-recruitment/aftershokzhr/36940 |
 | TCL华星 | formal | 显示材料与制造 | Hotjob/e成 | hotjob | — | 待核实 | — | — |  | https://wecruit.hotjob.cn/SU6491506a2f9d24316e91b81b/mc/position/campus?acotycoCode=ndwsgd&orgId=100801%2C104101&projectId=308501&recruitType=1&isLimitShowPostScope=1 |
 | 三一集团 | formal | 装备制造 | 北森 | beisen | — | 待核实 | — | — |  | https://sany.zhiye.com/campus/jobs |
 | 东莞新能德 | formal | 电池与储能 | 北森 | beisen | — | 待核实 | — | — |  | https://nvtpower.zhiye.com/campus/jobs |
@@ -31,7 +43,6 @@
 | 中信科 | formal | 央企科研与制造 | 北森 | beisen | — | 待核实 | — | — |  | https://cictmobile.zhiye.com/campus/jobs |
 | 中国中车 | formal | 轨道交通装备 | Hotjob/e成 | hotjob | — | 待核实 | — | — |  | https://crrc.hotjob.cn/SU64d47c466202cc36e27a52d4/pb/school.html |
 | 中国兵器工业集团 | formal | 国防工业与化工材料 | 北森 | beisen | — | 待核实 | — | — |  | https://norincogroupzhaopin.zhiye.com/campus/jobs |
-| 中国星网网络应用研究院 | formal | 央企科研院所 | 北森 | beisen | — | 待核实 | — | — |  | https://cscnrczp.zhiye.com/campus/jobs |
 | 中国汽车工程研究院 | formal | 工业技术研究院 | Hotjob/e成 | hotjob | — | 待核实 | — | — |  | https://wecruit.hotjob.cn/SU6603d5a01eb8054100c60436/pb/index.html |
 | 中国电科 | formal | 央企科研与电子材料 | 国聘 | iguopin | — | 待核实 | — | — |  | https://cetc.iguopin.com/job-campus |
 | 中国网安/30所 | formal | 科研院所 | Moka | moka | — | 待核实 | — | — |  | https://app.mokahr.com/campus_apply/cetc30/36270 |
@@ -92,9 +103,10 @@
 | 零跑汽车 | formal | 新能源汽车 | 北森 | beisen | — | 待核实 | — | — |  | https://leapmotor1.zhiye.com/campus/jobs |
 | 鹏芯微 | formal | 半导体材料与制造 | 北森 | beisen | — | 待核实 | — | — |  | https://career.pxwsemi.com/campus/jobs?shareId=b7ba1868-3017-4fbc-beb4-6fa0733a2d2d&shareSource=2 |
 | 麦米电气 | formal | 电力电子与制造 | Hotjob/e成 | hotjob | — | 待核实 | — | — |  | https://wecruit.hotjob.cn/SU6282075e0dcad413c09efe26/pb/school.html |
+| 中国星网网络应用研究院 | history | 央企科研院所 | 北森 | beisen | — | 待核实 | — | — | 历史14条岗位为AI/网络安全/航天控制/财资及博士后，未见化学材料工艺证据；基于已采集范围移出，非对单位未来招聘的永久否定 | https://cscnrczp.zhiye.com/campus/jobs |
 | 龙湖集团华西地区 | history |  | 未提供入口 | 待识别 | LEGACY-UNRESOLVED | confirmed_2027 | — | — | 无效招聘链接：https://点击后面图片投递内推；render 返回 0 个岗位 | https://点击后面图片投递内推 |
 
-## 搜索关注名单（16 家，不等于已发现候选）
+## 搜索关注名单（17 家，不等于已发现候选）
 
 | 企业 | 行业 |
 | --- | --- |
@@ -114,3 +126,4 @@
 | 北控水务 | 环保与水务 |
 | 首创环保 | 环保与水务 |
 | 光大环境 | 环保与水务 |
+| 中国中化 | 化工与材料 |

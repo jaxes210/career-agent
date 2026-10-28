@@ -26,6 +26,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from crawlers import CRAWLER_MAP  # noqa: E402
 import job_filters  # noqa: E402
+import job_cohorts  # noqa: E402
 
 ROOT = Path(__file__).parent.parent
 REPORT_PATH = ROOT / "data" / "validation_report.json"
@@ -102,7 +103,7 @@ def _field_coverage(jobs: list[dict]) -> dict[str, int]:
 def validate_one(entry: dict) -> dict:
     name, url, crawler = entry["name"], entry["careers_url"], entry["crawler"]
     res = {"name": name, "careers_url": url, "crawler": crawler,
-           "count": 0, "formal_target_count": 0, "samples": [],
+           "count": 0, "formal_target_count": 0, "confirmed_2027_complete_count": 0, "samples": [],
            "field_coverage": {"title": 0, "location": 0, "original_url": 0, "requirements": 0},
            "promotion_ready": False, "social_ratio": 0.0,
            "campus_url": _is_campus_url(crawler, url)}
@@ -161,11 +162,14 @@ def validate_one(entry: dict) -> dict:
         res["reason"] = (
             "关键字段待补全: " + ", ".join(missing) if missing else ""
         )
-        res["promotion_ready"] = any(
-            all(_field_coverage([job]).values()) for job in target_jobs
+        res["confirmed_2027_complete_count"] = sum(
+            all(_field_coverage([job]).values())
+            and job_cohorts.is_confirmed_current(job_cohorts.explicit_job_cohort(job))
+            for job in target_jobs
         )
+        res["promotion_ready"] = res["confirmed_2027_complete_count"] > 0
         if not missing and not res["promotion_ready"]:
-            res["reason"] = "关键字段未在同一真实岗位中同时取得"
+            res["reason"] = "尚未取得同一岗位的完整关键字段与明确2027届证据；保留候选"
     return res
 
 

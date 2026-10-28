@@ -392,6 +392,7 @@ def validate_candidates(
             verdict == "OK"
             and result.get("promotion_ready") is True
             and int(result.get("formal_target_count") or 0) > 0
+            and int(result.get("confirmed_2027_complete_count") or 0) > 0
             and crawler
             and record.get("official_status") == "verified"
             and record.get("official_evidence_url")
@@ -423,9 +424,13 @@ def _proposal_entries(state: dict[str, Any], companies: list[dict[str, Any]]) ->
     }
     entries = []
     for record in state.get("records") or []:
+        if (record.get("employer_review") or {}).get("category") == "移出正式监测":
+            continue
         if (not record.get("promotion_ready") or record.get("pool_status") != "candidate"
                 or record.get("official_status") != "verified"
                 or not record.get("official_evidence_url")):
+            continue
+        if int((record.get("validation") or {}).get("confirmed_2027_complete_count") or 0) < 1:
             continue
         if not _parse_time(record.get("last_validated_at")) or (
             _now() - _parse_time(record.get("last_validated_at")) > timedelta(days=7)

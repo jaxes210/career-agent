@@ -1057,21 +1057,33 @@
 
 ## 企业发现与候选池（自动维护）
 <!-- COMPANY_POOL_AUTOMATION_START -->
-正式池 **68** 家；候选 **13** 家；可提案 **0** 家；失败 **0** 家。
+正式池 **67** 家；候选 **25** 家；可提案 **0** 家；失败 **0** 家。
 
 | 企业 | 状态 | 爬虫 | 最近裁决 | 原因 | 招聘入口 |
 | --- | --- | --- | --- | --- | --- |
 | MDPI | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://mdpi.cn/career/recruit/ca-recruit/position?email=3341436634@qq.com |
+| 万华化学 | candidate | `render` | BLOCKED |  | https://www.whchem.com/column/164/ |
 | 三环集团 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://hr.cctc.cc/school?sourceCode=869573&isRecommendCode=true |
+| 东方电气 | candidate | `iguopin` | 待验证 |  | https://dec2026.iguopin.com/job |
+| 东风汽车 | candidate | `hotjob` | 待验证 |  | https://dfmc.hotjob.cn/SU60cc3c9cbef57c51986a8ca0/pb/school.html |
+| 中国一汽 | candidate | `hotjob` | 待验证 |  | https://faw-zhaopin.hotjob.cn/SU603374380dcad4635b836531/pb/school.html |
 | 中国通信服务广东公司 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://iter.stongyw.cn/web/schoolwx/job/index.html?RCode=260040 |
+| 中科曙光 | candidate | `beisen` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://sugon.zhiye.com/campus/jobs |
 | 之江实验室 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://talents.zhejianglab.com/SU6456170be84cd420e37a68c4/pb/school.html?postTypeCode=0%2F1227%2F37850530 |
+| 卓胜微电子 | candidate | `beisen` | 待验证 |  | https://maxscend.zhiye.com/campus/jobs?shareId=538ec1bd-204d-4562-828f-4915ebe319a0&shareSource=2 |
 | 友塔游戏 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://www.yottagames.com.cn/zh/internal-recommendation?token=480b3cd4a66863e82cb4e2bc1fd60a45-999602-1093058550&sub=077 |
 | 吉比特-雷霆游戏 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://hr.g-bits.com/web/index.html#/post-web/post-list/?referralCode=FH386S |
 | 嘉为蓝鲸（要先实习转正） | candidate | `beisen` | LEGACY-UNRESOLVED | beisen 返回 0 个岗位 | https://canway.m.zhiye.com/JobAd/List?jc=2&shareid=9054f207-bce6-4a12-aba9-315de554ddba&token=62669728473b41e5a55494ddb851158 |
+| 小米 | candidate | `xiaomi` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://xiaomi.jobs.f.mioffice.cn/ |
 | 帆软 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://t6ixa9nyl6.jiandaoyun.com/f/65e1a1308ce7672fded0f0cf?ext=CDSXJ |
+| 开立医疗 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/sonoscape/94392 |
+| 思摩尔 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/smoore/150918?recommendCode=DS8x9P6R#/jobs |
 | 昂科技术 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://s.51job.com/2vSIuH |
 | 浪潮集团 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://wx64310b3064348282.hcmcloud.cn/recruit#/common_model_nav_anonymous/multi?c_model=_HB4_UmVsZWFzZUpvYk1ncg%253D%253D&meta_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&advance_filter_dict=%7B%22job_class%22:%22%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%22,%22select_depart%22:false%7D&key=_HB4_cmVjb21tZW5kX2pvYl9saXN0&model=_HB4_UmVjcnVpdFJlY29tbWVuZA%253D%253D&nav_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&custom_params=_HB4_eyJpbnRlcm5hbF9jb2RlIjoieEdpb0pBaCJ9&company_id=_HB4_OA%253D%253D |
+| 瑞沃德 | candidate | `beisen` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://rwdls.zhiye.com/campus/jobs |
+| 禾赛科技 | candidate | `feishu` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://kwh0jtf778.jobs.feishu.cn/229043/position/application |
 | 网易互联网 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://campus.163.com/bolehtml/home?projectId=103&type=99&boleId=e1dd4e319e73d68a&boleType=2&signature=133fad406699e30097ce17c376500d6c&isShare=1 |
 | 联合利华 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://xym.51job.com/VueData/neitui/user/#/?ehireid=8833740&prd=xyznt&ruid=162491&referrer=o0cn56rchou82EDTyJc1LYCY0txw |
 | 腾讯云智研发 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://join.tencent-cloud.com |
+| 韶音科技 | candidate | `moka` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://app.mokahr.com/campus-recruitment/aftershokzhr/36940 |
 <!-- COMPANY_POOL_AUTOMATION_END -->
