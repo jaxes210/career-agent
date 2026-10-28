@@ -84,3 +84,30 @@ def test_crawl_one_attaches_configured_campaign_to_filtered_project(monkeypatch)
     })
 
     assert jobs[0]["campaign_text"] == "2027届应届生"
+
+
+def test_source_validator_distinguishes_network_policy_block(monkeypatch):
+    from scripts import validate_company
+
+    class BlockedCrawler:
+        def __init__(self, *_args):
+            pass
+
+        def fetch(self):
+            raise AssertionError("blocked source must not be crawled")
+
+    monkeypatch.setitem(validate_company.CRAWLER_MAP, "blocked", BlockedCrawler)
+    monkeypatch.setattr(
+        validate_company,
+        "_network_policy_block_reason",
+        lambda _url: "当前运行环境代理策略拒绝访问",
+    )
+
+    result = validate_company.validate_one({
+        "name": "受限来源",
+        "careers_url": "https://blocked.example/campus",
+        "crawler": "blocked",
+    })
+
+    assert result["verdict"] == "BLOCKED"
+    assert result["count"] == 0

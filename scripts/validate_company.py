@@ -20,7 +20,8 @@ import sys
 from pathlib import Path
 from urllib.parse import urlparse
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+import requests
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from crawlers import CRAWLER_MAP  # noqa: E402
@@ -34,6 +35,25 @@ SOCIAL_WORDS = [
     "资深", "高级", "专家", "经验", "年以上", "社招", "社会招聘", "总监", "主管", "负责人",
     "lead", "senior", "staff", "principal", "expert", "director", "manager",
 ]
+
+
+def _network_policy_block_reason(url: str) -> str:
+    """Return a clear proxy-policy blocker without mislabeling the source empty."""
+    try:
+        response = requests.get(
+            url,
+            timeout=12,
+            allow_redirects=True,
+            headers={"User-Agent": "Mozilla/5.0 career-agent source validator"},
+        )
+    except requests.RequestException as exc:
+        detail = str(exc)
+        if "403 Forbidden" in detail and "proxy" in detail.lower():
+            return "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决"
+        return ""
+    if response.status_code == 403 and "domain forbidden" in response.text.lower():
+        return "当前运行环境域名白名单拒绝访问（Domain forbidden），未执行来源有效性裁决"
+    return ""
 
 
 def _is_campus_url(crawler: str, url: str) -> bool:
@@ -65,6 +85,11 @@ def validate_one(entry: dict) -> dict:
     if cls is None:
         res["verdict"] = "ERROR"
         res["reason"] = f"未知 crawler: {crawler}"
+        return res
+    blocked = _network_policy_block_reason(url)
+    if blocked:
+        res["verdict"] = "BLOCKED"
+        res["reason"] = blocked
         return res
     try:
         jobs = cls(name, url).fetch() or []
@@ -138,7 +163,7 @@ def main():
     results = []
     for i, e in enumerate(items, 1):
         r = validate_one(e)
-        mark = {"OK": "✅", "SUSPECT-社招": "⚠️", "EMPTY": "⛔", "ERROR": "❓"}.get(r["verdict"], "?")
+        mark = {"OK": "✅", "SUSPECT-社招": "⚠️", "EMPTY": "⛔", "BLOCKED": "🔒", "ERROR": "❓"}.get(r["verdict"], "?")
         print(f"{mark} [{i}/{len(items)}] {r['name']:<16} {r['verdict']:<12} {r['count']}岗  {r['reason']}", flush=True)
         for s in r["samples"][:3]:
             print(f"      · {s['title']}  |  {s['city']}", flush=True)
@@ -150,10 +175,17 @@ def main():
 
     n = len(results)
     cnt = lambda v: sum(1 for r in results if r["verdict"] == v)  # noqa: E731
-    print(f"\n本次 {n} 家：OK {cnt('OK')} / SUSPECT {cnt('SUSPECT-社招')} / EMPTY {cnt('EMPTY')} / ERROR {cnt('ERROR')}")
+    print(
+        f"\n本次 {n} 家：OK {cnt('OK')} / SUSPECT {cnt('SUSPECT-社招')} / "
+        f"EMPTY {cnt('EMPTY')} / BLOCKED {cnt('BLOCKED')} / ERROR {cnt('ERROR')}"
+    )
     print(f"累计 OK {len(ok)} 家 → {APPROVED_PATH}（复核后文本追加进 config.yaml）")
     print(f"完整报告 → {REPORT_PATH}")
 
 
 if __name__ == "__main__":
+    if hasattr(sys.stdout, "buffer"):
+        sys.stdout = io.TextIOWrapper(
+            sys.stdout.buffer, encoding="utf-8", errors="replace"
+        )
     main()

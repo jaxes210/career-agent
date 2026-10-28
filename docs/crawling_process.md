@@ -83,6 +83,12 @@ python C:\Users\周帅康\.codex\skills\recruitment-crawler-integration\scripts\
 
 ## 4. 项目 crawler 验收
 
+云环境的代理或域名白名单拒绝访问时，`validate_company.py` 应记录为
+`BLOCKED`，不能记为 `EMPTY`。`EMPTY` 只表示请求实际到达招聘来源且 crawler
+仍返回 0 岗；`BLOCKED` 只说明本次运行环境无法裁决来源有效性。解除网络限制后
+必须重新运行验证，历史数据库记录可作为来源曾经成功抓取的证据，但不能替代后续
+失效监测。
+
 所有候选 URL 必须通过项目脚本验证：
 
 ```powershell
