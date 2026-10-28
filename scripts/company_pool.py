@@ -277,13 +277,112 @@ def _merge_lead(state: dict[str, Any], lead: dict[str, Any]) -> dict[str, Any]:
     return record
 
 
-def discover_qq_docs(state: dict[str, Any], companies: list[dict[str, Any]]) -> dict[str, int]:
+def _historical_title_evidence(
+    names: list[str],
+    admission: dict[str, Any],
+    db_path: Path = ROOT / "data" / "jobs.db",
+) -> dict[str, list[str]]:
+    """Return bounded, title-level evidence for admitting new employer leads."""
+    title_pattern = str(admission.get("historical_title_pattern") or "")
+    if not names or not title_pattern or not db_path.exists():
+        return {}
+    positive = re.compile(title_pattern, re.I)
+    negative_text = str(admission.get("excluded_title_pattern") or "")
+    negative = re.compile(negative_text, re.I) if negative_text else None
+    conn = sqlite3.connect(db_path)
+    try:
+        columns = {row[1] for row in conn.execute("PRAGMA table_info(jobs)")}
+        if not {"company", "title"}.issubset(columns):
+            return {}
+        marks = ",".join("?" for _ in names)
+        rows = conn.execute(
+            f"SELECT company, title FROM jobs WHERE company IN ({marks})",
+            names,
+        )
+        evidence: dict[str, list[str]] = {}
+        for company, title in rows:
+            title = str(title or "").strip()
+            if not title or not positive.search(title) or (negative and negative.search(title)):
+                continue
+            samples = evidence.setdefault(str(company), [])
+            if title not in samples and len(samples) < 3:
+                samples.append(title)
+        return evidence
+    finally:
+        conn.close()
+
+
+def _qq_admitted_names(
+    state: dict[str, Any],
+    rows: list[dict[str, Any]],
+    source: dict[str, Any],
+    *,
+    db_path: Path = ROOT / "data" / "jobs.db",
+) -> tuple[set[str], dict[str, list[str]]]:
+    admission = source.get("admission") or {}
+    names = [str(row.get("canonical_name") or "").strip() for row in rows]
+    if not admission:
+        return set(names), {}
+    source_id = str(source.get("id") or "qq_docs_27_autumn")
+    protected = set()
+    for record in state.get("records") or []:
+        source_ids = {str(item.get("source_id") or "") for item in record.get("sources") or []}
+        if record.get("pool_status") != "candidate" or source_ids - {source_id}:
+            protected.add(str(record.get("name") or ""))
+    allowlist = {str(name) for name in admission.get("company_allowlist") or []}
+    company_pattern_text = str(admission.get("company_name_pattern") or "")
+    company_pattern = re.compile(company_pattern_text, re.I) if company_pattern_text else None
+    title_evidence = _historical_title_evidence(names, admission, db_path)
+    admitted = {
+        name for name in names
+        if name in protected
+        or name in allowlist
+        or bool(company_pattern and company_pattern.search(name))
+        or bool(title_evidence.get(name))
+    }
+    return admitted, title_evidence
+
+
+def _prune_qq_only_candidates(state: dict[str, Any], source_id: str, admitted: set[str]) -> int:
+    records = state.get("records") or []
+    kept = []
+    removed = 0
+    for record in records:
+        source_ids = {str(item.get("source_id") or "") for item in record.get("sources") or []}
+        qq_only_candidate = (
+            record.get("pool_status") == "candidate"
+            and source_ids == {source_id}
+            and not record.get("validation")
+            and not record.get("official_status")
+        )
+        if qq_only_candidate and str(record.get("name") or "") not in admitted:
+            removed += 1
+            continue
+        kept.append(record)
+    state["records"] = kept
+    return removed
+
+
+def discover_qq_docs(
+    state: dict[str, Any],
+    companies: list[dict[str, Any]],
+    source: dict[str, Any] | None = None,
+    *,
+    db_path: Path = ROOT / "data" / "jobs.db",
+) -> dict[str, int]:
     """Reuse the existing 27-autumn smart-sheet parser as a lead adapter."""
     from scripts import qq_docs_27_autumn_monitor as qq
 
+    source = source or {"id": "qq_docs_27_autumn"}
     result = qq.run(companies)
+    admitted, title_evidence = _qq_admitted_names(
+        state, result["rows"], source, db_path=db_path,
+    )
+    pruned = _prune_qq_only_candidates(state, str(source["id"]), admitted)
     discovered = 0
     for row in result["rows"]:
+        if row["canonical_name"] not in admitted:
+            continue
         links = list(dict.fromkeys(row.get("links") or [""]))
         for url in links:
             crawler = qq.infer_crawler(url) if url else None
@@ -291,16 +390,26 @@ def discover_qq_docs(state: dict[str, Any], companies: list[dict[str, Any]]) -> 
                 "name": row["canonical_name"],
                 "careers_url": url,
                 "crawler": crawler,
-                "source_id": "qq_docs_27_autumn",
+                "source_id": str(source["id"]),
                 "source_url": qq.SOURCE_URL,
                 "cohort_status": "confirmed_2027",
-                "evidence": f"{row['source_name']}：{qq.TARGET_TAG}",
+                "evidence": (
+                    f"{row['source_name']}：{qq.TARGET_TAG}"
+                    + (f"；历史岗位证据：{'、'.join(title_evidence[row['canonical_name']])}"
+                       if title_evidence.get(row["canonical_name"]) else "")
+                ),
             })
             discovered += 1
-    return {"source_rows": len(result["rows"]), "lead_urls": discovered}
+    return {
+        "source_rows": len(result["rows"]),
+        "admitted_rows": sum(row["canonical_name"] in admitted for row in result["rows"]),
+        "excluded_rows": sum(row["canonical_name"] not in admitted for row in result["rows"]),
+        "pruned_candidates": pruned,
+        "lead_urls": discovered,
+    }
 
 
-DISCOVERY_ADAPTERS: dict[str, Callable[[dict, list[dict]], dict[str, int]]] = {
+DISCOVERY_ADAPTERS: dict[str, Callable[..., dict[str, int]]] = {
     "qq_docs_27_autumn": discover_qq_docs,
 }
 
@@ -334,7 +443,7 @@ def discover(state: dict[str, Any], companies: list[dict[str, Any]], sources_pat
             summary["errors"][source.get("id") or adapter_name] = "未实现的发现适配器"
             continue
         try:
-            summary["sources"][source.get("id") or adapter_name] = adapter(state, companies)
+            summary["sources"][source.get("id") or adapter_name] = adapter(state, companies, source)
         except Exception as exc:  # A public source outage must not discard saved leads.
             summary["errors"][source.get("id") or adapter_name] = f"{type(exc).__name__}: {exc}"
     state["last_discovery"] = {"at": _iso(_now()), **summary}

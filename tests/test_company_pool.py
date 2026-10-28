@@ -274,3 +274,55 @@ def test_discovery_does_not_reset_failed_source_retry_state():
     company_pool._merge_lead(state, lead)
     assert record['failure_count'] == 3
     assert company_pool.validate_candidates(state) == []
+
+
+def test_qq_discovery_admits_industrial_evidence_and_prunes_software_noise(tmp_path, monkeypatch):
+    db_path = tmp_path / 'jobs.db'
+    conn = sqlite3.connect(db_path)
+    conn.execute('CREATE TABLE jobs (company TEXT, title TEXT)')
+    conn.executemany('INSERT INTO jobs VALUES (?, ?)', [
+        ('材料岗位企业', '材料研发工程师'),
+        ('软件企业', '模型推理优化工程师'),
+    ])
+    conn.commit()
+    conn.close()
+    source = {
+        'id': 'qq_docs_27_autumn',
+        'admission': {
+            'company_name_pattern': '化工|材料',
+            'historical_title_pattern': '材料研发|化工工艺',
+            'excluded_title_pattern': '模型|软件|算法',
+            'company_allowlist': ['人工保留企业'],
+        },
+    }
+    state = _state()
+    for name in ['软件企业', '既有工业候选']:
+        state['records'].append({
+            'name': name,
+            'pool_status': 'candidate',
+            'sources': [{
+                'source_id': 'qq_docs_27_autumn' if name == '软件企业' else 'industrial-audit',
+            }],
+            'failure_count': 0,
+            'failure_history': [],
+        })
+    rows = [
+        {'source_name': name, 'canonical_name': name, 'links': [f'https://{index}.zhiye.com/campus/jobs']}
+        for index, name in enumerate([
+            '软件企业', '材料岗位企业', '某化工有限公司', '人工保留企业', '既有工业候选'
+        ])
+    ]
+    monkeypatch.setattr(
+        'scripts.qq_docs_27_autumn_monitor.run',
+        lambda companies: {'rows': rows},
+    )
+
+    summary = company_pool.discover_qq_docs(state, [], source, db_path=db_path)
+
+    names = {record['name'] for record in state['records']}
+    assert '软件企业' not in names
+    assert names == {'材料岗位企业', '某化工有限公司', '人工保留企业', '既有工业候选'}
+    assert summary == {
+        'source_rows': 5, 'admitted_rows': 4, 'excluded_rows': 1,
+        'pruned_candidates': 1, 'lead_urls': 4,
+    }

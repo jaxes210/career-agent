@@ -1043,6 +1043,7 @@
 ## 已排除或需要注意
 
 - 2026-10-28：GitHub Actions真实探测6个pending入口。国家能源、兵器集团页面可建立连接但返回登录/验证码/访问挑战；华东理工、北京化工门户及国投/电科国聘页可访问但通用HTML解析为NO_PARSED_LEADS。高校地址尚非就业公告入口，国聘页面需专用SPA/API适配；0条线索、0家通过验证，全部继续pending，不能移入正式池。运行 #1 的exit 128来自诊断JSON未纳入Git状态提交，非抓取失败，工作流已修复。
+- 2026-10-28：运行 #2 成功验证状态持久化，但腾讯文档宽泛源曾把205家软件/游戏等企业加入候选。新增工业催化企业准入后，清理165个仅有该来源、未验证且无专业迁移证据的记录，保留40个有行业名称、历史材料/工艺岗位或人工审核依据的新候选；正式67家不变，候选调整为65家。
 - 2026-07-26：修复云端抓取异常。银河通用飞书校招页当前明确显示 0 个岗位；通用飞书爬虫现将“空列表且无分页控件”识别为正常完成，不再误报翻页失败。芯行纪改用专用 `xtimes` 爬虫，在官网 HTTPS/TLS 不稳定时通过只读文本解析通道读取同一官方页面，实抓 3 个校招岗位，均包含工作职责和资格要求；用户侧链接仍保留芯行纪官网，并标记为招聘列表。
 - 2026-07-19：复核云端明确网络失败项。豹趣科技和正运动技术使用原官方校招入口重新验证，分别真实返回 5、8 个岗位，确认是瞬时网络故障；通用 Requests 与 Playwright 导航层已加入有限重试。芯行纪官方校招页仍有有效岗位内容，但官网 TLS/连接不稳定且暂未找到可靠官方替代入口，保留配置并由重试与健康审计持续监控，失败时不参与岗位下线判断。
 - 2026-07-14：京东已修复岗位详情链接。旧爬虫误将 API 路径作为浏览器地址并标记为招聘列表；现改用 `https://campus.jd.com/#/details?type=...&id=...`，已在浏览器验证可打开具体岗位详情页。已迁移 70 条历史京东链接，并重抓入库；远景能源对应配置名为“远景科技”，使用已验证的 Moka 校招入口，已重抓并刷新报告。
@@ -1058,238 +1059,73 @@
 
 ## 企业发现与候选池（自动维护）
 <!-- COMPANY_POOL_AUTOMATION_START -->
-正式池 **67** 家；候选 **230** 家；可提案 **0** 家；失败 **0** 家。
+正式池 **67** 家；候选 **65** 家；可提案 **0** 家；失败 **0** 家。
 
 | 企业 | 状态 | 爬虫 | 最近裁决 | 原因 | 招聘入口 |
 | --- | --- | --- | --- | --- | --- |
-| 360集团 | candidate | `beisen` | 待验证 |  | https://360campus.zhiye.com/campus/jobs?shareId=55bf79da-a592-4b8c-a493-81b5c2103e7e&shareSource=2 |
-| 4399游戏 | candidate | `待识别` | 待验证 |  | https://hr.4399om.com/weixin/?r=job/agent&type=2&isOpen=0&jobTableType=1&code=ctg5d |
-| 58同城 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/58/150953?recommendCode=DSVZmSGD#/jobs |
-| 9377游戏 | candidate | `beisen` | 待验证 |  | https://9377.zhiye.com/campus/jobs?shareId=62a2649a-3826-44b2-a0df-667250430806&shareSource=2 |
-| CVTE视源股份 | candidate | `待识别` | 待验证 |  | https://campus.cvte.com |
-| Dexmal 原力灵机 | candidate | `feishu` | 待验证 |  | https://dexmal-inc.jobs.feishu.cn/s/UcNqTb50zDE |
-| FMG集团 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/ur/45210?recommendCode=DShEgnny#/jobs |
-| Funplus | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/funplus01/147931?recommendCode=DSFXq8tM#/jobs |
-| Garena | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/garena/148076?recommendCode=DS2ZAVF2#/jobs |
-| HOLLYLAND猛玛 | candidate | `beisen` | 待验证 |  | https://hollyland.zhiye.com/campus/jobs?shareId=2dbb4980-d61f-4c1b-a61b-faede5103786&shareSource=2 |
 | MDPI | candidate | `待识别` | NEEDS-ADAPTER | 未知招聘平台，需核实并开发爬虫 | https://mdpi.cn/career/recruit/ca-recruit/position?email=3341436634@qq.com |
-| MetaApp | candidate | `feishu` | 待验证 |  | https://meta.jobs.feishu.cn/s/epYBFZjBD4k |
-| MiniMax | candidate | `feishu` | 待验证 |  | https://vrfi1sk8a0.jobs.feishu.cn/s/kGKwaJ_fg7g |
-| Momenta | candidate | `feishu` | 待验证 |  | https://momenta.jobs.feishu.cn/s/gIkCsB4KZiA |
-| OBSBOT寻影 | candidate | `feishu` | 待验证 |  | https://n8r2cr07gk.jobs.feishu.cn/s/4eHpfEDiOXo |
 | OPPO | candidate | `待识别` | 待验证 |  | https://careers.oppo.com/university/oppo/campus/post?shareId=17986 |
-| RoboSense速腾聚创 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/robosense/69887?recommendCode=DSYUVMna#/jobs |
-| SHEIN希音 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/shein/2932?recommendCode=DS7TNCrY#/jobs |
-| Sea | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/shopee/170435#/job/90611de8-f66d-42c0-920e-3972682a596f?from=qrcode |
-| TP-LINK普联 | candidate | `待识别` | 待验证 |  | https://hr.tp-link.com.cn |
-| TP-LINK联洲 | candidate | `待识别` | 待验证 |  | https://join.tplinkglobal.com/share/jobs?share_id=2090394245740965889&share_type=qr |
-| VeSync | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/vesync/182301?recommendCode=DSJDjhnd#/jobs |
-| Yealink亿联网络 | candidate | `beisen` | 待验证 |  | https://yealink.zhiye.com/campus/jobs?shareId=1e7ebafb-d84c-4279-b3f8-df60790a96fe&shareSource=2 |
-| ZURU | candidate | `hotjob` | 待验证 |  | https://wecruit.hotjob.cn/SU69fd8f7f1f17c372512fdd19/mc/position/campus?acotycoCode=cjsbom&projectId=100501&recruitType=1&isLimitShowPostScope=1 |
-| vivo | candidate | `待识别` | 待验证 |  | https://hr-campus.vivo.com/campus/jobs?shareId=ef1f6091-1531-4172-b6fd-438412dbceb4&shareSource=2 |
-| 七十迈 | candidate | `beisen` | 待验证 |  | https://70mai.zhiye.com/campus/jobs?shareId=ba97fc77-83cc-4735-9b6b-f73832bcab61&shareSource=2 |
-| 万兴科技 | candidate | `beisen` | 待验证 |  | https://wondersharecampus.zhiye.com/campus/jobs?shareId=661d7600-08e4-41d7-9592-b8b5f4eb61a5&shareSource=2 |
 | 万华化学 | candidate | `render` | BLOCKED |  | https://www.whchem.com/column/164/ |
-| 万得 Wind | candidate | `待识别` | 待验证 |  | https://www.wind.com.cn/mobile/JoinUS/RecruitDetail/zh.html?entry=school |
-| 万辰集团（好想来） | candidate | `beisen` | 待验证 |  | https://vanchen1.zhiye.com/campus/jobs?shareId=14ffc5ce-1b26-47c7-b80b-05719510dade&shareSource=2 |
-| 三七互娱 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/37/58016?recommendCode=DSjnn8dk#/jobs |
 | 三棵树 | candidate | `hotjob` | 待验证 |  | https://wecruit.hotjob.cn/SU6173aef0bef57c4414103348/mc/position/campus?acotycoCode=tydrup&projectId=201401&recruitType=1&isLimitShowPostScope=1 |
 | 三环集团 | candidate | `待识别` | NEEDS-ADAPTER | 未知招聘平台，需核实并开发爬虫 | https://hr.cctc.cc/school?sourceCode=869573&isRecommendCode=true |
 | 东方电气 | candidate | `iguopin` | 待验证 |  | https://dec2026.iguopin.com/job |
-| 东方财富 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/eastmoney/92400?recommendCode=DS6dCr5V#/jobs |
 | 东风汽车 | candidate | `hotjob` | 待验证 |  | https://dfmc.hotjob.cn/SU60cc3c9cbef57c51986a8ca0/pb/school.html |
 | 中国一汽 | candidate | `hotjob` | 待验证 |  | https://faw-zhaopin.hotjob.cn/SU603374380dcad4635b836531/pb/school.html |
 | 中国通信服务广东公司 | candidate | `待识别` | NEEDS-ADAPTER | 未知招聘平台，需核实并开发爬虫 | https://iter.stongyw.cn/web/schoolwx/job/index.html?RCode=260040 |
 | 中科曙光 | candidate | `beisen` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://sugon.zhiye.com/campus/jobs |
 | 之江实验室 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://talents.zhejianglab.com/SU6456170be84cd420e37a68c4/pb/school.html?postTypeCode=0%2F1227%2F37850530 |
-| 乐信圣文 | candidate | `feishu` | 待验证 |  | https://learnings.jobs.feishu.cn/s/nkV6mtflhW4 |
 | 九号公司 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/ninebot/45627?recommendCode=DSHhfH26#/jobs |
-| 九坤投资 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/ubiquantrecruit/37031?recommendCode=DSThDarV#/jobs |
-| 九方智投 | candidate | `feishu` | 待验证 |  | https://vcnuqm4lv2uh.jobs.feishu.cn/s/rQsQe1FhiJo |
-| 云和恩墨 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/enmotech/47098#/ |
-| 云览科技 | candidate | `待识别` | 待验证 |  | https://cloudview-inc.com/join/jobs?inviteCode=pM3mM |
-| 京东 | candidate | `待识别` | 待验证 |  | https://campus.jd.com/api/wx/position/index#/?emplErp=XK115B |
-| 亿道集团 | candidate | `beisen` | 待验证 |  | https://emdoor1.zhiye.com/campus/jobs?shareId=b823be82-165b-4ae0-a62c-397cb69ad51f&shareSource=2 |
-| 众安保险 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/zhongan/71908?recommendCode=DSkZKTjJ#/jobs |
-| 优博讯 | candidate | `beisen` | 待验证 |  | https://urovo.zhiye.com/campus/jobs?shareId=520f3916-35a6-477a-b56e-f1dfc976daf6&shareSource=2 |
-| 佑驾创新MINIEYE | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/minieye/118571?recommendCode=DSFx4BJN&hash=%23%2Fjobs#/jobs |
-| 作业帮产研 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/zuoyebang/39595?recommendCode=DSpn3aSr#/jobs |
 | 信捷电气 | candidate | `beisen` | 待验证 |  | https://xinje.zhiye.com/campus/jobs?shareId=26ad7995-14c6-409e-8ee8-8ee4543da41a&shareSource=1 |
-| 元戎启行 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/deeproute/145894#/home |
-| 冰川网络 | candidate | `beisen` | 待验证 |  | https://bingchuan1.zhiye.com/campus/jobs?shareId=96e146eb-c9af-4434-93d6-e68b09b451e9&shareSource=2 |
 | 凌云光 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/lusterinc/44882?recommendCode=DSzaUcgP#/jobs |
-| 凡岛 | candidate | `待识别` | 待验证 |  | https://job.fandow.com/home?pushCode=XRN8AF9 |
 | 创维集团 | candidate | `hotjob` | 待验证 |  | https://wecruit.hotjob.cn/SU668e3a541eb8050602c1b176/mc/position/campus?acotycoCode=eojtgn&recruitType=1&isLimitShowPostScope=0 |
-| 千里科技 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/qianli1/147197?recommendCode=DSunz6Nt#/jobs |
-| 华宝新能 | candidate | `待识别` | 待验证 |  | https://career.hello-tech.com/campus/jobs?shareId=33d74670-8143-435a-8b1e-d747781a1f08&shareSource=2 |
 | 卓胜微电子 | candidate | `beisen` | 待验证 |  | https://maxscend.zhiye.com/campus/jobs?shareId=538ec1bd-204d-4562-828f-4915ebe319a0&shareSource=2 |
-| 卓越教育 | candidate | `hotjob` | 待验证 |  | https://wecruit.hotjob.cn/SU63366959bef57c270741e2c6/mc/position/campus?acotycoCode=rkkxzz&recruitType=1&isLimitShowPostScope=0 |
-| 卓驭 | candidate | `待识别` | 待验证 |  | https://we.zyt.com/campus/jobs?shareId=5937d9af-0f39-418f-9ea4-c9a5a2c7caca&shareSource=2 |
 | 博众精工 | candidate | `beisen` | 待验证 |  | https://bozhon3.zhiye.com/campus/jobs?shareId=945f5d01-429c-4a55-ba17-128798f145bf&shareSource=2 |
-| 卡方科技 | candidate | `feishu` | 待验证 |  | https://kafangtech.jobs.feishu.cn/s/61hqmxKBKTw |
-| 卧安机器人 | candidate | `beisen` | 待验证 |  | https://woanhome.zhiye.com/campus/jobs?shareId=d120f246-ea82-4010-ab9a-b58bd85ebf87&shareSource=2 |
 | 友塔游戏 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://www.yottagames.com.cn/zh/internal-recommendation?token=480b3cd4a66863e82cb4e2bc1fd60a45-999602-1093058550&sub=077 |
-| 叠纸游戏 | candidate | `待识别` | 待验证 |  | https://career.papegames.com/s/m389ozdCvHA |
-| 合合信息 | candidate | `beisen` | 待验证 |  | https://intsig.zhiye.com/campus/jobs?shareId=634b9f5d-1456-42a6-82cd-3fe590037c1d&shareSource=2 |
 | 吉比特-雷霆游戏 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://hr.g-bits.com/web/index.html#/post-web/post-list/?referralCode=FH386S |
-| 同花顺 | candidate | `待识别` | 待验证 |  | https://campus.10jqka.com.cn/job/list?type=school |
-| 哔哩哔哩 | candidate | `待识别` | 待验证 |  | https://jobs.bilibili.com/campus/positions?token=a337cd2c-d038-411f-ba8a-0b1abf661f06 |
 | 嘉为蓝鲸（要先实习转正） | candidate | `beisen` | LEGACY-UNRESOLVED | beisen 返回 0 个岗位 | https://canway.m.zhiye.com/JobAd/List?jc=2&shareid=9054f207-bce6-4a12-aba9-315de554ddba&token=62669728473b41e5a55494ddb851158 |
 | 嘉士伯 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/carlsberg/37541?recommendCode=DSBCJFNM#/jobs |
-| 四方继保 | candidate | `beisen` | 待验证 |  | https://sf-auto1.zhiye.com/campus/jobs?shareId=86f02a13-0c23-4938-bbae-7c09c9ed3324&shareSource=2 |
-| 固德威 | candidate | `hotjob` | 待验证 |  | https://wecruit.hotjob.cn/SU630a3a0e2f9d2406b4f6c5f1/pb/school.html?acotycoCode=ibychh&projectId=200701&recruitType=1&isLimitShowPostScope=1 |
-| 国泰汉帛 | candidate | `feishu` | 待验证 |  | https://jvvyvrptdzz.jobs.feishu.cn/972701/m/position/list?external_referral_code=1M4TA4A |
-| 图拉斯（原蓝禾） | candidate | `feishu` | 待验证 |  | https://lanhevip.jobs.feishu.cn/s/A4zAkYMD9Xs |
-| 地平线 | candidate | `hotjob` | 待验证 |  | https://wecruit.hotjob.cn/SU62d915040dcad43c775ec12c/mc/position/campus?acotycoCode=dxwvub&projectId=103302&recruitType=1&isLimitShowPostScope=1 |
 | 埃科光电 | candidate | `待识别` | 待验证 |  | http://career.i-tek.cn/ |
-| 基恩士 | candidate | `beisen` | 待验证 |  | https://keyence.zhiye.com/campus/detail?jobAdId=85237bb7-cccc-40a8-beeb-cbcb6e97ea86&shareId=da8f1b15-8a84-4a97-854d-c7c168a556d5&shareSource=2 |
 | 大参林医药集团 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/dslyy/136052?recommendCode=DSUzgyFM&hash=%23%2Fjobs#/jobs |
-| 大寰机器人 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/dhrobotics/168695?recommendCode=DSDJZVaV#/jobs |
 | 大疆 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/dji/143359?recommendCode=DSYdQvMt#/jobs |
-| 太衍私募基金 | candidate | `feishu` | 待验证 |  | https://qcnjp4yi4cew.jobs.feishu.cn/s/erHbISmjI9Y |
-| 好未来产研 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/tal/146599?recommendCode=DSCvfGjS#/jobs |
-| 字节跳动 | candidate | `待识别` | 待验证 |  | https://job.toutiao.com/s/4FHCp6QamHo |
 | 宁德时代 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/catlhr/148948?recommendCode=DSvTFBzE#/jobs |
 | 宇石空间 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/astronstone/168327?recommendCode=DS9marHm#/jobs |
-| 宇通客车 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/su/loawxh |
-| 安克创新 | candidate | `feishu` | 待验证 |  | https://anker-in.jobs.feishu.cn/s/HCwjATb1DUQ |
 | 富特科技 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/evtech/47503?recommendCode=DS5HrUX6#/jobs |
-| 寒武纪 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/recommendation-apply/cambricon/46261?sharePageId=4679744&recommendCode=NTABY2t&codeType=1#/recommendation/page/4679744 |
 | 小米 | candidate | `xiaomi` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://xiaomi.jobs.f.mioffice.cn/ |
-| 小红书 | candidate | `待识别` | 待验证 |  | https://job.xiaohongshu.com/link?referer_code=0QR7KCI3CPJA |
-| 小马智行Pony.ai | candidate | `feishu` | 待验证 |  | https://ponyai.jobs.feishu.cn/s/9NZJlh4cpL8 |
-| 小鹏汽车 | candidate | `feishu` | 待验证 |  | https://xiaopeng.jobs.feishu.cn/s/Pycfxid-fok |
 | 巨一科技 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/ahjy/168235?recommendCode=DSPQjhw2#/jobs |
-| 巨人网络 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/ztgame/92438?recommendCode=DS8cb6eu#/jobs |
 | 帆软 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://t6ixa9nyl6.jiandaoyun.com/f/65e1a1308ce7672fded0f0cf?ext=CDSXJ |
-| 广电运通 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/grgbanking/148986?recommendCode=DSDGMxgK#/jobs |
-| 广联达 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/glodon/91966?recommendCode=DSSVc2yt#/jobs |
-| 库洛游戏 | candidate | `feishu` | 待验证 |  | https://kurogame.jobs.feishu.cn/s/2iN6KLsmOZw |
 | 康冠科技 | candidate | `beisen` | 待验证 |  | https://careerktc.zhiye.com/campus/jobs?shareId=5fed87ee-bf07-40c9-9f45-bae4db536355&shareSource=2 |
 | 开立医疗 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/sonoscape/94392 |
 | 影石 | candidate | `feishu` | 待验证 |  | https://arashivision.jobs.feishu.cn/s/hRGQvzCxIdk |
 | 徐福记 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/hfc-foods/102201?recommendCode=DSPDu3b3#/jobs |
-| 得物 | candidate | `feishu` | 待验证 |  | https://poizon.jobs.feishu.cn/s/i75Oh6bYCic |
-| 微步在线 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/threatbook/39679?recommendCode=DSUK2sNv#/jobs |
-| 快手 | candidate | `待识别` | 待验证 |  | https://campus.kuaishou.cn/recruit/campus/e/h5/#/campus/jobs?code=campusNTjtWbAZm |
 | 思摩尔 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/smoore/150918?recommendCode=DS8x9P6R#/jobs |
-| 思特威 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/smartsenstech1/56088?recommendCode=DS2NEFMs#/jobs |
-| 思谋科技 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/smartmore/40506?recommendCode=DSxFbuP1#/jobs |
-| 恒生电子 | candidate | `待识别` | 待验证 |  | https://campus.hundsun.com/campus/jobs?shareId=5ef11668-f2a7-43cc-acf5-089cf81ba301&shareSource=2 |
-| 扬腾创新 | candidate | `beisen` | 待验证 |  | https://yangtenginnovation-compus.zhiye.com/campus/jobs?shareId=8c456ab5-f1c8-46cd-8a91-037d42e2bcaa&shareSource=2 |
-| 拓竹科技Bambu Lab | candidate | `feishu` | 待验证 |  | https://bambulab.jobs.feishu.cn/s/bWi9cqMTpyw |
-| 招银云创 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/mbcloud/150116?recommendCode=DSQ3A12u#/jobs |
-| 招银网络科技 | candidate | `待识别` | 待验证 |  | https://cmbnt.cmbchina.com/pages/bindInvited.html?qrCode=7499CB23C54E42A79A38081473616DA2&rand=1785331872379&blNtCode=JFDZCW |
-| 拼多多 | candidate | `待识别` | 待验证 |  | https://careers.pddglobalhr.com/campus/grad?t=AOT9z6aa0x |
-| 搜狐畅游 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/cyou-inc/42233?recommendCode=DS73VDVC#/jobs |
-| 搜狐集团 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/sohu/36036?recommendCode=DSRxwjqx#/jobs |
-| 文远知行 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/jingchi/2137?recommendCode=DSTrUGcq#/jobs |
-| 新易盛 | candidate | `beisen` | 待验证 |  | https://eoptolink.zhiye.com/campus/jobs?shareId=76773328-5a2b-44f4-acf0-d9c800de01a0&shareSource=2 |
 | 昂科技术 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://s.51job.com/2vSIuH |
-| 明源云 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/mingyuan/168644?recommendCode=DSEKM1tG#/jobs |
-| 易点云 | candidate | `待识别` | 待验证 |  | https://recruit-pro.edianyun.com/#/wap/recruitment-collect |
-| 普渡机器人 | candidate | `beisen` | 待验证 |  | https://pudutech1.zhiye.com/campus/jobs?shareId=d3fd4e26-5274-4480-971b-517fc2189434&shareSource=2 |
 | 智元机器人 | candidate | `feishu` | 待验证 |  | https://agirobot.jobs.feishu.cn/s/hMjzLGIaTnQ |
-| 智平方 | candidate | `feishu` | 待验证 |  | https://ai2robotics.jobs.feishu.cn/s/pXrf5XaP3Po |
 | 智驾新程 neueHCT | candidate | `feishu` | 待验证 |  | https://neuehct.jobs.feishu.cn/s/da663t3OFv4 |
-| 曦望Sunrise | candidate | `待识别` | 待验证 |  | https://jobs.sunrise-ai.com/s/rdEbUxEZUvo |
 | 杉川机器人 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/su/cbijef |
-| 李森智能 | candidate | `beisen` | 待验证 |  | https://lisen.zhiye.com/campus/jobs?shareId=533d1cff-a525-46dc-8c5d-46445deabad4&shareSource=2 |
-| 极兔速递 | candidate | `feishu` | 待验证 |  | https://jtexpress.jobs.feishu.cn/s/au-hRT9NM5E |
 | 柏楚电子 | candidate | `beisen` | 待验证 |  | https://fscut.zhiye.com/campus/jobs?shareId=32ec46d5-492a-4294-95af-5a8c8ac58a56&shareSource=2 |
-| 柠檬微趣 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/su/tergdo |
-| 树根互联 | candidate | `beisen` | 待验证 |  | https://irootech.zhiye.com/campus/jobs?shareId=80f4049b-f7af-4f8d-bccb-8622eed42879&shareSource=2 |
-| 格力电器 | candidate | `待识别` | 待验证 |  | https://zhaopin.greeyun.com/home |
-| 格蓝若 | candidate | `beisen` | 待验证 |  | https://oetsky.zhiye.com/campus/jobs?shareId=0661f472-750c-44ff-9387-9d56a6027b3e&shareSource=2 |
-| 正浩EcoFlow | candidate | `待识别` | 待验证 |  | https://jobs.ecoflow.com/s/ZyFxOlW1sLI |
-| 沐曦股份 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/metax-tech/58131?recommendCode=DSjhTZe8#/jobs |
-| 沐瞳科技 | candidate | `feishu` | 待验证 |  | https://moonton.jobs.feishu.cn/s/VnhMKl-OMYc |
-| 波克 | candidate | `feishu` | 待验证 |  | https://boke.jobs.feishu.cn/s/FdZL0oHPUYg |
 | 洲明科技 | candidate | `beisen` | 待验证 |  | https://unilumin.zhiye.com/campus/jobs?shareId=e4d202b7-39b7-455a-bea5-338561168759&shareSource=2 |
-| 浩鲸科技 | candidate | `beisen` | 待验证 |  | https://iwhalecloud1.zhiye.com/campus/jobs?shareId=499ac060-630c-4d66-8cef-44bccacade79&shareSource=2 |
 | 浪潮集团 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://wx64310b3064348282.hcmcloud.cn/recruit#/common_model_nav_anonymous/multi?c_model=_HB4_UmVsZWFzZUpvYk1ncg%253D%253D&meta_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&advance_filter_dict=%7B%22job_class%22:%22%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%22,%22select_depart%22:false%7D&key=_HB4_cmVjb21tZW5kX2pvYl9saXN0&model=_HB4_UmVjcnVpdFJlY29tbWVuZA%253D%253D&nav_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&custom_params=_HB4_eyJpbnRlcm5hbF9jb2RlIjoieEdpb0pBaCJ9&company_id=_HB4_OA%253D%253D |
 | 海天味业 | candidate | `hotjob` | 待验证 |  | https://wecruit.hotjob.cn/SU6322ee8c0dcad46a862dcbe5/mc/position/campus?acotycoCode=bgpkci&recruitType=1&isLimitShowPostScope=1 |
-| 海尔智家 | candidate | `待识别` | 待验证 |  | https://maker.haier.net/client/campusmobile/activity/id/68/fid.html?inviter_code=VElJMWI2OExmV0k9 |
-| 海尔智家-AI专项 | candidate | `待识别` | 待验证 |  | https://maker.haier.net/client/campusmobile/researchlist/id/68/fid/30.html?inviter_code=VElJMWI2OExmV0k9 |
-| 海康威视 | candidate | `待识别` | 待验证 |  | https://campushr.hikvision.com/school?schoolType=nozxf&activeTab=0 |
-| 海能达通信 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/hytera/182194?recommendCode=DSnApMzB#/jobs |
-| 深信服 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/recommendation-apply/sangfor/5369?sharePageId=4335123&amp;recommendCode=NTAeTq2&amp;codeType=1#/jobs?project=100128211 |
-| 深蓝互动 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/blueinteractive/38434?recommendCode=DSZtcZQB#/jobs |
-| 游卡 | candidate | `待识别` | 待验证 |  | https://campus.yokaverse.com/ |
-| 滴滴 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/didiglobal/96064?recommendCode=DS621uuv#/jobs |
-| 点点互动 | candidate | `待识别` | 待验证 |  | https://ddhd.cn/campus/jobs?shareId=3b4bf1d5-e3dc-448d-8434-53baa5d29cfd&shareSource=1 |
-| 燧原科技 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/enflame/168420?locale=zh-CN#/ |
 | 爱迪特Aidite | candidate | `待识别` | 待验证 |  | https://www.aidite.com/zh/positionPage |
 | 特斯拉 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/tesla/41460?recommendCode=DSs8kUEa#/jobs |
 | 理想汽车 | candidate | `feishu` | 待验证 |  | https://li.jobs.feishu.cn/s/tJF4dkXEZkI |
 | 瑞声科技 | candidate | `待识别` | 待验证 |  | https://talent.aactechnologies.com/campus/m/position/list?external_referral_code=8RY44XV |
 | 瑞沃德 | candidate | `beisen` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://rwdls.zhiye.com/campus/jobs |
-| 电科金仓 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/kingbase/47259?recommendCode=DShDN9hm#/jobs |
-| 百度 | candidate | `待识别` | 待验证 |  | https://dwz.cn/BX4X1k6w |
-| 盛弘电气 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/sinexcel/74287?recommendCode=DSwpMpuY#/jobs |
-| 睿联技术 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/reo/136006?recommendCode=DSyaa93G#/jobs |
 | 禾赛科技 | candidate | `feishu` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://kwh0jtf778.jobs.feishu.cn/229043/position/application |
 | 禾迈股份 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/hoymiles/70377?recommendCode=DSHcSR6p#/jobs |
-| 科大讯飞 | candidate | `beisen` | 待验证 |  | https://iflytek.zhiye.com/campus/jobs?shareId=3d18c956-2820-45fe-80a9-f6f76308cc9f&shareSource=2 |
 | 立讯技术 | candidate | `beisen` | 待验证 |  | https://luxshare-tech.zhiye.com/campus/jobs?shareId=3f27582d-0e97-4f27-96f4-22048a62f3b4&shareSource=2 |
-| 米哈游 | candidate | `待识别` | 待验证 |  | https://jobs.mihoyo.com/m/?recommendationCode=ST4G&isRecommendation=true#/campus/position |
 | 经纬恒润 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/jingweihengrun/168294?recommendCode=DSkAKetZ#/jobs |
-| 网易互娱 | candidate | `待识别` | 待验证 |  | https://campus.game.163.com?referralCode=pASpTr |
 | 网易互联网 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://campus.163.com/bolehtml/home?projectId=103&type=99&boleId=e1dd4e319e73d68a&boleType=2&signature=133fad406699e30097ce17c376500d6c&isShare=1 |
-| 网易雷火 | candidate | `待识别` | 待验证 |  | https://xiaozhao.leihuo.netease.com/neitui/#/?introduceId=xKWmfq9qD9DEtsOn |
 | 美团 | candidate | `待识别` | 待验证 |  | https://zhaopin.meituan.com/m/campus?zp-from=hiring-campus-bole-elephant&staffSsoId=23761311 |
-| 美的集团 | candidate | `待识别` | 待验证 |  | https://careers.midea.com/recruit-school-wechat/job?mvp_code=M8621M&type=1 |
-| 群核科技 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/qunhemail/2832?recommendCode=DSVyddjj#/jobs |
 | 联合利华 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://xym.51job.com/VueData/neitui/user/#/?ehireid=8833740&prd=xyznt&ruid=162491&referrer=o0cn56rchou82EDTyJc1LYCY0txw |
-| 联想 | candidate | `待识别` | 待验证 |  | https://talent.lenovo.com.cn/campus?projectType=1 |
-| 聚宽投资 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/joinquant/92347?recommendCode=DS86UpyF#/jobs |
-| 腾讯 | candidate | `待识别` | 待验证 |  | https://join.qq.com/resume.html?k=vPTeIjTrFkEs-zVHQbPCap-koXnwW3cpRelOqQ2wf0I |
 | 腾讯云智研发 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://join.tencent-cloud.com |
-| 腾讯音乐 | candidate | `待识别` | 待验证 |  | https://join.tencentmusic.com/campus/post?type=10 |
-| 自变量机器人 | candidate | `feishu` | 待验证 |  | https://x2-robot.jobs.feishu.cn/s/cr-OoWdwAvM |
-| 舜宇集团 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/sunnyoptical/45602?recommendCode=DSm39D5X#/jobs |
 | 英科再生 | candidate | `feishu` | 待验证 |  | https://global-intco.jobs.feishu.cn/s/GPVzkGAwcl0 |
 | 荣耀 | candidate | `待识别` | 待验证 |  | https://career.honor.com/SU60ee9e002f9d247b98da489e/mc/position/campus?acotycoCode=mmjiqp&projectId=101401%2C101601%2C101801%2C101901&recruitType=1&isLimitShowPostScope=1 |
-| 莉莉丝游戏 | candidate | `feishu` | 待验证 |  | https://lilithgames.jobs.feishu.cn/s/LS13zX5I1lc |
-| 蔚来汽车 | candidate | `feishu` | 待验证 |  | https://nio.jobs.feishu.cn/s/7eS_xvAK4kI |
-| 认养一头牛 | candidate | `beisen` | 待验证 |  | https://ryytn.zhiye.com/campus/jobs?shareId=4685c8fd-55c5-4604-a10a-e405613d7923&shareSource=2 |
-| 诗悦网络 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/shiyuehr/72055?recommendCode=DS2gf3y9#/jobs |
-| 诺瓦星云 | candidate | `beisen` | 待验证 |  | https://novastar.zhiye.com/campus/jobs?shareId=d040a3b6-f740-4953-a20f-02d1eab54cc3&shareSource=2 |
-| 象屿股份 | candidate | `beisen` | 待验证 |  | https://xiangyu.zhiye.com/campus/jobs?shareId=04ba3846-f95d-4166-84f0-f7ae96c29fe1&shareSource=2 |
-| 货拉拉 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/huolalahr/98660?recommendCode=DSVVJ2Jg#/jobs |
 | 路特ROOT | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/rootglobal/44850?recommendCode=DS4eY69C#/jobs |
-| 轻舟智航 | candidate | `feishu` | 待验证 |  | https://qcraft.jobs.feishu.cn/s/yxH8NMS4XGc |
-| 迅雷 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/xunlei/26600?recommendCode=DSdSNKR9#/jobs |
-| 途游游戏 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus_apply/tuyoogame/146219?recommendCode=DSQKjZuQ#/jobs |
-| 途虎养车 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/tuhu/28398?recommendCode=DS3hMB6E#/jobs |
-| 酷睿程 | candidate | `feishu` | 待验证 |  | https://carizon.jobs.feishu.cn/s/gLmpfqWvVjg |
-| 金山办公-云杉计划 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/wps/41436?recommendCode=DS5u51CA#/jobs |
-| 金证科技 | candidate | `beisen` | 待验证 |  | https://szkingdom1.zhiye.com/campus/jobs?shareId=e1c27e99-3f78-4776-ad7f-fb290455858f&shareSource=2 |
-| 银河通用 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/yinhetongyong/165930?recommendCode=DSmgbJ2x#/jobs |
-| 银泰商业 | candidate | `待识别` | 待验证 |  | http://talent.intime.com.cn/campus/jobs?shareId=48780f33-941e-46a4-814d-9799f9112248&shareSource=2 |
 | 锐捷网络 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/ruijie/136206?recommendCode=DSAd4zdj#/jobs |
-| 锐明技术 | candidate | `beisen` | 待验证 |  | https://streamax.zhiye.com/campus/jobs?shareId=ba0fc90a-a0ae-4f5e-ba4f-801c95a288b3&shareSource=2 |
-| 阳光保险 | candidate | `待识别` | 待验证 |  | https://sunzhaopin.sinosig.com/campus/jobs?shareId=e5550a73-c29d-4fe7-a89b-9bde517c7e1e&shareSource=2 |
-| 阿里-平头哥 | candidate | `待识别` | 待验证 |  | https://campus-talent.alibaba.com/campus/position?campusShareCode=hmSBcg4U%2FkdbfPRQ42bRwNKNpzURtSZ49iAMry0CzOjSEORZHsCnVIx7T6SWUAi6&batchId=100000760001&filterParams=%7B%22customDept%22%3A%5B%22PQHNXW%22%5D%7D |
-| 阿里-淘宝闪购 | candidate | `待识别` | 待验证 |  | https://campus-talent.alibaba.com/campus/position?campusShareCode=hmSBcg4U%2FkdbfPRQ42bRwCvUxINoO65Hj4CVpR0aEAjwb4opcJF_WOObjMgIXMvD&batchId=100000760001 |
-| 阿里-菜鸟 | candidate | `待识别` | 待验证 |  | https://campus-talent.alibaba.com/campus/position?campusShareCode=hmSBcg4U%2FkdbfPRQ42bRwEwG7yB4IkIKUM0CjrNwc98%3D&batchId=100000540002 |
-| 阿里-蚂蚁集团 | candidate | `待识别` | 待验证 |  | https://hrrecommend.antgroup.com/job-list.html?source=campus_external_recommend&code=T_dN2oDMsas%2F7M1pcbeNZgPQyH2sYJEaioT37binMeo%3D |
-| 阿里云 | candidate | `待识别` | 待验证 |  | https://campus-talent.alibaba.com/campus/position?campusShareCode=hmSBcg4U%2FkdbfPRQ42bRwDVLnpEHKJTAjcnECncYuxndfqYQBzl0DngyL4uLeJs6&batchId=100000760001 |
-| 阿里云瓴羊 | candidate | `待识别` | 待验证 |  | https://alidocs.dingtalk.com/notable/share/form/v01eYVOL5ozy48eAlpz_dv19yqvsgs3oebp3pcjys_1qX0QQ0?utm_source=qrcode_form&source=qrcode |
-| 阿里国际 | candidate | `待识别` | 待验证 |  | https://campus-talent.alibaba.com/campus/position?campusShareCode=hmSBcg4U%2FkdbfPRQ42bRwFPNyFXy7z8Cvn%2Fa11wIKv9lEosT8v48VQGuA47YqF_j&batchId=100000760001 |
-| 阿里淘天 | candidate | `待识别` | 待验证 |  | https://campus-talent.alibaba.com/campus/position?campusShareCode=hmSBcg4U%2FkdbfPRQ42bRwDcfBaJ2CesAlc%2FvqOMYbBymmzBp0pRZjHku53ln26c1&batchId=100000760001 |
-| 阿里灵犀互娱 | candidate | `待识别` | 待验证 |  | https://campus-talent.alibaba.com/campus/position?campusShareCode=pVTFwhdbMZWGIxcVKETbpXPhlMU46yv_zbk6tqVPyRs%3D&batchId=100000540002 |
 | 雷赛智能 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/campus-recruitment/leisai/146886?recommendCode=DSaBjkyH#/jobs |
 | 韶音科技 | candidate | `moka` | BLOCKED | 当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决 | https://app.mokahr.com/campus-recruitment/aftershokzhr/36940 |
-| 顺丰集团 | candidate | `待识别` | 待验证 |  | https://campus.sf-express.com/#/positionList |
-| 飞步科技 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus-recruitment/fabu/56114?recommendCode=DSgZsTrZ#/jobs |
-| 飞鱼科技 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/feiyu/1633?recommendCode=DSFHF9rV#/jobs |
-| 骑士集团 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/black-unique/29232?recommendCode=DSv6KdHC#/jobs |
-| 高标科技 | candidate | `beisen` | 待验证 |  | https://kjgb.zhiye.com/campus/jobs?shareId=3cef82ab-bf24-4225-9f23-ee18ced3ce45&shareSource=2 |
-| 高途 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/bjhl/102145?recommendCode=DSAhQp9b#/jobs |
 | 高露洁 | candidate | `beisen` | 待验证 |  | https://colgate.zhiye.com/campus/jobs?shareId=b387fafc-5d32-459d-8590-5c04a942b519&shareSource=2 |
 | 鸿擎科技 | candidate | `feishu` | 待验证 |  | https://qcnhg4ksaiwt.jobs.feishu.cn/257870/m/?external_referral_code=92AJ8US |
-| 鹰角网络 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/m/recommendation-apply/hypergryph/26594?sharePageId=4654413&amp;recommendCode=NTA6WPs&amp;codeType=1#/recommendation/page/4654413 |
 | 黑白调-傲风 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/heibaidiao/54126?recommendCode=DSBjx3ZQ#/jobs |
-| 黑芝麻智能 | candidate | `beisen` | 待验证 |  | https://bsthr.zhiye.com/campus/jobs?shareId=49723520-dbb6-40b1-a6fb-4e25245409cb&shareSource=2 |
 <!-- COMPANY_POOL_AUTOMATION_END -->
