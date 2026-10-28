@@ -230,6 +230,7 @@ def _jobs_payload(items: list, app_index=None) -> list[dict]:
             "cy": _cohort_label(job),
             "cat": job_filters.job_category(job),
             "english": job_filters.english_eligibility(job, profile)["status"],
+            "qualification": job_filters.job_eligibility(job, profile)["status"],
             "ev": job.get("cohort_evidence") or job.get("cohort_source") or "官网未明确届别",
             "e": evaluated,
             "id": job.get("id"),
@@ -298,9 +299,11 @@ def _filter_items(all_items: list) -> tuple[list, list, list, int]:
         if original:
             a = {**original, "gaps": list(original.get("gaps") or [])}
             label = f"英语条件：{english['status']}；{english['reason']}"
+            qualification = job_filters.job_eligibility(it["job"], profile)
+            a["gaps"].append("资格核实：" + qualification["reason"])
             a["gaps"] = [gap for gap in a["gaps"] if not gap.startswith("英语条件：")]
             a["gaps"].append(label)
-            if english["status"] == "不符合":
+            if job_filters.job_eligibility(it["job"], profile)["status"] == "不符合":
                 a["recommendation"] = "不推荐"
             it = {**it, "analysis": a}
         a = it.get("analysis")
@@ -1875,7 +1878,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return link;
   }
   function jobName(j) {
-    var name = esc(j.t) + ' <span class="cohort-badge">英语：' + esc(j.english || '待核实') + '</span> <span class="cohort-badge">' + esc(j.cy || '届别待确认') + '</span>';
+    var name = esc(j.t) + ' <span class="cohort-badge">英语：' + esc(j.english || '待核实') + '；资格：' + esc(j.qualification || '待核实') + '</span> <span class="cohort-badge">' + esc(j.cy || '届别待确认') + '</span>';
     return j.k === 'list' ? '<span class="cell-job-link">' + name + '</span>' :
       '<a href="' + esc(j.u) + '" target="_blank" rel="noopener" class="cell-job-link">' + name + '</a>';
   }

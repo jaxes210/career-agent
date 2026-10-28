@@ -42,6 +42,16 @@ def load_profile(path: str | Path = "profile.yaml") -> dict:
     if english.get("cet6_below_425") and english.get("cet6_score", 0) >= 425:
         raise ValueError("英语六级分数与未达到425的声明冲突")
 
+    for score_field in ("cet4_score",):
+        value = english.get(score_field)
+        if value is not None and (isinstance(value, bool) or not isinstance(value, (int, float)) or not 0 <= value <= 710):
+            raise ValueError(f"{score_field} 必须是0到710的分数")
+    if "education" in profile:
+        if not isinstance(profile["education"], list) or any(not isinstance(e, dict) or not e.get("school") for e in profile["education"]):
+            raise ValueError("education 必须是含学校信息的列表")
+    for field in ("technique_experience", "scoring_policy"):
+        if field in profile and not isinstance(profile[field], dict):
+            raise ValueError(f"{field} 必须是映射")
     preferences = profile.get("employer_preferences") or {}
     if not isinstance(preferences, dict) or any(
         not isinstance(preferences.get(field, []), list)

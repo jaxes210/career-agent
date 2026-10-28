@@ -1,136 +1,233 @@
-
 degree: 硕士研究生
 job_type: 校招
 target_cohort: 2027
-
 directions:
-  - 化工工艺与生产技术
-  - 工业催化与催化剂研发
-  - 环境工程与污染治理
-  - 材料研发与表征
-  - 分析检测与质量技术
-  - 能源化工与环保技术管理
-
+- 工业催化与催化剂研发
+- 化工工艺与工艺技术
+- 化工生产技术与技术支持
+- 化学品与功能材料研发
+- 化工实验与理化分析
+- 工艺优化与技术研发
 secondary_directions:
-  - 生产运行与技术支持
-  - 工艺优化
-  - 水处理工程
-  - 化工与环保相关综合技术岗位
-
+- 环保技术与工业水处理
+- 新能源与电池材料
+- 精细化工与日化配方
+- 表面活性剂研发
+- 质量检测与实验室技术
+- 材料制备及应用研发
+- 产品技术支持与技术管理
 skills:
-  - 催化材料制备与性能评价
-  - 高级氧化技术与PMS活化
-  - 光辅助催化实验
-  - XRD
-  - XPS
-  - SEM
-  - BET
-  - FTIR
-  - UV-Vis
-  - HPLC-UV
-  - 电化学测试
-  - Origin数据分析
-  - 科研论文撰写
-
+- 实验设计与变量控制
+- 催化材料制备及性能评价
+- 反应条件优化
+- 重复性验证与稳定性分析
+- 失活及再生评价
+- 科研数据处理与论文写作
+- 胶体界面与纳米材料实验研究
 project_evidence:
-  - 开展聚合磺化钴酞菁负载氧化铝催化材料研究
-  - 研究光辅助PMS活化及有机污染物降解
-  - 掌握催化剂制备、性能测试与稳定性评价
-  - 使用XPS、XRD、SEM、BET等进行材料表征
-  - 开展HPLC-UV分析及污染物降解动力学研究
-  - 具有SCI论文撰写与审稿意见回复经历
-
+- P-CoSPc/Al₂O₃光辅助PMS体系：催化材料制备、负载比例优化、体系设计、条件筛选和动力学分析
+- 催化剂循环稳定性、失活及光辅助再生评价；结构性能关联分析
+- XRD、XPS、FTIR、SEM、BET、EPR表征数据分析；UV-Vis、HPLC-UV、TOC、ICP及电化学相关实验与数据分析（具体仪器操作层级待核实）
+- 山东大学交换培养：多酚相关黑色素样纳米颗粒合成条件与配比优化、分散稳定性、TEM与DLS及粒径分布分析
+- 科研论文写作及审稿意见回复
 learning_targets:
-  - 工业化工工艺流程
-  - 工业催化剂生产与应用
-  - 化工过程优化
-  - 企业EHS与环保管理
-
-unverified_skills: []
-
+- 大型化工装置生产运行
+- 工业DCS操作
+- 工艺包设计
+- 工业催化剂规模化生产
+- 完整工业EHS管理
+unverified_skills:
+- 大型化工装置生产运行
+- 工业DCS操作
+- 工艺包设计
+- 工业催化剂规模化生产
+- 完整工业EHS管理
 target_roles:
-  - name: 化工工艺与生产技术
-    keywords:
-      - 化工工艺
-      - 工艺工程师
-      - 生产技术
-      - 工艺技术
-      - 工艺优化
-      - 化工技术
-
-  - name: 催化与材料研发
-    keywords:
-      - 催化
-      - 催化剂
-      - 材料研发
-      - 材料工程师
-      - 研发工程师
-      - 应用研发
-
-  - name: 环境工程与水处理
-    keywords:
-      - 环保
-      - 环境工程
-      - 污水处理
-      - 废水处理
-      - 水处理
-      - 污染治理
-      - 三废治理
-
-  - name: 分析检测与质量技术
-    keywords:
-      - 分析检测
-      - 化学分析
-      - 检测工程师
-      - 实验室
-      - 质量技术
-      - 质量检测
-      - 理化分析
-
-  - name: 能源化工与综合技术
-    keywords:
-      - 能源化工
-      - 煤化工
-      - 石油化工
-      - 技术管理
-      - 技术支持
-      - 生产运行
-
+- name: 化工工艺与生产技术
+  keywords:
+  - 化工工艺
+  - 工艺工程师
+  - 生产技术
+  - 工艺技术
+  - 工艺优化
+  - 化工技术
+  priority: 1
+- name: 催化与材料研发
+  keywords:
+  - 催化
+  - 催化剂
+  - 材料研发
+  - 材料工程师
+  - 研发工程师
+  - 应用研发
+  priority: 1
+- name: 环境工程与水处理
+  keywords:
+  - 环保
+  - 环境工程
+  - 污水处理
+  - 废水处理
+  - 水处理
+  - 污染治理
+  - 三废治理
+  priority: 2
+- name: 分析检测与质量技术
+  keywords:
+  - 分析检测
+  - 化学分析
+  - 检测工程师
+  - 实验室
+  - 质量技术
+  - 质量检测
+  - 理化分析
+  priority: 2
+- name: 能源化工与综合技术
+  keywords:
+  - 能源化工
+  - 煤化工
+  - 石油化工
+  - 技术管理
+  - 技术支持
+  - 生产运行
+  priority: 1
+- name: 精细化工与日化配方
+  priority: 2
+  keywords:
+  - 配方
+  - 日化
+  - 表面活性剂
+  - 精细化工
+  - 胶体
+  - 界面
+  - 纳米材料
 preferred_cities: []
-
 excluded_title_keywords:
-  - 软件开发
-  - 软件工程师
-  - C++开发
-  - C++研发
-  - Java开发
-  - Java研发
-  - 机器人视觉
-  - AI研发
-  - 前端开发
-  - 后端开发
-  - 算法工程师
-  - 游戏开发
-  - UI设计师
-  - 直播运营
-
+- 软件开发
+- 软件工程师
+- C++开发
+- C++研发
+- Java开发
+- Java研发
+- 机器人视觉
+- AI研发
+- 前端开发
+- 后端开发
+- 算法工程师
+- 游戏开发
+- UI设计师
+- 直播运营
+- 商品开发
 score_component_limits:
   core_direction: 25
   required_skills: 25
   project_evidence: 25
   engineering_stack: 15
   basic_criteria: 10
-
 score_thresholds:
   recommend: 80
   consider: 60
-
-# 仅记录已知条件，不虚构具体六级分数或替代证书。
 english:
+  cet4_score: 527
   cet6_below_425: true
-
-# 只影响相近匹配岗位的处理优先级，不作为筛选门槛。
+  cet6_exam_taken: true
 employer_preferences:
-  preferred_natures: [央企, 国企, 国有企业, 中央企业]
-  preferred_industries: [制造, 化工, 环保, 能源, 材料]
-  industrial_role_keywords: [工艺, 生产技术, 生产运行, 化学分析, 质量检测, 环境工程, 水处理, 催化, 材料]
+  preferred_natures:
+  - 央企
+  - 国企
+  - 国有企业
+  - 中央企业
+  - 科研院所
+  - 国有控股
+  preferred_industries:
+  - 制造
+  - 化工
+  - 环保
+  - 能源
+  - 材料
+  industrial_role_keywords:
+  - 工艺
+  - 生产技术
+  - 生产运行
+  - 化学分析
+  - 质量检测
+  - 环境工程
+  - 水处理
+  - 催化
+  - 材料
+major: 工业催化
+education:
+- school: 中国日用化学工业研究院
+  major: 工业催化
+  degree: 硕士研究生
+  graduation_cohort: 2027
+  platform: 功能性表面活性剂山西省重点实验室
+  research: 催化材料制备、表界面调控、催化反应及稳定性评价
+- school: 山东大学
+  type: 交换培养
+  period: 2024.09—2025.06
+  degree_awarding: false
+  platform: 化学与化工学院，胶体与界面化学教育部重点实验室
+  research: 胶体与界面化学、功能纳米材料、表面活性剂物理化学与乳状液理论
+- school: 武汉工程大学
+  major: 生物工程
+  degree: 本科
+  period: 2019.09—2023.06
+  courses:
+  - 化工原理
+  - 分析化学
+  - 物理化学
+  - 生物化学
+tertiary_directions:
+- 接受工业催化、化学化工相关背景的央国企技术岗
+- 接受生物工程本科和工业催化硕士的综合技术岗
+- 专业限制宽泛的生产技术与管理培训岗
+technique_experience:
+  level_policy: 独立操作、参与测试、委托测试后数据分析须分别核实；未确认时不得写独立熟练操作
+  independent_operation_confirmed: []
+  participation_or_analysis:
+  - UV-Vis
+  - HPLC-UV
+  - TEM
+  - DLS
+  - XRD
+  - XPS
+  - FTIR
+  - SEM
+  - BET
+  - EPR
+  - ICP
+  - TOC
+  - 电化学测试
+  software:
+  - Origin
+  - GraphPad Prism
+  - Excel
+  - ChemDraw
+publications:
+- journal: Applied Surface Science
+  project: P-CoSPc/Al₂O₃光辅助PMS催化体系
+  status: 已投稿，2026年10月完成第一轮修订提交；未录用、未发表
+- journal: Chemistry of Materials
+  project: 黑色素样纳米颗粒研究
+  status: 已发表
+  authorship: 共同第一作者
+- title: 双核金属酞菁类化合物的制备及应用研究进展
+  journal: 日用化学工业（中英文）
+  status: 已接收待刊
+  authorship: 第一作者
+internships:
+- employer: 县级市场监督管理局
+  work: 药品监管检查协助、信息核对和规范性资料整理
+  evidence_limit: 仅证明规范意识、资料管理；不等于工业企业质量管理经验
+major_policy: 工业催化不自动等同化学工程与技术、化学工程或环境工程；专业目录与代码依公告核实
+scoring_policy:
+  eligibility_first: true
+  stability_first: true
+  private_manufacturers_allowed: true
+  dimensions:
+  - 硬性资格
+  - 专业匹配
+  - 技能与科研证据
+  - 企业性质与稳定性
+  - 岗位内容与发展
+  stability_evidence: 企业性质仅是偏好证据，不能推断经营稳定或作为排除门槛

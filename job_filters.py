@@ -394,4 +394,35 @@ def english_eligibility(job: dict, profile: dict) -> dict:
             return {"status": "不符合", "reason": f"JD明确要求英语六级至少{score}分，候选人未达到且未见替代条件", "evidence": clause.strip()}
         if candidate_score is not None and float(candidate_score) >= score:
             return {"status": "符合", "reason": "已达到JD明确的六级分数条件", "evidence": clause.strip()}
+    four = re.search(r"(?:CET[\s-]*4|英语四级|大学英语四级|四级)(?:[^。；;\n]{0,12}?)(\d{3})\s*分", body, re.I)
+    four_required = re.search(r"(?:要求|通过|须|达到)[^。；;\n]{0,8}(?:CET[\s-]*4|英语四级|大学英语四级|四级)", body, re.I)
+    if (four or four_required) and not re.search(six, body, re.I):
+        threshold = int(four.group(1)) if four else 425
+        score = candidate.get("cet4_score")
+        if score is not None:
+            return {"status": "符合" if score >= threshold else "不符合",
+                    "reason": f"四级已知分数{score}，岗位四级要求{threshold}分；其他英语条件仍需核实", "evidence": body}
     return {"status": "待核实", "reason": "JD未明确英语条件或现有信息不足，不能判定不符合", "evidence": ""}
+
+
+def job_eligibility(job: dict, profile: dict) -> dict:
+    """Separate deterministic qualifications from transferable skill scores."""
+    body = unicodedata.normalize('NFKC', str(job.get('jd_raw') or ''))
+    title = str(job.get('title') or '')
+    english = english_eligibility(job, profile)
+    degree = {'status': '待核实', 'reason': '未明确学历要求'}
+    if re.search(r'博士后|博士专招|博士专项', title) or re.search(
+        r'仅(?:限|招|接受)?博士|博士(?:研究生)?(?:学历|学位)(?:为必需|为必须)|学历要求[:：\s]*博士|(?:要求|须具备|须为)博士(?:学历|学位|研究生)', body
+    ) or (re.search(r'博士(?:研究生)?', title) and not re.search(r'硕士|本科', title)):
+        degree = {'status': '不符合', 'reason': '明确博士限定，当前为硕士'}
+    elif re.search(r'硕士|研究生|本科及以上', body):
+        degree = {'status': '待核实', 'reason': '学历表述包含硕士或研究生，需核实完整条件'}
+    major = {'status': '待核实', 'reason': '专业目录、代码及相近专业范围须按公告核实'}
+    if re.search(r'专业不限|不限专业', body):
+        major = {'status': '符合', 'reason': '明确不限专业'}
+    elif '工业催化' in body:
+        major = {'status': '待核实', 'reason': '包含工业催化，仍需核对专业代码、学历阶段和其他限制'}
+    checks = {'english': english, 'degree': degree, 'major': major}
+    status = '不符合' if any(c['status'] == '不符合' for c in checks.values()) else '待核实'
+    return {'status': status, 'checks': checks,
+            'reason': '；'.join(c['reason'] for c in checks.values())}

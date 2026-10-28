@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 _ANALYZE_WORKERS = max(1, int(os.environ.get("ANALYZE_WORKERS", "4")))
 _JD_HYDRATE_WORKERS = max(1, int(os.environ.get("JD_HYDRATE_WORKERS", "2")))
 
-ANALYSIS_VERSION = "match-v3.0-profile-eligibility"
+ANALYSIS_VERSION = "match-v3.1-industrial-catalysis-qualifications"
 SCREENING_VERSION = "target-tier-v3.0-profile"
 
 _SCORE_COMPONENT_LIMITS = {
@@ -275,7 +275,8 @@ def local_screening_tier(job: dict, profile: dict | None = None) -> str:
     title_match = any(word in title for word in words)
     # Target title plus concrete profile evidence permits Pro; sparse or broad
     # titles remain B and can be hydrated without assuming any software stack.
-    evidence = profile.get("skills", []) + profile.get("project_evidence", [])
+    evidence = (profile.get("skills", []) + profile.get("project_evidence", [])
+                + (profile.get("technique_experience") or {}).get("participation_or_analysis", []))
     evidence_match = any(
         str(word).strip() and unicodedata.normalize("NFKC", str(word)).casefold() in body
         for word in evidence
@@ -594,12 +595,17 @@ def _finalize_analysis(raw: dict, job: dict, profile: dict, model: str) -> dict:
 
     english = job_filters.english_eligibility(job, profile)
     gaps.append(f"英语条件：{english['status']}；{english['reason']}")
-    if english["status"] == "不符合":
+    gaps.append("资格核实：" + job_filters.job_eligibility(job, profile)["reason"])
+    if job_filters.job_eligibility(job, profile)["status"] == "不符合":
         recommendation = "不推荐"
         score = min(score, max(0, consider_threshold - 1))
 
+    if recommendation == "推荐" and job_filters.job_eligibility(job, profile)["status"] == "待核实":
+        recommendation = "考虑"
+
     return {
         "english_eligibility": english,
+        "eligibility": job_filters.job_eligibility(job, profile),
         "match_score": score,
         "score_breakdown": breakdown,
         "evidence": evidence,
@@ -627,13 +633,14 @@ def analyze_job(
     if job_details.is_jd_incomplete(job):
         return {**_INCOMPLETE_JD_ANALYSIS, **analysis_metadata(job, profile, model)}
     english = job_filters.english_eligibility(job, profile)
-    if english["status"] == "不符合":
+    if job_filters.job_eligibility(job, profile)["status"] == "不符合":
         return {
             "match_score": 0, "score_breakdown": {}, "evidence": [],
             "evidence_level": "insufficient", "advantages": [],
-            "gaps": [f"英语条件：不符合；{english['reason']}"],
-            "summary": "英语硬性条件不符合", "recommendation": "不推荐",
+            "gaps": ["资格条件：" + job_filters.job_eligibility(job, profile)["reason"]],
+            "summary": "硬性资格不符合", "recommendation": "不推荐",
             "analysis_status": "complete", "english_eligibility": english,
+        "eligibility": job_filters.job_eligibility(job, profile),
             **analysis_metadata(job, profile, model),
         }
 
@@ -644,11 +651,12 @@ def analyze_job(
         "只能作为工程栈证据；learning_targets 和 unverified_skills 均不能作为已掌握能力。\n\n"
         f"候选人结构化配置：\n{_profile_context(profile)}\n\n"
         "请逐条对照 JD，按以下上限给出整数子分：\n"
-        f"- core_direction 0-{limits['core_direction']}：岗位核心职责与主/次方向的一致性。\n"
+        f"- core_direction 0-{limits['core_direction']}：岗位专业、核心职责与三级目标方向的一致性；无需课题完全相同。\n"
         f"- required_skills 0-{limits['required_skills']}：JD 必备技能中有直接证据的覆盖度。\n"
         f"- project_evidence 0-{limits['project_evidence']}：真实项目证据的数量、深度和相似程度。\n"
-        f"- engineering_stack 0-{limits['engineering_stack']}：语言、框架、工具和工程环境。\n"
+        f"- engineering_stack 0-{limits['engineering_stack']}：实验方法、表征数据分析、科研工具及已确认操作层级。\n"
         f"- basic_criteria 0-{limits['basic_criteria']}：学历、届别等基础条件；地点不计入技能分。\n\n"
+        "正式硕士专业为工业催化，本科生物工程，山东大学仅交换培养。专业目录不自动等同其他专业。仪器未确认操作层级不得写独立熟练操作。工业经验学习方向不能当实操经历。论文投稿修订不等于录用发表。先审资格，专业限制不清须列待核实；企业性质仅影响偏好，不推断经营稳定。\n"
         "英语资格以程序的保守判定为准；未说明、替代条件未核实不得判不符合。\n证据规则：\n"
         "1. relation 只能为 direct、adjacent、missing；requirement_type 只能为 core、supporting、basic。\n"
         "2. 通用工具重叠不能代替岗位核心专业能力、业务或项目经验。\n"
