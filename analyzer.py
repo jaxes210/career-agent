@@ -637,7 +637,8 @@ def analyze_job(
         return {
             "match_score": 0, "score_breakdown": {}, "evidence": [],
             "evidence_level": "insufficient", "advantages": [],
-            "gaps": ["资格条件：" + job_filters.job_eligibility(job, profile)["reason"]],
+            "gaps": [f"英语条件：{english['status']}；{english['reason']}",
+                     "资格条件：" + job_filters.job_eligibility(job, profile)["reason"]],
             "summary": "硬性资格不符合", "recommendation": "不推荐",
             "analysis_status": "complete", "english_eligibility": english,
         "eligibility": job_filters.job_eligibility(job, profile),
