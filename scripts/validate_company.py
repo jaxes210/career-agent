@@ -52,7 +52,11 @@ def _network_policy_block_reason(url: str) -> str:
         detail = str(exc)
         if "403 Forbidden" in detail and "proxy" in detail.lower():
             return "当前运行环境代理策略拒绝访问（CONNECT 403），未执行来源有效性裁决"
-        return ""
+        return f"连接受限或不可用（{type(exc).__name__}），不裁决企业未招聘"
+    if response.status_code in {401, 403, 407, 429}:
+        return f"访问受限 HTTP {response.status_code}，不裁决企业未招聘"
+    if re.search(r"验证码|人机验证|安全验证|captcha|请先登录", response.text, re.I):
+        return "访问受限：登录或验证码，不裁决企业未招聘"
     if response.status_code == 403 and "domain forbidden" in response.text.lower():
         return "当前运行环境域名白名单拒绝访问（Domain forbidden），未执行来源有效性裁决"
     return ""

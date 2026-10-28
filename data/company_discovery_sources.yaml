@@ -44,3 +44,43 @@ watchlist:
 
   - name: 中国中化
     industry: 化工与材料
+
+# 探测清单：未经本轮成功读取与内容核实，不作为已验证生产发现源。
+# 高校URL仅为门户探测，不宣称是就业公告入口。
+pending_sources:
+  - id: chnenergy_announcements
+    adapter: public_html
+    category: group
+    source_url: https://zhaopin.chnenergy.com.cn/recTypeSerch?kinds=1&schType=2
+    enabled: false
+    provenance: outputs/company_integration_status.md
+  - id: norinco_campus
+    adapter: public_html
+    category: group
+    source_url: https://norincogroupzhaopin.zhiye.com/campus/jobs
+    enabled: false
+    provenance: config.yaml（可能需现有北森API而非静态HTML）
+  - id: ecust_portal_probe
+    adapter: public_html
+    category: university
+    source_url: https://www.ecust.edu.cn/
+    enabled: false
+    provenance: 华东理工大学门户待探测就业导航，尚未获得就业公告URL
+  - id: buct_portal_probe
+    adapter: public_html
+    category: university
+    source_url: https://www.buct.edu.cn/
+    enabled: false
+    provenance: 北京化工大学门户待探测就业导航，尚未获得就业公告URL
+  - id: iguopin_sdic
+    adapter: public_html
+    category: platform
+    source_url: https://sdic1.iguopin.com/jobCampus
+    enabled: false
+    provenance: config.yaml（可能需国聘适配器）
+  - id: iguopin_cetc
+    adapter: public_html
+    category: platform
+    source_url: https://cetc.iguopin.com/job-campus
+    enabled: false
+    provenance: config.yaml（可能需国聘适配器）

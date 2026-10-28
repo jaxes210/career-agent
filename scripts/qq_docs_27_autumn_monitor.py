@@ -243,6 +243,9 @@ def recruitment_source_identity(url: str, crawler: str | None = None) -> str:
     if crawler == "hotjob":
         match = re.search(r"/(SU[0-9a-f]+)", path, re.I)
         return f"hotjob:{match.group(1).casefold()}" if match else f"hotjob:{host}:{path.casefold()}"
+    if crawler == "iguopin" and host in {"iguopin.com", "www.iguopin.com"}:
+        query = dict(parse_qsl(parsed.query))
+        return f"iguopin:{host}:{path}:{query.get('id', '')}"
     if crawler in {"feishu", "beisen"}:
         return f"{crawler}:{host}"
     return f"{crawler}:{host}"

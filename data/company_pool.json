@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-28T06:03:41Z",
+  "updated_at": "2026-10-28T08:15:38Z",
   "records": [
     {
       "name": "MDPI",
@@ -2535,5 +2535,43 @@
   "last_validation": {
     "at": "2026-10-28T05:41:58Z",
     "checked": 0
+  },
+  "source_health": {
+    "chnenergy_announcements": {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "checked_at": "2026-10-28T08:15:38Z",
+      "next_retry_at": "2026-10-31T08:15:38Z"
+    },
+    "norinco_campus": {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "checked_at": "2026-10-28T08:15:38Z",
+      "next_retry_at": "2026-10-31T08:15:38Z"
+    },
+    "ecust_portal_probe": {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "checked_at": "2026-10-28T08:15:38Z",
+      "next_retry_at": "2026-10-31T08:15:38Z"
+    },
+    "buct_portal_probe": {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "checked_at": "2026-10-28T08:15:38Z",
+      "next_retry_at": "2026-10-31T08:15:38Z"
+    },
+    "iguopin_sdic": {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "checked_at": "2026-10-28T08:15:38Z",
+      "next_retry_at": "2026-10-31T08:15:38Z"
+    },
+    "iguopin_cetc": {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "checked_at": "2026-10-28T08:15:38Z",
+      "next_retry_at": "2026-10-31T08:15:38Z"
+    }
   }
 }

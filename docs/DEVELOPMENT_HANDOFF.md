@@ -95,3 +95,15 @@
 - 已同步main至3bb3c9f（应用代码），随后仅补文档。真实云端Tests通过、Sync report 40646915509成功、Pages40646958440成功。
 - 通过新增push触发的零API预检40646987765，runner明确报DEEPSEEK_API_KEY is not configured for this workflow。已确认不是仅本地变量缺失，当前工作流拿不到Secret，需用户设置仓库级Secret或授权组织级Secret。未读取密钥值，未发起付费API。
 - 下一步用户配置Secret后手动Controlled DeepSeek preflight execute=false，然后才execute=true。模型深度型号支持、余额和实际响应仍待受控验证。生产库SHA256保持原值，67家池不变。
+
+## 2026-10-28 多源发现最小版本
+
+- 新增scripts/public_discovery.py：公开HTML列表/公告和RSS/Atom解析，企业名、岗位要求摘要、原始公告及投递URL进入现有_merge_lead；第三方转载只作线索，不证明官方或资格。
+- company_pool.discover支持注册public_html/public_rss，限制10来源、每来源最多2详情、2MiB响应；source_health保存BLOCKED等状态、next_retry_at；候选深入验证硬限3家。
+- 修复未知共享URL忽略企业查询ID的问题，以及国聘www域名不同company?id的去重；集团独立下属单位使用完整名称，不按集团子串合并。
+- 新增pending_sources6条（三类各2）：国家能源和兵器集团、两所高校门户、国投/电科国聘页。均未通过真实内容验证，disabled，不增加生产启用来源；高校门户不是就业公告URL。
+- 实际运行scripts/test_discovery_sources.py，6入口全部代理连接ProxyError/BLOCKED，0真实招聘线索/0新企业/0官方验证/0届别资格验证/0深入企业验证/0新增企业PR。没有抓旧企业凑数；详见outputs/multisource_probe.json、docs/MULTISOURCE_DISCOVERY_TEST.md。
+- 当前67家config、jobs.db和applications.json与本轮HEAD字节完全相同，无DeepSeek请求、无日常全量采集。仅保存失败发现源source_health，3天后重试。
+- GitHub一三五及手动触发保留，默认深入验证3，新增诊断artifact。仍需网络开放后验证高校真正就业入口、集团公告及国聘SPA内容；不得将这轮标为已完成多源线上覆盖。
+- 后续：按测试报告开放6个入口域名及gp-api.iguopin.com，运行限量探测；取得真实公告后启用注册来源，再company_pool.py run --limit 3走官方/2027届/字段门槛及PR审核。
+- 最终Python3.11测试342 passed；git diff --check通过。未注册任何“已验证”新来源，线上真实覆盖仍为待完成项。

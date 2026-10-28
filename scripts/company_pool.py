@@ -24,7 +24,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qsl, urlencode
 
 import yaml
 
@@ -67,7 +67,8 @@ def _name_key(name: str) -> str:
 
 def _url_key(url: str) -> str:
     parsed = urlparse(url.strip())
-    return f"{parsed.netloc.casefold()}{parsed.path.rstrip('/').casefold()}"
+    query = urlencode(sorted((k,v) for k,v in parse_qsl(parsed.query) if not k.startswith("utm_")))
+    return f"{parsed.netloc.casefold()}{parsed.path.rstrip('/')}?{query}#{parsed.fragment}"
 
 
 def _source_key(url: str, crawler: str | None = None) -> str:
@@ -307,10 +308,27 @@ DISCOVERY_ADAPTERS: dict[str, Callable[[dict, list[dict]], dict[str, int]]] = {
 def discover(state: dict[str, Any], companies: list[dict[str, Any]], sources_path: Path = DEFAULT_SOURCES) -> dict[str, Any]:
     source_config = _load_yaml(sources_path)
     summary: dict[str, Any] = {"sources": {}, "errors": {}}
-    for source in source_config.get("sources") or []:
+    for source in (source_config.get("sources") or [])[:10]:
         if not source.get("enabled", True):
             continue
         adapter_name = str(source.get("adapter") or "")
+        if adapter_name in {"public_html", "public_rss"}:
+            from scripts.public_discovery import discover_source
+            previous = (state.get("source_health") or {}).get(source['id'], {})
+            retry = _parse_time(previous.get("next_retry_at"))
+            if retry and retry > _now():
+                summary["sources"][source['id']] = {"status":"DEFERRED", "next_retry_at":previous['next_retry_at']}
+                continue
+            result = discover_source(source)
+            leads = result.pop("leads")
+            result["lead_urls"] = len(leads)
+            for lead in leads:
+                _merge_lead(state, lead)
+            result["checked_at"] = _iso(_now())
+            result["next_retry_at"] = _iso(_now() + timedelta(days=3 if result['status']=='BLOCKED' else 2))
+            state.setdefault("source_health", {})[source['id']] = result
+            summary["sources"][source['id']] = result
+            continue
         adapter = DISCOVERY_ADAPTERS.get(adapter_name)
         if adapter is None:
             summary["errors"][source.get("id") or adapter_name] = "未实现的发现适配器"
@@ -360,7 +378,7 @@ def validate_candidates(
     candidates.sort(key=lambda row: (row.get("next_retry_at") or "", row.get("first_discovered_at") or ""))
 
     results = []
-    for record in candidates[: max(0, limit)]:
+    for record in candidates[: min(3, max(0, limit))]:
         url = str(record.get("careers_url") or "").strip()
         crawler = str(record.get("crawler") or "").strip() or infer_crawler(url)
         if not url:

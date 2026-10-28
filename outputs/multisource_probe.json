@@ -1,0 +1,106 @@
+{
+  "sources": [
+    {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "leads": [],
+      "requests": [
+        {
+          "url": "https://zhaopin.chnenergy.com.cn/recTypeSerch?kinds=1&schType=2",
+          "status": "BLOCKED",
+          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+        }
+      ],
+      "id": "chnenergy_announcements",
+      "category": "group",
+      "source_url": "https://zhaopin.chnenergy.com.cn/recTypeSerch?kinds=1&schType=2",
+      "checked_at": "2026-10-28T08:15:38Z"
+    },
+    {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "leads": [],
+      "requests": [
+        {
+          "url": "https://norincogroupzhaopin.zhiye.com/campus/jobs",
+          "status": "BLOCKED",
+          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+        }
+      ],
+      "id": "norinco_campus",
+      "category": "group",
+      "source_url": "https://norincogroupzhaopin.zhiye.com/campus/jobs",
+      "checked_at": "2026-10-28T08:15:38Z"
+    },
+    {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "leads": [],
+      "requests": [
+        {
+          "url": "https://www.ecust.edu.cn/",
+          "status": "BLOCKED",
+          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+        }
+      ],
+      "id": "ecust_portal_probe",
+      "category": "university",
+      "source_url": "https://www.ecust.edu.cn/",
+      "checked_at": "2026-10-28T08:15:38Z"
+    },
+    {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "leads": [],
+      "requests": [
+        {
+          "url": "https://www.buct.edu.cn/",
+          "status": "BLOCKED",
+          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+        }
+      ],
+      "id": "buct_portal_probe",
+      "category": "university",
+      "source_url": "https://www.buct.edu.cn/",
+      "checked_at": "2026-10-28T08:15:38Z"
+    },
+    {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "leads": [],
+      "requests": [
+        {
+          "url": "https://sdic1.iguopin.com/jobCampus",
+          "status": "BLOCKED",
+          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+        }
+      ],
+      "id": "iguopin_sdic",
+      "category": "platform",
+      "source_url": "https://sdic1.iguopin.com/jobCampus",
+      "checked_at": "2026-10-28T08:15:38Z"
+    },
+    {
+      "status": "BLOCKED",
+      "reason": "connection restricted or unavailable: CONNECT 403 Forbidden",
+      "leads": [],
+      "requests": [
+        {
+          "url": "https://cetc.iguopin.com/job-campus",
+          "status": "BLOCKED",
+          "reason": "connection restricted or unavailable: CONNECT 403 Forbidden"
+        }
+      ],
+      "id": "iguopin_cetc",
+      "category": "platform",
+      "source_url": "https://cetc.iguopin.com/job-campus",
+      "checked_at": "2026-10-28T08:15:38Z"
+    }
+  ],
+  "lead_count": 0,
+  "new_company_count": 0,
+  "official_verified": 0,
+  "confirmed_2027_eligible": 0,
+  "deep_validations": 0,
+  "pr_created": false
+}

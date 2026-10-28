@@ -297,3 +297,7 @@ python scripts/audit_company_integrations.py --workers 8
 ## 工业催化企业池审查
 
 使用 `python scripts/audit_industrial_company_pool.py` 根据本轮备份基线生成历史证据审计；`--apply` 更新可恢复的企业分类和配置，`--live-limit` 最多验证5家上游线索。报告路径 `docs/COMPANY_POOL_AUDIT.md`。企业行业及工艺/质量历史岗位只用于监测排序，不能替代专业、学历、英语资格审核。自动接入必须在同一相关岗位取得完整字段和明确2027届证据；信息不足留候选。只有有具体证据并记录在 `data/company_relevance_policy.yaml` 的移除判定才能移出正式池；0条岗位/代理限制不构成移除理由。
+
+## 多源发现解析
+
+`scripts/public_discovery.py`支持注册`public_html`与`public_rss`，可设置article_selector/link_selector和max_detail_pages（硬限2）。仅把真实标题和正文抽取为候选，不把2027关键词或第三方投递链接当官方资格。失败探测登记pending_sources及source_health，不启用未经验证来源。`python scripts/test_discovery_sources.py`只测试6个探测入口；详细结果见docs/MULTISOURCE_DISCOVERY_TEST.md。403、登录、验证码、超时/代理连接失败均不得归因于“企业无招聘”。
