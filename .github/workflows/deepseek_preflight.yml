@@ -1,5 +1,6 @@
 name: Controlled DeepSeek preflight
 on:
+  # Push-triggered runs are always zero-API dry runs because workflow inputs are absent.
   push:
     branches: [main]
     paths:
