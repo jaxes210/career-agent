@@ -27,6 +27,7 @@
 - 增量运行：JD、画像、模型和评分版本均未变化时复用结果，避免重复消耗 Token。
 - 静态报告：27 届岗位、今日新增、分届公司排行、往届/待确认岗位和投递看板。
 - GitHub Actions 定时运行，报告发布到 `gh-pages` 分支。
+- 三级企业池：公开来源发现的新企业先进入持久化候选池，真实岗位与关键字段验证通过后生成配置 PR，失败来源按退避周期重试并保留历史。
 - 可接入 Cloudflare Pages 和飞书机器人。
 
 ## 使用前准备
@@ -234,6 +235,31 @@ python scripts/validate_company.py 示例公司 https://example.com/campus rende
 ```
 
 只有真实返回正式校招岗位的入口才应加入主配置。详细流程见 `docs/crawling_process.md`。
+
+## 自动扩展企业池
+
+企业发现状态保存在 `data/company_pool.json`，公开来源注册在
+`data/company_discovery_sources.yaml`。正式池、候选池和失败历史彼此分离：
+
+- `config.yaml` 是正式监测池，仍由每日岗位流水线读取。
+- 候选来源记录首次发现、最近验证、下次重试、平台、爬虫、届别和失败原因。
+- 未识别的新平台只记录适配需求，不会猜测 `crawler`。
+- 只有真实返回方向相关正式校招岗位，且标题、地点、任职要求、原始链接均可提取时，才生成修改 `config.yaml` 的审核 PR。
+
+本地只做状态同步和报告（不联网、不调用 DeepSeek）：
+
+```bash
+python scripts/company_pool.py sync
+python scripts/company_pool.py report
+```
+
+联网执行一次限量发现与验证：
+
+```bash
+python scripts/company_pool.py run --limit 12
+```
+
+GitHub Actions 每日更新正式池岗位；每周一、三、五发现并验证到期候选；每周日生成 `company-pool.html` 数据质量报告。候选验证流程不注入 `DEEPSEEK_API_KEY`。
 
 ## 常见问题
 

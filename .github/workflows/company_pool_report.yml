@@ -1,0 +1,58 @@
+name: Weekly employer pool quality report
+
+on:
+  schedule:
+    # 每周日北京时间 10:00 生成企业池增长与数据质量报告。
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: company-pool-report
+  cancel-in-progress: true
+
+jobs:
+  report:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Generate pool reports
+        run: python scripts/company_pool.py report
+
+      - name: Commit Markdown quality report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs/company_pool_report.md outputs/company_integration_status.md
+          if git diff --staged --quiet; then
+            echo "No report changes"
+          else
+            git commit -m "docs(pool): refresh weekly employer quality report [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Deploy pool HTML to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports
+          publish_branch: gh-pages
+          keep_files: true

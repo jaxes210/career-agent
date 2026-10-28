@@ -5,6 +5,10 @@
 ```mermaid
 flowchart LR
     Scheduler[GitHub Actions 定时任务] --> Pipeline[Career Agent 流水线]
+    Discovery[公开招聘线索] --> Pool[候选与失败企业池]
+    Pool --> Validate[真实岗位和字段验证]
+    Validate --> PR[config.yaml 审核 PR]
+    PR --> Sources
     Sources[企业招聘站] --> Crawlers[平台与企业爬虫]
     Crawlers --> Normalize[岗位标准化与届别识别]
     Normalize --> Store[(SQLite 岗位库)]
@@ -19,6 +23,26 @@ flowchart LR
     Store --> WebApp[本地投递管理器]
     WebApp --> Applications[data/applications.json]
 ```
+
+## 企业池扩展流水线
+
+```mermaid
+flowchart LR
+    Registry[发现源注册表] --> Discover[每周三次发现]
+    Discover --> Dedup[名称、平台租户和集团信息去重]
+    Dedup --> Candidate[(company_pool.json)]
+    Candidate --> Retry[按 next_retry_at 限量验证]
+    Retry --> Existing[复用现有平台爬虫]
+    Retry --> Adapter[未知平台：记录适配需求]
+    Existing --> Quality{方向相关正式校招且<br/>四项关键字段齐全?}
+    Quality -->|是| Proposal[生成 config.yaml 变更]
+    Proposal --> Review[GitHub Pull Request 审核]
+    Review --> Formal[正式监测池]
+    Quality -->|否| Candidate
+    Retry -->|连续失败| Failed[失败与历史记录]
+```
+
+发现与验证流程不调用 DeepSeek。候选状态直接持久化，正式池变更单独走 PR；因此 PR 等待审核时，首次发现时间、失败次数和重试计划仍会保留。
 
 ## 每日流水线
 
@@ -60,4 +84,6 @@ sequenceDiagram
 | `profile.yaml` | 个人画像和评分规则 | 私有部署或脱敏示例 |
 | `data/jobs.db` | 岗位、分析和增量状态 | 运行时存储或制品，不建议长期提交大文件 |
 | `data/applications.json` | 投递进度 | 私有存储，不应公开 |
+| `data/company_pool.json` | 正式、候选、失败来源及重试状态 | Git 跟踪 |
+| `data/company_discovery_sources.yaml` | 已验证可读取的发现源与搜索关注名单 | Git 跟踪 |
 | `outputs/` | 静态报告 | `gh-pages` 或部署制品 |

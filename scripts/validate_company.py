@@ -25,6 +25,7 @@ import requests
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from crawlers import CRAWLER_MAP  # noqa: E402
+import job_filters  # noqa: E402
 
 ROOT = Path(__file__).parent.parent
 REPORT_PATH = ROOT / "data" / "validation_report.json"
@@ -77,10 +78,34 @@ def _social_ratio(titles: list[str]) -> float:
     return hit / len(low)
 
 
+def _has_requirements(job: dict) -> bool:
+    body = str(job.get("jd_raw") or "").strip()
+    return len(body) >= 20 and re.search(
+        r"任职要求|任职资格|岗位要求|资格要求|专业要求", body
+    ) is not None
+
+
+def _field_coverage(jobs: list[dict]) -> dict[str, int]:
+    """Count extractable fields needed before unattended pool promotion."""
+
+    return {
+        "title": sum(bool(str(job.get("title") or "").strip()) for job in jobs),
+        "location": sum(bool(str(job.get("city") or "").strip()) for job in jobs),
+        "original_url": sum(
+            str(job.get("jd_url") or "").startswith(("http://", "https://"))
+            for job in jobs
+        ),
+        "requirements": sum(_has_requirements(job) for job in jobs),
+    }
+
+
 def validate_one(entry: dict) -> dict:
     name, url, crawler = entry["name"], entry["careers_url"], entry["crawler"]
     res = {"name": name, "careers_url": url, "crawler": crawler,
-           "count": 0, "samples": [], "social_ratio": 0.0, "campus_url": _is_campus_url(crawler, url)}
+           "count": 0, "formal_target_count": 0, "samples": [],
+           "field_coverage": {"title": 0, "location": 0, "original_url": 0, "requirements": 0},
+           "promotion_ready": False, "social_ratio": 0.0,
+           "campus_url": _is_campus_url(crawler, url)}
     cls = CRAWLER_MAP.get(crawler)
     if cls is None:
         res["verdict"] = "ERROR"
@@ -92,7 +117,11 @@ def validate_one(entry: dict) -> dict:
         res["reason"] = blocked
         return res
     try:
-        jobs = cls(name, url).fetch() or []
+        instance = cls(name, url)
+        jobs = instance.fetch() or []
+        if getattr(instance, "pagination_complete", True) is False:
+            res.update(verdict="ERROR", reason="分页未完整结束，不接受部分岗位")
+            return res
     except Exception as e:  # noqa: BLE001
         res["verdict"] = "EMPTY"
         res["reason"] = f"fetch 异常: {type(e).__name__}: {e}"
@@ -100,7 +129,19 @@ def validate_one(entry: dict) -> dict:
 
     titles = [j.get("title", "") for j in jobs]
     res["count"] = len(jobs)
-    res["samples"] = [{"title": j.get("title", ""), "city": j.get("city", "")} for j in jobs[:8]]
+    formal_jobs, _ = job_filters.filter_formal_campus_jobs(jobs)
+    target_jobs, _ = job_filters.filter_target_direction_jobs(formal_jobs)
+    res["formal_target_count"] = len(target_jobs)
+    res["field_coverage"] = _field_coverage(target_jobs)
+    res["samples"] = [
+        {
+            "title": j.get("title", ""),
+            "city": j.get("city", ""),
+            "jd_url": j.get("jd_url", ""),
+            "has_requirements": _has_requirements(j),
+        }
+        for j in target_jobs[:8]
+    ]
     res["social_ratio"] = round(_social_ratio(titles), 2)
 
     if not jobs:
@@ -109,9 +150,22 @@ def validate_one(entry: dict) -> dict:
     elif res["social_ratio"] > 0.5 or not res["campus_url"]:
         res["verdict"] = "SUSPECT-社招"
         res["reason"] = f"社招词比例 {res['social_ratio']} / campus_url={res['campus_url']}"
+    elif not target_jobs:
+        res["verdict"] = "SUSPECT-方向"
+        res["reason"] = "抓到岗位，但没有通过正式校招与目标方向规则的岗位"
     else:
         res["verdict"] = "OK"
-        res["reason"] = ""
+        missing = [
+            field for field, count in res["field_coverage"].items() if count == 0
+        ]
+        res["reason"] = (
+            "关键字段待补全: " + ", ".join(missing) if missing else ""
+        )
+        res["promotion_ready"] = any(
+            all(_field_coverage([job]).values()) for job in target_jobs
+        )
+        if not missing and not res["promotion_ready"]:
+            res["reason"] = "关键字段未在同一真实岗位中同时取得"
     return res
 
 
@@ -147,7 +201,10 @@ def _save(results: list[dict]) -> list[dict]:
     merged = list(by_name.values())
     REPORT_PATH.write_text(json.dumps(merged, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    ok = [r for r in merged if r["verdict"] == "OK"]
+    ok = [
+        r for r in merged
+        if r["verdict"] == "OK" and r.get("promotion_ready") is True
+    ]
     lines = ["# validate_company.py 验证通过（OK）的公司——可文本追加进 config.yaml\n"]
     for r in ok:
         lines.append(f"  - name: {r['name']}\n    careers_url: {r['careers_url']}\n    crawler: {r['crawler']}\n")
@@ -163,7 +220,7 @@ def main():
     results = []
     for i, e in enumerate(items, 1):
         r = validate_one(e)
-        mark = {"OK": "✅", "SUSPECT-社招": "⚠️", "EMPTY": "⛔", "BLOCKED": "🔒", "ERROR": "❓"}.get(r["verdict"], "?")
+        mark = {"OK": "✅", "SUSPECT-社招": "⚠️", "SUSPECT-方向": "⚠️", "EMPTY": "⛔", "BLOCKED": "🔒", "ERROR": "❓"}.get(r["verdict"], "?")
         print(f"{mark} [{i}/{len(items)}] {r['name']:<16} {r['verdict']:<12} {r['count']}岗  {r['reason']}", flush=True)
         for s in r["samples"][:3]:
             print(f"      · {s['title']}  |  {s['city']}", flush=True)
@@ -176,7 +233,7 @@ def main():
     n = len(results)
     cnt = lambda v: sum(1 for r in results if r["verdict"] == v)  # noqa: E731
     print(
-        f"\n本次 {n} 家：OK {cnt('OK')} / SUSPECT {cnt('SUSPECT-社招')} / "
+        f"\n本次 {n} 家：OK {cnt('OK')} / SUSPECT {cnt('SUSPECT-社招') + cnt('SUSPECT-方向')} / "
         f"EMPTY {cnt('EMPTY')} / BLOCKED {cnt('BLOCKED')} / ERROR {cnt('ERROR')}"
     )
     print(f"累计 OK {len(ok)} 家 → {APPROVED_PATH}（复核后文本追加进 config.yaml）")

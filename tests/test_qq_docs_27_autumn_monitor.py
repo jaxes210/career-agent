@@ -137,12 +137,12 @@ def test_attach_trusted_cohort_evidence_records_tencent_source():
     assert companies[0]["source_cohort_url"] == "https://example.com/envision/2027"
 
 
-def test_infer_crawler_reuses_supported_platforms_and_render_fallback():
+def test_infer_crawler_reuses_supported_platforms_without_guessing_unknown_hosts():
     assert infer_crawler("https://app.mokahr.com/campus_apply/example/1") == "moka"
     assert infer_crawler("https://example.zhiye.com/campus/jobs") == "beisen"
-    assert infer_crawler("https://campus.example.com/campus/jobs") == "beisen"
+    assert infer_crawler("https://campus.example.com/campus/jobs") is None
     assert infer_crawler("https://example.jobs.feishu.cn/campus/position") == "feishu"
-    assert infer_crawler("https://careers.example.com/campus") == "render"
+    assert infer_crawler("https://careers.example.com/campus") is None
 
 
 def test_auto_onboarding_requires_a_real_formal_job():
@@ -171,7 +171,7 @@ def test_auto_onboarding_rejects_intern_only_results():
         "source_name": "Intern Co",
         "canonical_name": "Intern Co",
         "in_config": False,
-        "links": ["https://careers.example.com/campus"],
+        "links": ["https://app.mokahr.com/campus_apply/intern/1"],
     }]
 
     approved, attempts = validate_unconfigured_rows(
@@ -189,7 +189,7 @@ def test_auto_onboarding_rejects_direction_out_results():
         "source_name": "Campus Ambassador Co",
         "canonical_name": "Campus Ambassador Co",
         "in_config": False,
-        "links": ["https://careers.example.com/campus"],
+        "links": ["https://app.mokahr.com/campus_apply/ambassador/1"],
     }]
 
     approved, attempts = validate_unconfigured_rows(

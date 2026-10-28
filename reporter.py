@@ -1118,6 +1118,12 @@ def _render_sidebar() -> str:
             f'<div class="nav-group-label">{html.escape(group_label)}</div>'
             f'<ul class="nav-list">{"".join(lis)}</ul>'
         )
+    blocks.append(
+        '<div class="nav-group-label">监测</div><ul class="nav-list">'
+        '<li><a class="nav-external" href="./company-pool.html">'
+        f'<span class="nav-icon">{_ICON_BARS}</span><span class="nav-label">企业池状态</span>'
+        '</a></li></ul>'
+    )
     return f"""
 <aside class="sidebar">
   <div class="brand">
@@ -1172,6 +1178,9 @@ ul { list-style: none; }
             color: #6B7280; font-size: 14px; user-select: none;
             transition: background .15s, color .15s; }
 .nav-item:hover { background: #F5F6FA; color: #374151; }
+.nav-external { position: relative; display: flex; align-items: center; gap: 12px;
+                padding: 10px 12px; border-radius: 8px; color: #6B7280; }
+.nav-external:hover { background: #F5F6FA; color: #374151; }
 .nav-item.active { background: #EEF0FF; color: #6C63FF; font-weight: 600; }
 .nav-item.active::before { content: ""; position: absolute; left: 0; top: 50%;
             transform: translateY(-50%); width: 3px; height: 18px;

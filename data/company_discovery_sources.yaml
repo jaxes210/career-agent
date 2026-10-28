@@ -1,0 +1,43 @@
+# 自动发现源注册表。只启用已经有只读解析器和测试的公开来源。
+sources:
+  - id: qq_docs_27_autumn
+    adapter: qq_docs_27_autumn
+    enabled: true
+    source_url: https://docs.qq.com/smartsheet/DY3pHYkNvb0ZRSHdi?tab=t0gmEC&viewId=vUQPXH
+    source_type: 2027届校招公开汇总
+
+# 这些单位是搜索目标，不是已经验证的候选来源。没有官方招聘入口前，
+# 不写 crawler，也不进入 config.yaml。
+watchlist:
+  - name: 中国石油
+    industry: 石油石化
+  - name: 中国石化
+    industry: 石油石化
+  - name: 中国海油
+    industry: 石油石化
+  - name: 国家能源集团
+    industry: 能源与煤化工
+  - name: 中国中煤
+    industry: 能源与煤化工
+  - name: 晋能控股
+    industry: 能源与煤化工
+  - name: 山东能源
+    industry: 能源与煤化工
+  - name: 万华化学
+    industry: 化工与材料
+  - name: 卫星化学
+    industry: 化工与材料
+  - name: 华鲁恒升
+    industry: 化工与材料
+  - name: 宝丰能源
+    industry: 化工与材料
+  - name: 荣盛石化
+    industry: 化工与材料
+  - name: 中国节能环保
+    industry: 环保
+  - name: 北控水务
+    industry: 环保与水务
+  - name: 首创环保
+    industry: 环保与水务
+  - name: 光大环境
+    industry: 环保与水务

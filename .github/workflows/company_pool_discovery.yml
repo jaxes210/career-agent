@@ -1,0 +1,100 @@
+name: Discover and validate employer sources
+
+on:
+  schedule:
+    # 每周一、三、五北京时间 09:30。只发现与验证来源，不调用 DeepSeek。
+    - cron: "30 1 * * 1,3,5"
+  workflow_dispatch:
+    inputs:
+      validation_limit:
+        description: "本轮最多验证多少个到期候选"
+        required: false
+        default: "12"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: company-pool-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-chromium-v1
+
+      - name: Install crawler dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Discover and validate due candidates
+        env:
+          VALIDATION_LIMIT: ${{ inputs.validation_limit || '12' }}
+        run: python scripts/company_pool.py run --limit "$VALIDATION_LIMIT"
+
+      - name: Persist pool state without changing the formal pool
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/company_pool.json outputs/company_pool_report.md outputs/company_integration_status.md
+          if git diff --staged --quiet; then
+            echo "No employer-pool state changes"
+          else
+            git commit -m "chore(pool): refresh discovery and validation state [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Build reviewed config proposal
+        id: proposal
+        run: |
+          python scripts/company_pool.py propose --write-config
+          if git diff --quiet -- config.yaml; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update formal-pool pull request
+        if: steps.proposal.outputs.ready == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/employer-pool-proposal
+          delete-branch: true
+          commit-message: "feat(config): promote verified employer sources"
+          title: "feat(config): 纳入已验证招聘来源"
+          body: |
+            自动发现系统已验证这些来源能够返回方向相关正式校招岗位，并检查了岗位标题、地点、任职要求与原始链接。
+
+            - 正式监测池仅在本 PR 合并后变化
+            - 候选及失败状态已单独持久化
+            - 本流程未调用 DeepSeek
+
+            详情见 `outputs/company_pool_proposal.md` 与 `outputs/company_pool_report.md`。
+          add-paths: |
+            config.yaml
+            outputs/company_pool_proposal.md

@@ -58,8 +58,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # 腾讯文档自动接入只在真实抓到正式校招岗位后才会修改配置和状态文档。
-          git add data/jobs.db config.yaml outputs/company_integration_status.md
+          # 企业池扩展由独立工作流通过 PR 完成；每日任务只回写岗位状态。
+          git add data/jobs.db
           if git diff --staged --quiet; then
             echo "No DB changes to commit"
           else
@@ -81,6 +81,9 @@ jobs:
             fi
             git push
           fi
+
+      - name: Generate employer pool report (no AI)
+        run: python scripts/company_pool.py report
 
       - name: Deploy report to gh-pages
         uses: peaceiris/actions-gh-pages@v4

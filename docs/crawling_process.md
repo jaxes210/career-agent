@@ -262,7 +262,23 @@ python scripts/audit_company_integrations.py --workers 8
 
 审计结束后，把结论同步到 `outputs/company_integration_status.md`，保留需要复核的公司和原因。
 
-## 9. 当前推荐架构
+## 9. 长期自动企业池
+
+### 自动企业池的审核边界
+
+`scripts/company_pool.py` 是新企业进入 `config.yaml` 前的持久化缓冲层。腾讯文档 27 届监测器继续解析公开表格，但每日岗位任务不再直接改写正式池。
+
+1. 发现适配器将企业名、原始线索、招聘入口、届别证据写入 `data/company_pool.json`。
+2. 按企业名和招聘平台租户标识去重；集团上下级关系只使用已有 `parent_group` 证据，不根据名称猜测。
+3. 只有已知平台才分配 crawler。未知平台保留 `NEEDS-ADAPTER`，每 30 天重试，不能回退为未经验证的 `render`。
+4. 候选验证复用 `scripts/validate_company.py`，同时检查正式校招、画像方向、岗位标题、地点、任职要求和原始链接。
+5. `BLOCKED` 表示当前运行环境无法裁决，不能算空岗位；`EMPTY` 连续三次后进入失败池，但仍按退避周期保留重试机会。
+6. 通过全部门槛的候选仅生成配置提案，由 `.github/workflows/company_pool_discovery.yml` 创建或更新 PR。PR 合并后，下一轮同步才将其标记为正式池。
+7. 周报同时写入 `outputs/company_pool_report.md`、`outputs/company_integration_status.md` 和 Pages 的 `company-pool.html`。
+
+当前自动源必须在 `data/company_discovery_sources.yaml` 注册并有对应解析器。没有合法、稳定搜索接口的搜索引擎不能以抓取搜索结果页的方式接入；这类来源只保留在关注名单，直到获得可验证的公开入口。
+
+## 10. 当前推荐架构
 
 最稳妥的长期流程是：
 
@@ -275,3 +291,5 @@ python scripts/audit_company_integrations.py --workers 8
 7. 校招季或链接规则变更后运行 `scripts/audit_active_job_links.py`，清理 404、空壳详情、产品/论坛误项，并浏览器复核限流站点。
 
 一句话：Firecrawl 负责加速发现和解析长尾页面，项目 crawler 负责稳定生产抓取，状态文档负责全过程可追踪。
+
+自动提案另须记录 `official_status: verified` 与 `official_evidence_url`（企业官网指向招聘租户的原始证据），且最近岗位验证不超过7天。仅识别到平台域名不能证明官方身份；至少一个方向相关岗位必须同时有四项关键字段，分页不完整不得通过。

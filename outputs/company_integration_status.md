@@ -1055,22 +1055,23 @@
 - 2026-07-09 至 2026-07-10：已按公司别名、集团覆盖关系和实际爬取结果，分别归入已接入、已覆盖、待验证或不可直接接入。具体公司状态以上方表格为准。
 - 后续新增公司时，必须先通过 `scripts/validate_company.py` 返回真实校招岗位，再写入 `config.yaml`；状态变更同步更新本文档。
 
-## 腾讯文档自动接入状态（自动维护）
-<!-- TENCENT_DOCS_AUTO_ONBOARDING_START -->
-| 公司 | 腾讯文档链接 | 识别爬虫 | 状态 | 原因 |
-| --- | --- | --- | --- | --- |
-| MDPI | https://mdpi.cn/career/recruit/ca-recruit/position?email=3341436634@qq.com | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 三环集团 | https://hr.cctc.cc/school?sourceCode=869573&isRecommendCode=true | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 中国通信服务广东公司 | https://iter.stongyw.cn/web/schoolwx/job/index.html?RCode=260040 | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 之江实验室 | https://talents.zhejianglab.com/SU6456170be84cd420e37a68c4/pb/school.html?postTypeCode=0%2F1227%2F37850530 | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 友塔游戏 | https://www.yottagames.com.cn/zh/internal-recommendation?token=480b3cd4a66863e82cb4e2bc1fd60a45-999602-1093058550&sub=077 | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 吉比特-雷霆游戏 | https://hr.g-bits.com/web/index.html#/post-web/post-list/?referralCode=FH386S | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 嘉为蓝鲸（要先实习转正） | https://canway.m.zhiye.com/JobAd/List?jc=2&shareid=9054f207-bce6-4a12-aba9-315de554ddba&token=62669728473b41e5a55494ddb851158 | `beisen` | 待人工接入 | beisen 返回 0 个岗位 |
-| 帆软 | https://t6ixa9nyl6.jiandaoyun.com/f/65e1a1308ce7672fded0f0cf?ext=CDSXJ | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 昂科技术 | https://s.51job.com/2vSIuH | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 浪潮集团 | https://wx64310b3064348282.hcmcloud.cn/recruit#/common_model_nav_anonymous/multi?c_model=_HB4_UmVsZWFzZUpvYk1ncg%253D%253D&meta_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&advance_filter_dict=%7B%22job_class%22:%22%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%22,%22select_depart%22:false%7D&key=_HB4_cmVjb21tZW5kX2pvYl9saXN0&model=_HB4_UmVjcnVpdFJlY29tbWVuZA%253D%253D&nav_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&custom_params=_HB4_eyJpbnRlcm5hbF9jb2RlIjoieEdpb0pBaCJ9&company_id=_HB4_OA%253D%253D | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 网易互联网 | https://campus.163.com/bolehtml/home?projectId=103&type=99&boleId=e1dd4e319e73d68a&boleType=2&signature=133fad406699e30097ce17c376500d6c&isShare=1 | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 联合利华 | https://xym.51job.com/VueData/neitui/user/#/?ehireid=8833740&prd=xyznt&ruid=162491&referrer=o0cn56rchou82EDTyJc1LYCY0txw | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 腾讯云智研发 | https://join.tencent-cloud.com | `render` | 待人工接入 | render 返回 0 个岗位 |
-| 龙湖集团华西地区 | https://点击后面图片投递内推 | `render` | 待人工接入 | render 返回 0 个岗位 |
-<!-- TENCENT_DOCS_AUTO_ONBOARDING_END -->
+## 企业发现与候选池（自动维护）
+<!-- COMPANY_POOL_AUTOMATION_START -->
+正式池 **68** 家；候选 **13** 家；可提案 **0** 家；失败 **0** 家。
+
+| 企业 | 状态 | 爬虫 | 最近裁决 | 原因 | 招聘入口 |
+| --- | --- | --- | --- | --- | --- |
+| MDPI | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://mdpi.cn/career/recruit/ca-recruit/position?email=3341436634@qq.com |
+| 三环集团 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://hr.cctc.cc/school?sourceCode=869573&isRecommendCode=true |
+| 中国通信服务广东公司 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://iter.stongyw.cn/web/schoolwx/job/index.html?RCode=260040 |
+| 之江实验室 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://talents.zhejianglab.com/SU6456170be84cd420e37a68c4/pb/school.html?postTypeCode=0%2F1227%2F37850530 |
+| 友塔游戏 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://www.yottagames.com.cn/zh/internal-recommendation?token=480b3cd4a66863e82cb4e2bc1fd60a45-999602-1093058550&sub=077 |
+| 吉比特-雷霆游戏 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://hr.g-bits.com/web/index.html#/post-web/post-list/?referralCode=FH386S |
+| 嘉为蓝鲸（要先实习转正） | candidate | `beisen` | LEGACY-UNRESOLVED | beisen 返回 0 个岗位 | https://canway.m.zhiye.com/JobAd/List?jc=2&shareid=9054f207-bce6-4a12-aba9-315de554ddba&token=62669728473b41e5a55494ddb851158 |
+| 帆软 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://t6ixa9nyl6.jiandaoyun.com/f/65e1a1308ce7672fded0f0cf?ext=CDSXJ |
+| 昂科技术 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://s.51job.com/2vSIuH |
+| 浪潮集团 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://wx64310b3064348282.hcmcloud.cn/recruit#/common_model_nav_anonymous/multi?c_model=_HB4_UmVsZWFzZUpvYk1ncg%253D%253D&meta_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&advance_filter_dict=%7B%22job_class%22:%22%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%22,%22select_depart%22:false%7D&key=_HB4_cmVjb21tZW5kX2pvYl9saXN0&model=_HB4_UmVjcnVpdFJlY29tbWVuZA%253D%253D&nav_state=_HB4_aW50ZXJuYWxfY2FuZGlkYXRl&custom_params=_HB4_eyJpbnRlcm5hbF9jb2RlIjoieEdpb0pBaCJ9&company_id=_HB4_OA%253D%253D |
+| 网易互联网 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://campus.163.com/bolehtml/home?projectId=103&type=99&boleId=e1dd4e319e73d68a&boleType=2&signature=133fad406699e30097ce17c376500d6c&isShare=1 |
+| 联合利华 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://xym.51job.com/VueData/neitui/user/#/?ehireid=8833740&prd=xyznt&ruid=162491&referrer=o0cn56rchou82EDTyJc1LYCY0txw |
+| 腾讯云智研发 | candidate | `待识别` | LEGACY-UNRESOLVED | render 返回 0 个岗位 | https://join.tencent-cloud.com |
+<!-- COMPANY_POOL_AUTOMATION_END -->

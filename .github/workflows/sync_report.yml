@@ -41,6 +41,9 @@ jobs:
         env:
           CI: "true"
         run: python view_all.py
+      - name: Generate employer pool report (no AI)
+        run: python scripts/company_pool.py report
+
       - name: Deploy report to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:

@@ -328,20 +328,23 @@ def attach_trusted_cohort_evidence(
 
 
 def infer_crawler(url: str) -> str | None:
-    """Choose an existing production crawler from a Tencent Docs job link."""
+    """Choose a known production crawler from a Tencent Docs job link.
+
+    Unknown hosts intentionally stay unassigned.  A generic renderer may be a
+    useful implementation tool, but selecting it without a successful live
+    test would turn an unverified lead into a misleading crawler declaration.
+    """
     host = urlparse(url).netloc.casefold()
-    path = urlparse(url).path.casefold()
-    if "mokahr.com" in host:
+    if host == "mokahr.com" or host.endswith(".mokahr.com"):
         return "moka"
-    if host.endswith(".zhiye.com") or "/campus/jobs" in path:
+    if host == "zhiye.com" or host.endswith(".zhiye.com"):
         return "beisen"
-    if "feishu.cn" in host or "mioffice.cn" in host:
+    if host.endswith(".jobs.feishu.cn") or host.endswith(".jobs.mioffice.cn"):
         return "feishu"
-    if "hotjob.cn" in host:
+    if host == "hotjob.cn" or host.endswith(".hotjob.cn"):
         return "hotjob"
-    if host:
-        # The generic renderer is the controlled fallback for self-built sites.
-        return "render"
+    if host == "iguopin.com" or host.endswith(".iguopin.com"):
+        return "iguopin"
     return None
 
 
