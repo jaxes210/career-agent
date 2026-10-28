@@ -74,7 +74,7 @@ _UNCONFIRMED_COHORT_ANALYSIS = {
 
 _VALID_RECOMMENDATIONS = {"推荐", "考虑", "不推荐"}
 
-_DEFAULT_MODEL = "deepseek-v4-flash"
+_DEFAULT_MODEL = "deepseek-flash"
 _DEFAULT_ANALYSIS_MODEL = "deepseek-v4-pro"
 _DEFAULT_MAX_TOKENS = 1000
 _ANTHROPIC_VERSION = "2023-06-01"
@@ -302,6 +302,7 @@ def classify_job_tiers(
 
     tiers = [local_screening_tier(job, profile) for job in jobs]
     ambiguous = [(index, jobs[index]) for index, tier in enumerate(tiers) if tier == "B"]
+    ambiguous = ambiguous[:20]  # Hard per-call ceiling; main shares 20 across both queues.
     if not ambiguous:
         return tiers
 
@@ -793,6 +794,9 @@ def batch_analyze(
     max_jobs: int | None = None,
     max_jobs_per_day: int | None = None,
 ) -> list[dict]:
+    max_jobs = 5 if max_jobs is None else min(5, max(0, max_jobs))
+    if max_jobs == 0 or max_jobs_per_day == 0:
+        return []
     pending = [j for j in jobs if needs_analysis(conn, j, profile, model)]
     if not pending:
         return []
@@ -820,6 +824,8 @@ def batch_analyze(
         and _can_hydrate_to_tier_a(job, profile)
     ]
     pro_candidates = initial_pro_candidates + upgrade_candidates
+    pro_candidates.sort(key=lambda job: _analysis_priority(job, profile), reverse=True)
+    pro_candidates = pro_candidates[:max_jobs]  # Bound hydration as well as API calls.
     skipped_tier_b = len(prefiltered) - len(initial_pro_candidates)
     if skipped_tier_b:
         logger.info(
@@ -890,7 +896,7 @@ def batch_analyze(
         return []
 
     complete.sort(key=lambda job: _analysis_priority(job, profile), reverse=True)
-    run_limit = max_jobs if max_jobs and max_jobs > 0 else None
+    run_limit = max_jobs
     if max_jobs_per_day and max_jobs_per_day > 0:
         analyzed_today = conn.execute(
             """SELECT COUNT(*) FROM job_analysis

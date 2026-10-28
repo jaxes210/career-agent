@@ -1,0 +1,44 @@
+name: Controlled DeepSeek preflight
+on:
+  workflow_dispatch:
+    inputs:
+      execute:
+        description: '允许付费API请求（最多20个Flash岗位、5个深度分析岗位）'
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: deepseek-preflight
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Verify deployed revision
+        run: |
+          git rev-parse HEAD
+          python -c "import yaml; from profile_config import load_profile; c=yaml.safe_load(open('config.yaml')); print('Companies:',len(c['companies'])); print('Major:',load_profile()['major']); print('Flash:',c['deepseek']['screening_model'])"
+      - name: Dry run or explicitly capped API test
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          EXECUTE: ${{ inputs.execute }}
+        run: |
+          if [ "$EXECUTE" = "true" ]; then
+            python scripts/deepseek_preflight.py --execute
+          else
+            python scripts/deepseek_preflight.py
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deepseek-preflight
+          path: outputs/deepseek_preflight.json

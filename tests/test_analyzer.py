@@ -98,7 +98,7 @@ def test_deepseek_request_uses_official_endpoint_and_disables_thinking(monkeypat
         analyzer.call_deepseek_api("system", "user")
 
     assert seen["url"].startswith("https://api.deepseek.com/anthropic/")
-    assert seen["payload"]["model"] == "deepseek-v4-flash"
+    assert seen["payload"]["model"] == "deepseek-flash"
     assert seen["payload"]["thinking"] == {"type": "disabled"}
 
 
@@ -210,7 +210,7 @@ def test_classify_relevant_titles_returns_bools():
     with patch("analyzer.call_deepseek_api", return_value=response) as mock_call:
         result = analyzer.classify_relevant_titles(titles, PROFILE)
     assert result == [True, False, True]
-    assert mock_call.call_args.args[2] == "deepseek-v4-flash"
+    assert mock_call.call_args.args[2] == "deepseek-flash"
 
 
 def test_classify_relevant_titles_handles_markdown_wrapping():
@@ -303,7 +303,7 @@ def test_classify_relevant_titles_chunks_large_input():
     with patch("analyzer.call_deepseek_api", side_effect=fake):
         result = analyzer.classify_relevant_titles(titles, PROFILE)
     assert len(result) == 95 and all(result)
-    assert batch_sizes == [20, 20, 20, 20, 15]
+    assert batch_sizes == [20]  # Remaining jobs retain local B; no additional paid batches.
 
 
 def test_classify_job_tiers_separates_pro_display_and_reject():
@@ -512,7 +512,7 @@ def test_batch_analyze_enforces_per_run_cap(tmp_path):
     import db
     conn = db.init_db(str(tmp_path / "cap.db"))
     jobs = []
-    for index in range(3):
+    for index in range(8):
         job = {
             "company": "测试公司", "title": f"C++客户端开发工程师{index}", "city": "深圳",
             "job_type": "校招", "jd_url": f"https://example.com/job/cap-{index}",
@@ -528,9 +528,22 @@ def test_batch_analyze_enforces_per_run_cap(tmp_path):
         results = analyzer.batch_analyze(jobs, PROFILE, conn, max_jobs=2)
     assert mock_call.call_count == 2
     assert len(results) == 2
+    with patch("analyzer.call_deepseek_api", return_value=response) as mock_call:
+        analyzer.batch_analyze(jobs, PROFILE, conn, max_jobs=999)
+    assert mock_call.call_count <= 5
     conn.close()
 
 
 def test_parse_analysis_json_accepts_literal_control_character():
     parsed = analyzer._parse_analysis_json('{"summary":"第一行\n第二行"}')
     assert parsed["summary"] == "第一行\n第二行"
+
+
+def test_zero_pro_budget_never_calls_model_or_hydrates(tmp_path):
+    import db
+    conn = db.init_db(str(tmp_path / "disabled.db"))
+    with patch("analyzer.call_deepseek_api") as call, patch("job_details.fetch_full_job_description") as hydrate:
+        assert analyzer.batch_analyze([JOB], PROFILE, conn, max_jobs=0) == []
+    call.assert_not_called()
+    hydrate.assert_not_called()
+    conn.close()

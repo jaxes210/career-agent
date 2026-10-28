@@ -47,6 +47,11 @@ jobs:
           python -m pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
+      - name: Log deployed revision and safety limits
+        run: |
+          git rev-parse HEAD
+          python -c "import yaml; c=yaml.safe_load(open('config.yaml')); print('companies',len(c['companies'])); print('Flash job cap=20, Pro job cap=5')"
+
       - name: Run pipeline
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}

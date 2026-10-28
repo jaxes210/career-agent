@@ -32,10 +32,17 @@ def _resolve_llm_models(llm_cfg: dict | None) -> tuple[str, str]:
     """Return screening and detailed-analysis models with legacy compatibility."""
     cfg = llm_cfg or {}
     legacy_model = cfg.get("model")
-    screening_model = cfg.get("screening_model") or legacy_model or "deepseek-v4-flash"
+    screening_model = cfg.get("screening_model") or legacy_model or "deepseek-flash"
     analysis_model = cfg.get("analysis_model") or legacy_model or "deepseek-v4-pro"
     return screening_model, analysis_model
 
+
+
+def take_screening_batch(jobs: list[dict], remaining: int):
+    """Share the capped queue across fresh and historical jobs."""
+    limit = min(20, max(0, remaining))
+    selected = jobs[:limit]
+    return selected, jobs[limit:], limit - len(selected)
 
 def load_config(path: str = "config.yaml") -> dict:
     with open(path, encoding="utf-8") as f:
@@ -309,6 +316,11 @@ def main():
         else:
             unscreened_jobs.append(job)
 
+    # One shared run budget for fresh and historical screening. Deferred rows
+    # stay visible and must not receive a fabricated cached B decision.
+    flash_limit = min(20, max(0, int(llm_cfg.get("max_flash_jobs_per_run", 20))))
+    unscreened_jobs, deferred_jobs, screening_remaining = take_screening_batch(unscreened_jobs, flash_limit)
+    tiered_jobs.extend({**job, "screening_tier": "B"} for job in deferred_jobs)
     fresh_tiers = []
     if unscreened_jobs:
         logger.info(
@@ -384,6 +396,7 @@ def main():
             historical_decisions.append((job, tier))
         else:
             historical_pending.append(job)
+    historical_pending, _, screening_remaining = take_screening_batch(historical_pending, screening_remaining)
     if historical_pending:
         tiers = analyzer.classify_job_tiers(
             historical_pending, profile, model=screening_model,
@@ -417,16 +430,8 @@ def main():
             conn,
             model=analysis_model,
             max_tokens=int(llm_cfg.get("analysis_max_tokens", 1200)),
-            max_jobs=(
-                None
-                if os.environ.get("ALLOW_FULL_PRO_ANALYSIS") == "1"
-                else int(llm_cfg.get("max_pro_jobs_per_run", 0))
-            ),
-            max_jobs_per_day=(
-                None
-                if os.environ.get("ALLOW_FULL_PRO_ANALYSIS") == "1"
-                else int(llm_cfg.get("max_pro_jobs_per_day", 0))
-            ),
+            max_jobs=min(5, max(0, int(llm_cfg.get("max_pro_jobs_per_run", 5)))),
+            max_jobs_per_day=min(10, max(0, int(llm_cfg.get("max_pro_jobs_per_day", 10)))),
         )
 
     # A list card can look like a campus role while the full detail reveals an

@@ -349,8 +349,9 @@ companies:
   industry: 半导体材料与制造
   pool_category: 保留：潜在匹配
 deepseek:
-  screening_model: deepseek-v4-flash
+  screening_model: deepseek-flash
   analysis_model: deepseek-v4-pro
+  max_flash_jobs_per_run: 20
   screening_max_tokens: 600
   analysis_max_tokens: 1200
   max_pro_jobs_per_run: 5

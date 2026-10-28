@@ -2,7 +2,7 @@ from main import _crawl_one, _normalize_configured_listing_links, _resolve_llm_m
 
 
 def test_resolve_llm_models_uses_hybrid_defaults():
-    assert _resolve_llm_models({}) == ("deepseek-v4-flash", "deepseek-v4-pro")
+    assert _resolve_llm_models({}) == ("deepseek-flash", "deepseek-v4-pro")
 
 
 def test_resolve_llm_models_supports_explicit_and_legacy_config():
@@ -111,3 +111,12 @@ def test_source_validator_distinguishes_network_policy_block(monkeypatch):
 
     assert result["verdict"] == "BLOCKED"
     assert result["count"] == 0
+
+
+def test_flash_budget_shared_between_fresh_and_historical_queues():
+    from main import take_screening_batch
+    selected, deferred, remaining = take_screening_batch(list(range(12)), 20)
+    historical, _, remaining = take_screening_batch(list(range(100)), remaining)
+    assert len(selected) + len(historical) == 20
+    assert not deferred and remaining == 0
+    assert len(take_screening_batch(list(range(100)), 999)[0]) == 20

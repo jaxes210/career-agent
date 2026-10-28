@@ -82,3 +82,11 @@
 - 完整报告 docs/COMPANY_POOL_AUDIT.md。下一步首先解决公开招聘域名访问策略、安装Playwright浏览器，再限量复验候选官方归属、专业和2027届岗位；优先万华及石化/煤化工集团独立招聘单位，不能按数量目标接入。
 - 本轮无DeepSeek调用；原有GitHub Actions未变更。代码与配置本地提交，尚未推送或验证远端运行。
 - 最终离线测试：331 passed，1个第三方pytest插件弃用警告；git diff --check通过。数据库SHA256及投递JSON与本轮开始时一致。
+
+## DeepSeek正式接入准备（2026-10-28）
+
+- screening_model及默认更新deepseek-flash；Pro保持deepseek-v4-pro，尚无真实API验证。
+- main共享Flash20岗位预算；batch_analyze硬限5，0禁用，取消无限额环境变量绕过，JD补全也先截5。日上限10保持。
+- 新增deepseek_preflight.py与Controlled DeepSeek preflight工作流，默认dry-run；--execute明确付费，临时DB、不爬取/不通知/不改生产库。最多20Flash岗位+5Pro岗位，HTTP不重试，总请求上限6。
+- 本地干跑20条，API0次，key_present=false（只指本地）。GitHub Actions/Secret名称API返回Forbidden，无法确认云端密钥、运行日志、实际模型可用。
+- 离线测试333 passed；说明docs/DEEPSEEK_READINESS.md。同步main后应先execute=false，再人工确认execute=true，不要用main.py做首次连通测试。
