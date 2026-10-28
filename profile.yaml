@@ -1,66 +1,110 @@
-degree: 本科
+
+degree: 硕士研究生
 job_type: 校招
-target_cohort: 2026
+target_cohort: 2027
 
 directions:
-  - 大模型应用开发
-  - AI应用开发
-  - Python后端开发
+  - 化工工艺与生产技术
+  - 工业催化与催化剂研发
+  - 环境工程与污染治理
+  - 材料研发与表征
+  - 分析检测与质量技术
+  - 能源化工与环保技术管理
+
+secondary_directions:
+  - 生产运行与技术支持
+  - 工艺优化
+  - 水处理工程
+  - 化工与环保相关综合技术岗位
 
 skills:
-  - Python
-  - Flask
-  - Django
-  - RESTful API
-  - LLM API
-  - Prompt Engineering
-  - RAG
-  - Embedding
-  - Git
-  - Linux
+  - 催化材料制备与性能评价
+  - 高级氧化技术与PMS活化
+  - 光辅助催化实验
+  - XRD
+  - XPS
+  - SEM
+  - BET
+  - FTIR
+  - UV-Vis
+  - HPLC-UV
+  - 电化学测试
+  - Origin数据分析
+  - 科研论文撰写
 
 project_evidence:
-  - 基于大模型 API 构建多轮对话系统，维护对话上下文并封装统一服务接口
-  - 构建本地文档 RAG 系统，实现文本分块、Embedding 向量化、Top-K 相似度检索和上下文拼接
-  - 使用 Python 开发推荐系统和自动化数据采集系统
+  - 开展聚合磺化钴酞菁负载氧化铝催化材料研究
+  - 研究光辅助PMS活化及有机污染物降解
+  - 掌握催化剂制备、性能测试与稳定性评价
+  - 使用XPS、XRD、SEM、BET等进行材料表征
+  - 开展HPLC-UV分析及污染物降解动力学研究
+  - 具有SCI论文撰写与审稿意见回复经历
 
 learning_targets:
-  - AI Agent
-  - LangChain
+  - 工业化工工艺流程
+  - 工业催化剂生产与应用
+  - 化工过程优化
+  - 企业EHS与环保管理
 
 unverified_skills: []
 
 target_roles:
-  - name: 大模型应用开发
+  - name: 化工工艺与生产技术
     keywords:
-      - 大模型
-      - LLM
-      - RAG
-      - Agent
-      - Prompt
-      - AI 应用
+      - 化工工艺
+      - 工艺工程师
+      - 生产技术
+      - 工艺技术
+      - 工艺优化
+      - 化工技术
 
-  - name: AI 应用开发
+  - name: 催化与材料研发
     keywords:
-      - AI 应用
-      - Python
-      - API
-      - 多轮对话
-      - 智能问答
+      - 催化
+      - 催化剂
+      - 材料研发
+      - 材料工程师
+      - 研发工程师
+      - 应用研发
 
-  - name: Python 后端开发
+  - name: 环境工程与水处理
     keywords:
-      - Python
-      - Flask
-      - Django
-      - RESTful API
-      - 后端
+      - 环保
+      - 环境工程
+      - 污水处理
+      - 废水处理
+      - 水处理
+      - 污染治理
+      - 三废治理
 
-preferred_cities:
-  - 杭州
-  - 上海
-  - 北京
-  - 深圳
+  - name: 分析检测与质量技术
+    keywords:
+      - 分析检测
+      - 化学分析
+      - 检测工程师
+      - 实验室
+      - 质量技术
+      - 理化分析
+
+  - name: 能源化工与综合技术
+    keywords:
+      - 能源化工
+      - 煤化工
+      - 石油化工
+      - 技术管理
+      - 技术支持
+      - 生产运行
+
+preferred_cities: []
+
+excluded_title_keywords:
+  - 软件开发
+  - 前端开发
+  - 后端开发
+  - 算法工程师
+  - 游戏开发
+  - UI设计师
+  - 直播运营
 
 score_component_limits:
   core_direction: 25
