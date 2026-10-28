@@ -13,7 +13,7 @@ MOCK_DATA = {
             "job": {
                 "id": 1,
                 "company": "宇树科技",
-                "title": "视觉算法工程师",
+                "title": "环境工程师",
                 "city": "杭州",
                 "jd_url": "https://www.unitree.com/jobs/visual",
                 "job_type": "校招",
@@ -33,7 +33,7 @@ MOCK_DATA = {
             "job": {
                 "id": 2,
                 "company": "宇树科技",
-                "title": "嵌入式软件工程师",
+                "title": "材料研发工程师",
                 "city": "深圳",
                 "jd_url": "https://www.unitree.com/jobs/embedded",
                 "job_type": "校招",
@@ -160,9 +160,9 @@ def test_report_shows_all_real_analyses(tmp_path):
     """所有真实 AI 分析的岗位都应展示，无论 recommendation 是什么。"""
     path = reporter.generate_report("2026-05-13", MOCK_DATA, reports_dir=str(tmp_path))
     content = Path(path).read_text(encoding="utf-8")
-    assert "视觉算法工程师" in content      # 88 推荐 → 大卡片
+    assert "环境工程师" in content      # 88 推荐 → 大卡片
     assert "机械臂控制工程师" in content    # 70 考虑 → 高匹配
-    assert "嵌入式软件工程师" in content    # 55 不推荐，但是真实分析 → 仍展示
+    assert "材料研发工程师" in content    # 55 不推荐，但是真实分析 → 仍展示
 
 
 def test_report_filters_stub_analyses(tmp_path):
@@ -187,7 +187,7 @@ def test_report_filters_stub_analyses(tmp_path):
                              "recommendation": "不推荐"},
             },
             {
-                "job": {"id": 12, "company": "宇树科技", "title": "视觉算法工程师",
+                "job": {"id": 12, "company": "宇树科技", "title": "环境工程师",
                         "city": "杭州", "jd_url": "https://x.com/3", "job_type": "校招",
                         "crawled_at": "2026-05-13"},
                 "analysis": {"match_score": 85, "advantages": ["ROS"], "gaps": ["CUDA"],
@@ -199,7 +199,7 @@ def test_report_filters_stub_analyses(tmp_path):
     content = Path(path).read_text(encoding="utf-8")
     assert "数据标注实习生" not in content   # 实习岗，仍过滤
     assert "品牌市场经理" not in content     # 方向外「未评估」，默认报告隐藏
-    assert "视觉算法工程师" in content       # 真实分析，展示
+    assert "环境工程师" in content       # 真实分析，展示
     assert "已隐藏 2 个过滤项" in content
 
 
@@ -242,18 +242,18 @@ def test_report_has_expected_pages(tmp_path):
 def test_report_moves_explicit_2026_jobs_to_previous_cohort(tmp_path):
     data = {
         "items": [
-            {"job": {"id": 1, "company": "甲", "title": "27届算法工程师", "city": "北京",
+            {"job": {"id": 1, "company": "甲", "title": "27届环境工程师", "city": "北京",
                      "jd_url": "https://example.com/27", "job_type": "校招", "jd_raw": "", "link_kind": "detail"},
              "analysis": {"match_score": 80, "advantages": [], "gaps": [], "summary": "", "recommendation": "推荐"}},
-            {"job": {"id": 2, "company": "乙", "title": "26届春招-C++开发工程师", "city": "上海",
+            {"job": {"id": 2, "company": "乙", "title": "26届春招-化工工艺工程师", "city": "上海",
                      "jd_url": "https://example.com/26", "job_type": "校招", "jd_raw": "", "link_kind": "detail"},
              "analysis": {"match_score": 80, "advantages": [], "gaps": [], "summary": "", "recommendation": "推荐"}},
         ]
     }
     content = Path(reporter.generate_report("2026-05-13", data, reports_dir=str(tmp_path))).read_text(encoding="utf-8")
     current, previous, unknown, _ = reporter._filter_items(data["items"])
-    assert [item["job"]["title"] for item in current] == ["27届算法工程师"]
-    assert [item["job"]["title"] for item in previous] == ["26届春招-C++开发工程师"]
+    assert [item["job"]["title"] for item in current] == ["27届环境工程师"]
+    assert [item["job"]["title"] for item in previous] == ["26届春招-化工工艺工程师"]
     assert unknown == []
     assert 'data-page="previous-cohort"' in content
 
@@ -261,13 +261,13 @@ def test_report_moves_explicit_2026_jobs_to_previous_cohort(tmp_path):
 def test_report_hides_internship_and_early_batch_rows():
     data = {
         "items": [
-            {"job": {"company": "甲", "title": "算法工程师", "job_type": "校招 正式",
+            {"job": {"company": "甲", "title": "环境工程师", "job_type": "校招 正式",
                      "jd_url": "https://example.com/formal", "jd_raw": ""},
              "analysis": {"match_score": 80}},
-            {"job": {"company": "乙", "title": "算法工程师", "job_type": "校招",
+            {"job": {"company": "乙", "title": "环境工程师", "job_type": "校招",
                      "jd_url": "https://example.com/intern", "jd_raw": "校招 实习 | 上海"},
              "analysis": {"match_score": 80}},
-            {"job": {"company": "丙", "title": "27届提前批-C++工程师", "job_type": "校招",
+            {"job": {"company": "丙", "title": "27届提前批-化工工艺工程师", "job_type": "校招",
                      "jd_url": "https://example.com/early", "jd_raw": ""},
              "analysis": {"match_score": 80}},
         ]
@@ -294,7 +294,7 @@ def test_report_has_cohort_search_and_company_detail_links(tmp_path):
     data = {**MOCK_DATA, "items": [
         *MOCK_DATA["items"],
         {
-            "job": {"id": 99, "company": "往届公司", "title": "26届软件工程师", "city": "北京",
+            "job": {"id": 99, "company": "往届公司", "title": "26届材料工程师", "city": "北京",
                     "jd_url": "https://example.com/previous", "job_type": "校招", "jd_raw": ""},
             "analysis": {"match_score": 70, "advantages": [], "gaps": [],
                          "summary": "", "recommendation": "推荐"},
@@ -310,7 +310,7 @@ def test_report_has_cohort_search_and_company_detail_links(tmp_path):
 
 def test_report_labels_listing_link_instead_of_detail_apply_link(tmp_path):
     data = {"items": [{
-            "job": {"id": 1, "company": "甲", "title": "算法工程师", "city": "北京",
+            "job": {"id": 1, "company": "甲", "title": "环境工程师", "city": "北京",
                     "jd_url": "https://example.com/campus/jobs#1", "job_type": "校招",
                     "cohort": 2027, "cohort_status": "confirmed",
                     "jd_raw": "", "link_kind": "list"},

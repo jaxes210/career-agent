@@ -1,22 +1,29 @@
 
 companies:
   - name: 国家开发投资集团
+    company_nature: 央企
     careers_url: https://sdic1.iguopin.com/jobCampus
     crawler: iguopin
 
   - name: 中国中车
+    company_nature: 央企
+    industry: 装备制造
     careers_url: https://crrc.hotjob.cn/SU64d47c466202cc36e27a52d4/pb/school.html
     crawler: hotjob
 
   - name: 中国兵器工业集团
+    company_nature: 央企
+    industry: 装备制造
     careers_url: https://norincogroupzhaopin.zhiye.com/campus/jobs
     crawler: beisen
 
   - name: 万华化学
+    industry: 化工制造
     careers_url: https://www.whchem.com/column/164/
     crawler: render
 
   - name: 宁德时代
+    industry: 电池制造
     careers_url: https://talent.catl.com/campus-recruitment/catlhr/115953
     crawler: moka
 

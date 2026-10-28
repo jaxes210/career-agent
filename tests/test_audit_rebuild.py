@@ -15,7 +15,7 @@ def test_audit_accepts_score_reduced_below_component_sum(tmp_path):
     conn = db.init_db(db_path)
     job = {
         "company": "测试公司",
-        "title": "C++软件开发工程师",
+        "title": "化工工艺工程师",
         "city": "深圳",
         "job_type": "校招",
         "jd_url": "https://example.com/campus/job/1",

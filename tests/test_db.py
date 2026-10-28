@@ -389,7 +389,7 @@ def test_purge_incomplete_jd_analyses_keeps_job_but_removes_score():
 
 def test_purge_direction_out_jobs_removes_job_and_analysis():
     conn = db.init_db(TEST_DB)
-    technical = {"company": "甲", "title": "C++软件开发工程师", "city": "北京", "job_type": "校招",
+    technical = {"company": "甲", "title": "化工工艺工程师", "city": "北京", "job_type": "校招",
                  "jd_url": "https://example.com/technical", "jd_raw": "", "published_at": "", "source": "甲"}
     non_target = {"company": "乙", "title": "产品运营经理", "city": "上海", "job_type": "校招",
                   "jd_url": "https://example.com/operations", "jd_raw": "", "published_at": "", "source": "乙"}
@@ -1110,7 +1110,7 @@ def test_purge_b_tier_analyses_preserves_locally_upgraded_a_job(monkeypatch):
         (job_id, 80),
     )
     conn.commit()
-    monkeypatch.setattr(analyzer, "analysis_screening_tier", lambda _job: "A")
+    monkeypatch.setattr(analyzer, "analysis_screening_tier", lambda _job, _profile=None: "A")
 
     assert db.purge_screening_tier_b_analyses(conn) == 0
     assert db.has_analysis(conn, job_id)

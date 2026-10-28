@@ -68,6 +68,16 @@ def _normalize_configured_listing_links(company: dict, jobs: list[dict]) -> list
     return jobs
 
 
+def _attach_company_metadata(jobs: list[dict], companies: list[dict]) -> None:
+    """Carry explicitly configured employer facts into the capped queue only."""
+    by_name = {company["name"]: company for company in companies}
+    for job in jobs:
+        company = by_name.get(job.get("company"), {})
+        for field in ("company_nature", "industry"):
+            if company.get(field):
+                job[field] = company[field]
+
+
 def _crawl_one(company: dict) -> tuple[str, list[dict]]:
     """跑单家爬虫，返回 (公司名, 岗位列表)。异常吞掉返回空，不影响其他公司。"""
     key = company["crawler"]
@@ -240,7 +250,7 @@ def main():
     migrated_jd_links = db_module.migrate_jd_detail_urls(conn)
     migrated_bilibili_links = db_module.migrate_bilibili_detail_links(conn)
     purged = db_module.purge_nonformal_campus_jobs(conn)
-    purged_direction_out = db_module.purge_direction_out_jobs(conn)
+    purged_direction_out = db_module.purge_direction_out_jobs(conn, profile)
     purged_incomplete_analysis = db_module.purge_incomplete_jd_analyses(conn)
     cohort_backfill = db_module.backfill_job_cohorts(conn, config["companies"])
     purged_noncurrent_analysis = db_module.purge_noncurrent_cohort_analyses(conn)
@@ -276,9 +286,11 @@ def main():
     all_jobs, dropped_jobs = job_filters.filter_formal_campus_jobs(all_jobs)
     if dropped_jobs:
         logger.info("已过滤 %d 个非正式校招岗位（实习/提前批/社招），不入库", len(dropped_jobs))
-    all_jobs, dropped_direction_out = job_filters.filter_target_direction_jobs(all_jobs)
+    all_jobs, dropped_direction_out = job_filters.filter_target_direction_jobs(all_jobs, profile)
     if dropped_direction_out:
         logger.info("已过滤 %d 个明确方向外岗位，不进入缓存与数据库", len(dropped_direction_out))
+
+    _attach_company_metadata(all_jobs, config["companies"])
 
     # 届别证据必须先于任何模型筛选。岗位字段没有明确届别时，再读取公司
     # 官方校招入口；仍无法确认的岗位保留到待确认页，但不调用任何模型。
@@ -313,7 +325,7 @@ def main():
     unscreened_jobs = []
     for job in current_cohort_jobs:
         tier = db_module.get_screening_tier(
-            conn, job, analyzer.SCREENING_VERSION
+            conn, job, analyzer.screening_cache_version(profile, screening_model)
         )
         if tier:
             cached_tiers.append((job, tier))
@@ -334,7 +346,7 @@ def main():
         )
         fresh_tiers = list(zip(unscreened_jobs, tiers))
         db_module.save_screening_tiers(
-            conn, fresh_tiers, analyzer.SCREENING_VERSION
+            conn, fresh_tiers, analyzer.screening_cache_version(profile, screening_model)
         )
 
     decisions = cached_tiers + fresh_tiers
@@ -382,6 +394,31 @@ def main():
     active_current = [
         job for job in active if job_cohorts.is_confirmed_current(job)
     ]
+    _attach_company_metadata(active_current, config["companies"])
+
+    # Historical active rows may not have been crawled today. Re-evaluate their
+    # tiers too; a stored A/C from another profile must not survive a profile edit.
+    historical_pending = []
+    historical_decisions = []
+    cache_version = analyzer.screening_cache_version(profile, screening_model)
+    for job in active_current:
+        tier = db_module.get_screening_tier(conn, job, cache_version)
+        if tier:
+            historical_decisions.append((job, tier))
+        else:
+            historical_pending.append(job)
+    if historical_pending:
+        tiers = analyzer.classify_job_tiers(
+            historical_pending, profile, model=screening_model,
+            max_tokens=int(llm_cfg.get("screening_max_tokens", 600)),
+        )
+        fresh = list(zip(historical_pending, tiers))
+        db_module.save_screening_tiers(conn, fresh, cache_version)
+        historical_decisions.extend(fresh)
+    db_module.update_existing_job_screening_tiers(conn, historical_decisions)
+    for job, tier in historical_decisions:
+        job["screening_tier"] = tier
+
     unanalyzed = [
         job for job in active_current
         if analyzer.needs_detailed_analysis(
@@ -420,7 +457,7 @@ def main():
     # happens immediately before Pro analysis, so enforce the deterministic
     # filters once more before reports are generated.
     post_hydration_nonformal = db_module.purge_nonformal_campus_jobs(conn)
-    post_hydration_direction = db_module.purge_direction_out_jobs(conn)
+    post_hydration_direction = db_module.purge_direction_out_jobs(conn, profile)
     post_hydration_incomplete = db_module.purge_incomplete_jd_analyses(conn)
     post_hydration_noncurrent = db_module.purge_noncurrent_cohort_analyses(conn)
     if post_hydration_nonformal:

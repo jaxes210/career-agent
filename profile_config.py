@@ -24,6 +24,31 @@ def load_profile(path: str | Path = "profile.yaml") -> dict:
     if missing:
         raise ValueError(f"profile.yaml 缺少字段: {', '.join(missing)}")
 
+    for field in ("directions", "skills", "target_roles"):
+        if not isinstance(profile[field], list) or not profile[field]:
+            raise ValueError(f"profile.yaml 的 {field} 必须是非空列表")
+    for role in profile["target_roles"]:
+        if not isinstance(role, (str, dict)) or (isinstance(role, dict) and
+                (not role.get("name") or not isinstance(role.get("keywords", []), list))):
+            raise ValueError("target_roles 必须包含角色名和关键词列表")
+    english = profile.get("english") or {}
+    if not isinstance(english, dict):
+        raise ValueError("english 必须是映射")
+    if "cet6_below_425" in english and not isinstance(english["cet6_below_425"], bool):
+        raise ValueError("cet6_below_425 必须是布尔值")
+    if "cet6_score" in english and (isinstance(english["cet6_score"], bool) or
+            not isinstance(english["cet6_score"], (int, float)) or not 0 <= english["cet6_score"] <= 710):
+        raise ValueError("cet6_score 必须是0到710的分数")
+    if english.get("cet6_below_425") and english.get("cet6_score", 0) >= 425:
+        raise ValueError("英语六级分数与未达到425的声明冲突")
+
+    preferences = profile.get("employer_preferences") or {}
+    if not isinstance(preferences, dict) or any(
+        not isinstance(preferences.get(field, []), list)
+        for field in ("preferred_natures", "preferred_industries", "industrial_role_keywords")
+    ):
+        raise ValueError("employer_preferences 必须包含偏好列表")
+
     limits = profile["score_component_limits"]
     expected_components = {
         "core_direction",
@@ -52,14 +77,14 @@ def load_profile(path: str | Path = "profile.yaml") -> dict:
         if str(item).strip()
     ]
     profile["direction"] = " / ".join(directions)
-    if not profile.get("matching"):
-        profile["matching"] = {
-            "primary_directions": directions,
-            "secondary_directions": profile.get("secondary_directions", []),
-            "project_evidence": profile.get("project_evidence", []),
-            "supporting_skills": profile.get("skills", []),
-            "learning_targets": profile.get("learning_targets", []),
-            "unverified_skills": profile.get("unverified_skills", []),
-        }
+    # Derive matching from current fields; old nested values must not win.
+    profile["matching"] = {
+        "primary_directions": directions,
+        "secondary_directions": profile.get("secondary_directions", []),
+        "project_evidence": profile.get("project_evidence", []),
+        "supporting_skills": profile.get("skills", []),
+        "learning_targets": profile.get("learning_targets", []),
+        "unverified_skills": profile.get("unverified_skills", []),
+    }
 
     return profile

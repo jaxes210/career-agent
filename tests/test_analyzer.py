@@ -9,6 +9,11 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 import analyzer
 
 PROFILE = {
+    "target_roles": [{"name": "配置的软件目标", "keywords": [
+        "视觉算法", "嵌入式", "C++", "软件测试", "大模型应用", "智能体", "Agentic",
+        "具身", "机械臂", "机器视觉", "VLA", "强化学习", "模仿学习", "机器人控制", "后端架构",
+    ]}],
+    "excluded_title_keywords": ["Java", "前端"],
     "skills": ["ROS Noetic", "C++", "Python", "YOLOv8", "RealSense深度相机"],
     "direction": "机器人视觉 / 机械臂控制",
     "degree": "研究生",
@@ -303,7 +308,7 @@ def test_classify_relevant_titles_chunks_large_input():
 
 def test_classify_job_tiers_separates_pro_display_and_reject():
     jobs = [
-        {"title": "C++客户端开发工程师", "jd_raw": ""},
+        {"title": "C++客户端开发工程师", "jd_raw": "使用C++开发"},
         {"title": "大模型训练研究员", "jd_raw": "负责基座模型预训练"},
         {"title": "Java后端研发工程师", "jd_raw": "Spring Cloud微服务"},
     ]

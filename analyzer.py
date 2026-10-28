@@ -23,8 +23,8 @@ logger = logging.getLogger(__name__)
 _ANALYZE_WORKERS = max(1, int(os.environ.get("ANALYZE_WORKERS", "4")))
 _JD_HYDRATE_WORKERS = max(1, int(os.environ.get("JD_HYDRATE_WORKERS", "2")))
 
-ANALYSIS_VERSION = "match-v2.0"
-SCREENING_VERSION = "target-tier-v2.0"
+ANALYSIS_VERSION = "match-v3.0-profile-eligibility"
+SCREENING_VERSION = "target-tier-v3.0-profile"
 
 _SCORE_COMPONENT_LIMITS = {
     "core_direction": 25,
@@ -239,87 +239,13 @@ def call_claude_api(*args, **kwargs) -> str:
 # 小批量能显著降低 JSON 截断和长度不匹配概率。
 _CLASSIFY_BATCH = 20
 
-_RELEVANT_TITLE_PATTERNS = (
-    "机器人", "视觉", "机器视觉", "感知", "slam", "点云", "图像", "算法", "cv", "计算机视觉",
-    "具身", "强化学习", "世界模型", "仿真", "触觉", "灵巧手", "物理引擎",
-    "vla", "vlm", "模仿学习", "端到端", "具身智能", "embodied",
-    "机械臂", "控制", "运控", "运动控制", "运动规划", "自动化", "导航", "定位", "规控",
-    "软件", "软件开发", "软件工程师", "后端", "客户端", "服务端", "开发", "研发", "c++", "c/c++",
-    "python", "java",
-    "前端", "全栈", "数据库", "内核", "编译", "架构师", "中间件",
-    "ai", "人工智能", "大模型", "llm", "多模态", "模型", "训练", "推理",
-    "智能体", "agent", "agentic", "rag", "function calling", "tool use",
-    "robotics", "system engineer", "software engineer", "qa", "qe",
-    "infra", "高性能计算", "信息安全", "网络工程师", "嵌入式", "系统", "linux",
-    "测试", "软件测试", "测试开发", "测开", "开发测试", "sdet", "质量",
-)
-
-_IRRELEVANT_TITLE_PATTERNS = (
-    "销售经理", "销售工程师", "销售专员", "销售代表", "客服", "法务", "财务", "会计", "hr", "人力", "行政", "物流",
-    "运营", "电商", "品牌", "市场", "商务", "采购", "产品经理", "设计师",
-    "主播", "编辑", "文案", "管培", "证券", "投资", "审计",
-)
-
 _SCREENING_TIERS = {"A", "B", "C"}
-_DIRECT_CPP_TITLE_RE = re.compile(
-    r"C\s*/\s*C\+\+|C\+\+|C语言|(?<![A-Za-z])C开发|"
-    r"上位机|桌面端|PC客户端|客户端开发|"
-    r"Windows(?:终端|系统).{0,8}(?:开发|软件)",
-    re.I,
-)
-_ROBOT_VISION_TITLE_RE = re.compile(
-    r"机器人视觉|机器视觉|视觉算法|点云|手眼标定|目标检测|"
-    r"机械臂|机器人(?:软件|系统|算法)|SLAM|导航算法|运控|运动控制",
-    re.I,
-)
-_TEST_TITLE_RE = re.compile(
-    r"测试开发|测开|SDET|软件测试|自动化测试|算法测试|机器人测试|"
-    r"智能测试|系统测试|研发测试|实验室测试|测试助理|测试\s*Infra|测试工程师",
-    re.I,
-)
-_SOFTWARE_TITLE_RE = re.compile(
-    r"软件(?:开发|研发|工程师|架构)|系统软件|平台软件|应用软件|"
-    r"嵌入式(?:软件|开发|工程师)|客户端|服务端|后端|研发方向|计算机软件类",
-    re.I,
-)
-_ASPIRATIONAL_TITLE_RE = re.compile(
-    r"大模型|LLM|AIGC|智能体|Agent|RAG|具身|VLA|VLM|强化学习|"
-    r"模仿学习|世界模型|多模态|AI(?:应用|算法|工程)|人工智能|"
-    r"视觉|感知|机器人|机械臂|SLAM|控制|运动规划|仿真|"
-    r"智能算法|图像算法|软件算法|AI\s*Infra",
-    re.I,
-)
-_BROAD_TECHNICAL_TITLE_RE = re.compile(
-    r"算法|软件|开发|研发|测试|嵌入式|系统|模型|AI|Python|Java|"
-    r"前端|全栈|数据库|内核|编译|中间件|Infra|Linux|工程师|研究",
-    re.I,
-)
-_OFF_TARGET_TECH_TITLE_RE = re.compile(
-    r"Java|前端|Web|Android|iOS|Golang|Go语言|PHP|数据库|大数据|"
-    r"数据分析|网络安全|信息安全|芯片|IC设计|FPGA|硬件|结构|电气|射频|天线",
-    re.I,
-)
-_CPP_STACK_RE = re.compile(
-    r"C\s*/\s*C\+\+|C\+\+|C语言|Qt|Linux|Ubuntu|Windows|多线程|"
-    r"操作系统|客户端|桌面端",
-    re.I,
-)
-_TEST_STACK_RE = re.compile(
-    r"自动化|测试平台|测试框架|接口测试|性能测试|单元测试|集成测试|"
-    r"测试工具|测试脚本|Python|C\+\+|代码|编程",
-    re.I,
-)
-_ROBOT_VISION_EVIDENCE_RE = re.compile(
-    r"ROS|SCARA|RealSense|深度相机|点云|手眼标定|YOLO|目标检测|"
-    r"机械臂|机器人视觉|机器视觉|机器人|Gazebo|Isaac|运动规划|轨迹|抓取",
-    re.I,
-)
 
 
 def _configured_title_keywords(profile: dict | None) -> tuple[str, ...]:
     if not profile:
         return ()
-    words = []
+    words = list(profile.get("directions") or []) + list(profile.get("secondary_directions") or [])
     for role in profile.get("target_roles") or []:
         if isinstance(role, str):
             words.append(role)
@@ -340,58 +266,23 @@ def local_screening_tier(job: dict, profile: dict | None = None) -> str:
     profile. B is a target or technical role that still needs a cheap review.
     C is a high-confidence non-target role.
     """
-    title = unicodedata.normalize("NFKC", str(job.get("title") or "")).strip()
-    body = unicodedata.normalize("NFKC", str(job.get("jd_raw") or "")).strip()
-    if job_filters.is_job_record_noise({**job, "title": title}):
+    profile = profile if profile is not None else job_filters.current_profile()
+    if job_filters.is_direction_out_job(job, profile):
         return "C"
-    normalized = title.casefold()
-    excluded = tuple(
-        unicodedata.normalize("NFKC", str(word)).strip().casefold()
-        for word in (profile or {}).get("excluded_title_keywords", [])
-        if str(word).strip()
+    title = unicodedata.normalize("NFKC", str(job.get("title") or "")).casefold()
+    body = unicodedata.normalize("NFKC", str(job.get("jd_raw") or "")).casefold()
+    words = _configured_title_keywords(profile)
+    title_match = any(word in title for word in words)
+    # Target title plus concrete profile evidence permits Pro; sparse or broad
+    # titles remain B and can be hydrated without assuming any software stack.
+    evidence = profile.get("skills", []) + profile.get("project_evidence", [])
+    evidence_match = any(
+        str(word).strip() and unicodedata.normalize("NFKC", str(word)).casefold() in body
+        for word in evidence
     )
-    if any(word in normalized for word in excluded):
-        return "C"
-    if any(word in normalized for word in _IRRELEVANT_TITLE_PATTERNS):
-        return "C"
-
-    combined = f"{title}\n{body[:6000]}"
-    configured_match = any(
-        word in normalized for word in _configured_title_keywords(profile)
-    )
-    if _DIRECT_CPP_TITLE_RE.search(title):
+    if title_match and evidence_match:
         return "A"
-    if _ROBOT_VISION_TITLE_RE.search(title):
-        return "A" if _ROBOT_VISION_EVIDENCE_RE.search(combined) else "B"
-    if _TEST_TITLE_RE.search(title):
-        return (
-            "A"
-            if _TEST_STACK_RE.search(combined)
-            or (
-                re.search(r"机器人|机械臂", title)
-                and _ROBOT_VISION_EVIDENCE_RE.search(combined)
-            )
-            else "B"
-        )
-    if _OFF_TARGET_TECH_TITLE_RE.search(title):
-        return "C"
-    if (
-        _ASPIRATIONAL_TITLE_RE.search(title)
-        and _ROBOT_VISION_EVIDENCE_RE.search(combined)
-    ):
-        return "A"
-    if _SOFTWARE_TITLE_RE.search(title):
-        return "A" if _CPP_STACK_RE.search(combined) else "B"
-    if _ASPIRATIONAL_TITLE_RE.search(title):
-        if re.search(r"AI\s*Infra|AI应用|大模型应用|仿真平台|智能算法", title, re.I):
-            if _CPP_STACK_RE.search(combined) or _TEST_STACK_RE.search(combined):
-                return "A"
-        return "B"
-    if _BROAD_TECHNICAL_TITLE_RE.search(title):
-        return "B"
-    if configured_match:
-        return "B"
-    return "C"
+    return "B"
 
 
 def classify_job_tiers(
@@ -460,8 +351,8 @@ def _classify_tier_batch(
         "将每个岗位分为一档：\n"
         "A：根据标题和JD摘要，核心要求已有直接项目证据，预计严格匹配分可达到60分，值得调用Pro。\n"
         "B：属于候选人目标或学习方向，但直接项目证据不足、JD信息不足或只能迁移，保留展示但不调用Pro。\n"
-        "C：方向明显不符，包括纯Java/前端/硬件/结构/电气/产品/运营等非目标岗位。\n"
-        "learning_targets和unverified_skills不能作为已掌握能力；仅有Python、Linux等通用词不能判A。\n"
+        "C：核心职责与配置的target_roles、主次方向明确不符；不得使用固定行业白名单。\n"
+        "learning_targets和unverified_skills不能作为已掌握能力；仅有通用工具重叠不能判A。\n"
         f"输出严格JSON数组，包含ID 1到{len(jobs)}，格式为"
         '{"id":1,"tier":"A"}。只输出JSON，不要解释。'
     )
@@ -548,11 +439,10 @@ def _merge_screening_tier(
         return "C"
     if local_tier == "A":
         return "A"
-    title = str(job.get("title") or "")
-    if model_tier == "C" and (
-        _SOFTWARE_TITLE_RE.search(title)
-        or _TEST_TITLE_RE.search(title)
-        or _ASPIRATIONAL_TITLE_RE.search(title)
+    # Explicit configured target roles are retained even when Flash is uncertain.
+    if model_tier == "C" and any(
+        word in str(job.get("title") or "").casefold()
+        for word in _configured_title_keywords(profile)
     ):
         return "B"
     return model_tier if model_tier in _SCREENING_TIERS else "B"
@@ -576,6 +466,10 @@ def profile_fingerprint(profile: dict) -> str:
     return _stable_hash(profile)
 
 
+def screening_cache_version(profile: dict, model: str) -> str:
+    return f"{SCREENING_VERSION}:{profile_fingerprint(profile)}:{model}"
+
+
 def analysis_metadata(job: dict, profile: dict, model: str) -> dict:
     return {
         "analysis_version": ANALYSIS_VERSION,
@@ -591,27 +485,7 @@ def needs_analysis(conn, job: dict, profile: dict, model: str) -> bool:
 
 
 def _profile_context(profile: dict) -> str:
-    matching = profile.get("matching") or {}
-    if not matching:
-        return (
-            f"目标方向：{profile.get('direction', '')}\n"
-            f"候选人自述技能：{', '.join(profile.get('skills', []))}\n"
-            "注意：未给出项目证据或熟练度的技能只能视为部分证据。"
-        )
-    return json.dumps(
-        {
-            "primary_directions": matching.get("primary_directions", []),
-            "secondary_directions": matching.get("secondary_directions", []),
-            "project_evidence": matching.get("project_evidence", []),
-            "supporting_skills": matching.get("supporting_skills", []),
-            "learning_targets": matching.get("learning_targets", []),
-            "unverified_skills": matching.get("unverified_skills", []),
-            "degree": profile.get("degree", ""),
-            "job_type": profile.get("job_type", ""),
-        },
-        ensure_ascii=False,
-        indent=2,
-    )
+    return json.dumps(profile, ensure_ascii=False, indent=2)
 
 
 def _score_component_limits(profile: dict) -> dict[str, int]:
@@ -718,7 +592,14 @@ def _finalize_analysis(raw: dict, job: dict, profile: dict, model: str) -> dict:
     else:
         recommendation = "不推荐"
 
+    english = job_filters.english_eligibility(job, profile)
+    gaps.append(f"英语条件：{english['status']}；{english['reason']}")
+    if english["status"] == "不符合":
+        recommendation = "不推荐"
+        score = min(score, max(0, consider_threshold - 1))
+
     return {
+        "english_eligibility": english,
         "match_score": score,
         "score_breakdown": breakdown,
         "evidence": evidence,
@@ -745,6 +626,16 @@ def analyze_job(
         }
     if job_details.is_jd_incomplete(job):
         return {**_INCOMPLETE_JD_ANALYSIS, **analysis_metadata(job, profile, model)}
+    english = job_filters.english_eligibility(job, profile)
+    if english["status"] == "不符合":
+        return {
+            "match_score": 0, "score_breakdown": {}, "evidence": [],
+            "evidence_level": "insufficient", "advantages": [],
+            "gaps": [f"英语条件：不符合；{english['reason']}"],
+            "summary": "英语硬性条件不符合", "recommendation": "不推荐",
+            "analysis_status": "complete", "english_eligibility": english,
+            **analysis_metadata(job, profile, model),
+        }
 
     limits = _score_component_limits(profile)
     system_prompt = (
@@ -758,11 +649,11 @@ def analyze_job(
         f"- project_evidence 0-{limits['project_evidence']}：真实项目证据的数量、深度和相似程度。\n"
         f"- engineering_stack 0-{limits['engineering_stack']}：语言、框架、工具和工程环境。\n"
         f"- basic_criteria 0-{limits['basic_criteria']}：学历、届别等基础条件；地点不计入技能分。\n\n"
-        "证据规则：\n"
+        "英语资格以程序的保守判定为准；未说明、替代条件未核实不得判不符合。\n证据规则：\n"
         "1. relation 只能为 direct、adjacent、missing；requirement_type 只能为 core、supporting、basic。\n"
-        "2. C++、Python、Qt、Linux 等通用工具重叠不能代替算法、业务或项目经验。\n"
+        "2. 通用工具重叠不能代替岗位核心专业能力、业务或项目经验。\n"
         "3. 仅有工具重叠或邻接经验时 evidence_level 必须为 adjacent，不能写 direct。\n"
-        "4. 缺少三维重建、跟踪、CAM、计算几何、强化学习等 JD 核心能力时必须列入 missing_core_requirements。\n"
+        "4. 缺少 JD 核心专业能力时必须列入 missing_core_requirements，不得套用固定专业要求。\n"
         "5. 不得使用“精通”“完全匹配”等超出候选人配置证据的表述。\n"
         "6. evidence_level：direct=核心要求大多有直接项目证据；partial=有部分直接证据；"
         "adjacent=主要依赖可迁移经验；insufficient=证据不足。\n\n"
@@ -813,34 +704,35 @@ def analyze_job(
         return dict(_DEFAULT_ANALYSIS)
 
 
-def analysis_screening_tier(job: dict) -> str:
+def analysis_screening_tier(job: dict, profile: dict | None = None) -> str:
     """Resolve the persisted tier after considering a newly hydrated JD."""
     persisted = str(job.get("screening_tier") or "").strip().upper()
-    local = local_screening_tier(job)
-    if persisted == "C":
+    local = local_screening_tier(job, profile)
+    if local == "C":
         return "C"
     if persisted == "A" or local == "A":
         return "A"
     return "B"
 
 
-def _analysis_priority(job: dict) -> tuple[int, int]:
-    """Rank capped Pro candidates by concrete local evidence."""
-    title = str(job.get("title") or "")
-    body = str(job.get("jd_raw") or "")
-    combined = f"{title}\n{body}"
-    evidence_hits = sum(
-        bool(pattern.search(combined))
-        for pattern in (_CPP_STACK_RE, _TEST_STACK_RE, _ROBOT_VISION_EVIDENCE_RE)
-    )
-    direct_title = sum(
-        bool(pattern.search(title))
-        for pattern in (_DIRECT_CPP_TITLE_RE, _ROBOT_VISION_TITLE_RE, _TEST_TITLE_RE)
-    )
-    return direct_title, evidence_hits
+def _analysis_priority(job: dict, profile: dict | None = None) -> tuple[int, int, int]:
+    """Prefer fit first, then documented employer/industrial preferences."""
+    profile = profile if profile is not None else job_filters.current_profile()
+    title = str(job.get("title") or "").casefold()
+    body = str(job.get("jd_raw") or "").casefold()
+    role_hits = sum(word in title for word in _configured_title_keywords(profile))
+    skill_hits = sum(str(word).casefold() in body for word in profile.get("skills", []))
+    # Never infer state ownership or stability from a company name.
+    preferences = profile.get("employer_preferences") or {}
+    nature = str(job.get("company_nature") or "")
+    industry = str(job.get("industry") or "")
+    preference = int(nature in preferences.get("preferred_natures", []) and bool(nature))
+    preference += int(any(word in industry for word in preferences.get("preferred_industries", [])))
+    preference += int(any(word in title for word in preferences.get("industrial_role_keywords", [])))
+    return role_hits, skill_hits, min(2, preference)
 
 
-def _can_hydrate_to_tier_a(job: dict) -> bool:
+def _can_hydrate_to_tier_a(job: dict, profile: dict | None = None) -> bool:
     """Return whether a sparse B row could become A after fetching its JD."""
     if not job_cohorts.is_confirmed_current(job):
         return False
@@ -858,7 +750,7 @@ def _can_hydrate_to_tier_a(job: dict) -> bool:
             retry_cooldown = datetime.now() - checked_at < timedelta(days=retry_days)
         except (TypeError, ValueError):
             retry_cooldown = False
-    if analysis_screening_tier(job) == "A":
+    if analysis_screening_tier(job, profile) == "A":
         if incomplete and (durable_unavailable or retry_cooldown):
             return False
         return True
@@ -866,16 +758,9 @@ def _can_hydrate_to_tier_a(job: dict) -> bool:
         return False
     if durable_unavailable or retry_cooldown:
         return False
-    title = str(job.get("title") or "")
-    return any(
-        pattern.search(title)
-        for pattern in (
-            _DIRECT_CPP_TITLE_RE,
-            _ROBOT_VISION_TITLE_RE,
-            _TEST_TITLE_RE,
-            _SOFTWARE_TITLE_RE,
-        )
-    )
+    profile = profile if profile is not None else job_filters.current_profile()
+    title = str(job.get("title") or "").casefold()
+    return any(word in title for word in _configured_title_keywords(profile))
 
 
 def needs_detailed_analysis(conn, job: dict, profile: dict, model: str) -> bool:
@@ -884,8 +769,8 @@ def needs_detailed_analysis(conn, job: dict, profile: dict, model: str) -> bool:
         needs_analysis(conn, job, profile, model)
         and job_cohorts.is_confirmed_current(job)
         and job_filters.is_formal_campus_job(job)
-        and not job_filters.is_direction_out_job(job)
-        and _can_hydrate_to_tier_a(job)
+        and not job_filters.is_direction_out_job(job, profile)
+        and _can_hydrate_to_tier_a(job, profile)
     )
 
 
@@ -907,7 +792,7 @@ def batch_analyze(
         job for job in pending
         if job_cohorts.is_confirmed_current(job)
         and job_filters.is_formal_campus_job(job)
-        and not job_filters.is_direction_out_job(job)
+        and not job_filters.is_direction_out_job(job, profile)
     ]
     excluded_before_hydration = len(pending) - len(prefiltered)
     if excluded_before_hydration:
@@ -918,12 +803,12 @@ def batch_analyze(
         )
     initial_pro_candidates = [
         job for job in prefiltered
-        if analysis_screening_tier(job) == "A"
+        if analysis_screening_tier(job, profile) == "A"
     ]
     upgrade_candidates = [
         job for job in prefiltered
-        if analysis_screening_tier(job) == "B"
-        and _can_hydrate_to_tier_a(job)
+        if analysis_screening_tier(job, profile) == "B"
+        and _can_hydrate_to_tier_a(job, profile)
     ]
     pro_candidates = initial_pro_candidates + upgrade_candidates
     skipped_tier_b = len(prefiltered) - len(initial_pro_candidates)
@@ -980,7 +865,7 @@ def batch_analyze(
     eligible = [
         job for job in complete
         if job_filters.is_formal_campus_job(job)
-        and not job_filters.is_direction_out_job(job)
+        and not job_filters.is_direction_out_job(job, profile)
     ]
     excluded_after_hydration = len(complete) - len(eligible)
     if excluded_after_hydration:
@@ -989,13 +874,13 @@ def batch_analyze(
             excluded_after_hydration,
         )
     complete = [
-        job for job in eligible if analysis_screening_tier(job) == "A"
+        job for job in eligible if analysis_screening_tier(job, profile) == "A"
     ]
 
     if not complete:
         return []
 
-    complete.sort(key=_analysis_priority, reverse=True)
+    complete.sort(key=lambda job: _analysis_priority(job, profile), reverse=True)
     run_limit = max_jobs if max_jobs and max_jobs > 0 else None
     if max_jobs_per_day and max_jobs_per_day > 0:
         analyzed_today = conn.execute(

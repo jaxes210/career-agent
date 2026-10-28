@@ -201,6 +201,7 @@ def _jobs_payload(items: list, app_index=None) -> list[dict]:
     """
     app_index = app_index or {}
     out = []
+    profile = job_filters.current_profile()
     for it in items:
         job = it["job"]
         a = it.get("analysis") or {}
@@ -228,6 +229,7 @@ def _jobs_payload(items: list, app_index=None) -> list[dict]:
             "k": job.get("link_kind", "detail"),
             "cy": _cohort_label(job),
             "cat": job_filters.job_category(job),
+            "english": job_filters.english_eligibility(job, profile)["status"],
             "ev": job.get("cohort_evidence") or job.get("cohort_source") or "官网未明确届别",
             "e": evaluated,
             "id": job.get("id"),
@@ -280,12 +282,32 @@ def _filter_items(all_items: list) -> tuple[list, list, list, int]:
     """
     hidden = 0
     current, previous, unknown = [], [], []
+    profile = job_filters.current_profile()
     for it in all_items:
+        english = job_filters.english_eligibility(it["job"], profile)
+        # Copy rather than mutate shared/cached analyses. English is visible even
+        # for unscored B jobs; no model call is needed to establish this status.
+        original = it.get("analysis")
+        if original and ("job_id" in original or "profile_fingerprint" in original):
+            import analyzer
+            if (original.get("profile_fingerprint") != analyzer.profile_fingerprint(profile)
+                    or original.get("analysis_version") != analyzer.ANALYSIS_VERSION
+                    or original.get("jd_fingerprint") != analyzer.jd_fingerprint(it["job"])):
+                original = None
+                it = {**it, "analysis": None}
+        if original:
+            a = {**original, "gaps": list(original.get("gaps") or [])}
+            label = f"英语条件：{english['status']}；{english['reason']}"
+            a["gaps"] = [gap for gap in a["gaps"] if not gap.startswith("英语条件：")]
+            a["gaps"].append(label)
+            if english["status"] == "不符合":
+                a["recommendation"] = "不推荐"
+            it = {**it, "analysis": a}
         a = it.get("analysis")
         if not job_filters.is_formal_campus_job(it["job"]):
             hidden += 1
             continue
-        if job_filters.is_direction_out_job(it["job"]):
+        if job_filters.is_direction_out_job(it["job"], profile):
             hidden += 1
             continue
         if a and (a.get("summary") or "") == _FAIL_SUMMARY:
@@ -1844,7 +1866,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return link;
   }
   function jobName(j) {
-    var name = esc(j.t) + ' <span class="cohort-badge">' + esc(j.cy || '届别待确认') + '</span>';
+    var name = esc(j.t) + ' <span class="cohort-badge">英语：' + esc(j.english || '待核实') + '</span> <span class="cohort-badge">' + esc(j.cy || '届别待确认') + '</span>';
     return j.k === 'list' ? '<span class="cell-job-link">' + name + '</span>' :
       '<a href="' + esc(j.u) + '" target="_blank" rel="noopener" class="cell-job-link">' + name + '</a>';
   }

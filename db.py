@@ -442,12 +442,13 @@ def purge_nonformal_campus_jobs(conn: sqlite3.Connection) -> int:
     return len(ids)
 
 
-def purge_direction_out_jobs(conn: sqlite3.Connection) -> int:
+def purge_direction_out_jobs(conn: sqlite3.Connection, profile: dict | None = None) -> int:
     """Remove legacy explicit non-target roles and their stale analyses."""
-    from job_filters import is_direction_out_job
+    from job_filters import is_direction_out_job, current_profile
 
+    profile = profile if profile is not None else current_profile()
     rows = [dict(row) for row in conn.execute("SELECT * FROM jobs").fetchall()]
-    ids = [row["id"] for row in rows if is_direction_out_job(row)]
+    ids = [row["id"] for row in rows if is_direction_out_job(row, profile)]
     if not ids:
         return 0
     conn.executemany("DELETE FROM job_analysis WHERE job_id = ?", [(job_id,) for job_id in ids])
@@ -631,7 +632,9 @@ def purge_screening_tier_c_jobs(conn: sqlite3.Connection) -> int:
 def purge_screening_tier_b_analyses(conn: sqlite3.Connection) -> int:
     """Remove stale Pro scores from B-tier jobs while preserving the jobs."""
     import analyzer
+    from job_filters import current_profile
 
+    profile = current_profile()
     ids = [
         row["id"]
         for row in conn.execute(
@@ -640,7 +643,7 @@ def purge_screening_tier_b_analyses(conn: sqlite3.Connection) -> int:
                INNER JOIN job_analysis AS analysis ON analysis.job_id = job.id
                WHERE UPPER(TRIM(COALESCE(job.screening_tier, ''))) = 'B'"""
         ).fetchall()
-        if analyzer.analysis_screening_tier(dict(row)) == "B"
+        if analyzer.analysis_screening_tier(dict(row), profile) != "A"
     ]
     if not ids:
         return 0

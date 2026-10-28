@@ -1,5 +1,17 @@
 # 公司招聘接入状态
 
+## 2026-10-28 环境工程画像适配抽样
+
+仅抽样现有 `config.yaml` 入口，无新增企业、无 URL 变更、无全量搜索、无 DeepSeek 调用，未写正式岗位数据库。
+
+| 公司 | 检查范围 | 结果 |
+| --- | --- | --- |
+| 国家开发投资集团 | 配置入口请求 + iguopin 真实爬虫一次 | `sdic1.iguopin.com` 入口请求失败；`gp-api.iguopin.com` API 被代理 CONNECT 403 阻断；爬虫返回 0，不能验证岗位或届别 |
+| 万华化学 | 配置的 `www.whchem.com/column/164/` 只读请求 | ProxyError，当前网络策略不允许连接；未运行浏览器抓取，不能验证岗位 |
+| 华测 | 配置入口请求 + beisen 真实爬虫一次 | `huace.zhiye.com` API 被代理 CONNECT 403 阻断；渲染回退缺少 Playwright Chromium；返回 0，不能验证岗位或届别 |
+
+三个入口均归为 Not Connected / Needs URL Search Or Verification（本次原因为运行环境阻断，未认定 URL 无效）。后续需在环境设置按需允许上述域名、完成 Chromium 安装，再按既有文档复测真实岗位与2027届官方证据。未使用猜测的新入口；本地 `recruitment-crawler-integration` 技能未找到，本次遵循仓库文档执行只读抽样。
+
 ## 2026-07-27 官方校招活动页届别复核
 
 - 18:40 完成修改后的首次全量正式运行并写入 `data/jobs.db`：10,514 个活跃岗位中确认 2027 届 1,337 个，A 档 682 个、B 档 655 个；当日新增完成 416 条 V4-Pro 分析，库内 743 条分析均为 `complete`。仅同花顺“算法工程师（金融 AI Agent 平台）”因官方来源只有列表页、JD 为空而未调用 Pro；另有 67 个 JD 不完整岗位均为 B 档，不调用 Pro。报告已于 18:40 重新生成；本地未配置 `FEISHU_WEBHOOK`，因此本轮未推送飞书。

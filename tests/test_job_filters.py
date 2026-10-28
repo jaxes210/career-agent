@@ -290,7 +290,7 @@ def test_direction_filter_keeps_technical_roles_with_business_context():
         {"title": "机器人应用项目工程师"},
         {"title": "混元-视频编辑和统一生成模型探索"},
     ]
-    kept, dropped = job_filters.filter_target_direction_jobs(jobs)
+    kept, dropped = job_filters.filter_target_direction_jobs(jobs, profile={})
     assert [job["title"] for job in kept] == [job["title"] for job in jobs]
     assert dropped == []
 

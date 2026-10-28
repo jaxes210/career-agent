@@ -45,7 +45,8 @@ def _conn():
 
 def _data_signature():
     """Return a cheap cache key that changes whenever report state changes."""
-    paths = (Path(DB_PATH), db_module.APPLICATIONS_PATH)
+    paths = (Path(DB_PATH), db_module.APPLICATIONS_PATH,
+             Path(os.environ.get("PROFILE_PATH", _ROOT / "profile.yaml")))
     signature = [date.today().isoformat()]
     for path in paths:
         try:
