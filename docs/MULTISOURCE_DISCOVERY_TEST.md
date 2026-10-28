@@ -51,3 +51,11 @@
 ## 离线验证
 
 Python 3.11下342项测试通过，涵盖HTML/RSS提取、独立子单位去重、国聘查询ID、未知届别保留、验证码/连接失败分类及来源重试节流。配置、招聘数据库和投递记录字节核对通过。
+
+## GitHub Actions 复验状态
+
+2026-10-28检查公开工作流页面：`Discover and validate employer sources` 已存在且支持手动触发，但页面明确显示尚无历史运行。当前Codex云环境执行 `gh workflow run company_pool_discovery.yml --ref main -f validation_limit=3` 时，GitHub API返回 `Forbidden`，没有创建运行，不能用本地CONNECT 403结果代替GitHub runner结论。
+
+工作流已补充手动触发专用的6入口探测步骤，默认启用，定时任务不运行pending探测。artifact包含逐请求状态的 `outputs/multisource_probe.json`；Actions摘要直接显示6个来源的状态、原因、线索数和新企业数。异常原因现可区分 `proxy_connect_403`、目标HTTP 403、DNS/连接、TLS、超时、验证码/登录、正常访问但无匹配线索及页面解析错误。更新后Python 3.11测试为344 passed。
+
+具备仓库Actions写权限的账号可在网页手动选择 `main`、`validation_limit=3` 并保留“限量探测6个待验证公开入口”开启。该运行不调用DeepSeek、不执行每日全量岗位采集、不直接修改正式企业配置；发现的线索先进入候选状态，只有既有官方身份、完整真实岗位和2027届门槛全部通过时才生成待审核PR。

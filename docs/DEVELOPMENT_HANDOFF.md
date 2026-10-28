@@ -107,3 +107,12 @@
 - GitHub一三五及手动触发保留，默认深入验证3，新增诊断artifact。仍需网络开放后验证高校真正就业入口、集团公告及国聘SPA内容；不得将这轮标为已完成多源线上覆盖。
 - 后续：按测试报告开放6个入口域名及gp-api.iguopin.com，运行限量探测；取得真实公告后启用注册来源，再company_pool.py run --limit 3走官方/2027届/字段门槛及PR审核。
 - 最终Python3.11测试342 passed；git diff --check通过。未注册任何“已验证”新来源，线上真实覆盖仍为待完成项。
+
+## 2026-10-28 GitHub Actions 联网复验准备
+
+- 远端 `main` 起点与本地一致，均为 `219327b`；公开工作流页面显示 `Discover and validate employer sources` 已部署但 `This workflow has no runs yet`。仓库其他 Tests/报告/Pages 工作流有成功记录，说明 Actions 功能本身已启用。
+- 工作流原来只运行 enabled 来源，无法触达6个 `pending_sources`。已修正为：仅 `workflow_dispatch` 默认执行 `scripts/test_discovery_sources.py`，定时任务仍不探测 pending 来源；诊断 artifact 同时上传 `data/company_pool.json` 与 `outputs/multisource_probe.json`。`validation_limit` 默认和硬上限保持3。
+- 联网失败类型细分为代理CONNECT 403、代理错误、连接/DNS、TLS、连接/读取超时、目标HTTP状态、验证码/登录、无可解析线索和解析错误；仍统一遵守“访问失败不等于企业无招聘”。单个来源解析异常不再阻断其余5个入口，运行摘要会列出逐来源结果。
+- 尝试使用 `gh workflow run company_pool_discovery.yml --ref main -f validation_limit=3`，GitHub API 返回 `Forbidden`，没有创建运行记录；当前云环境的 `GH_TOKEN` 无效，移除该变量后也没有已登录账户。Git推送可用不代表具有Actions API调度权限。
+- 因未产生GitHub runner运行，本轮不能声称6入口在Actions中可访问，也没有新线索、新企业、官方验证或企业配置PR。用户需在 Actions 页面选择该工作流，点击 Run workflow，分支 `main`、`validation_limit=3`、保留 pending probe 开启；全程不调用DeepSeek或每日全量采集。
+- 本轮新增回归后Python3.11为344 passed，工作流YAML可解析，`git diff --check`通过。正式67家配置、jobs.db、投递记录、历史分析及API费用上限未改。

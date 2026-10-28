@@ -10,6 +10,11 @@ on:
         description: "本轮最多验证多少个到期候选"
         required: false
         default: "3"
+      probe_pending_sources:
+        description: "限量探测6个待验证公开入口（不写正式池）"
+        required: false
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -50,6 +55,10 @@ jobs:
           python -m pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
+      - name: Probe bounded pending public sources
+        if: github.event_name == 'workflow_dispatch' && inputs.probe_pending_sources
+        run: python scripts/test_discovery_sources.py
+
       - name: Discover and validate due candidates
         env:
           VALIDATION_LIMIT: ${{ inputs.validation_limit || '3' }}
@@ -60,7 +69,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: company-discovery-diagnostics
-          path: data/company_pool.json
+          path: |
+            data/company_pool.json
+            outputs/multisource_probe.json
 
       - name: Persist pool state without changing the formal pool
         run: |

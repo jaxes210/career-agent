@@ -301,3 +301,5 @@ python scripts/audit_company_integrations.py --workers 8
 ## 多源发现解析
 
 `scripts/public_discovery.py`支持注册`public_html`与`public_rss`，可设置article_selector/link_selector和max_detail_pages（硬限2）。仅把真实标题和正文抽取为候选，不把2027关键词或第三方投递链接当官方资格。失败探测登记pending_sources及source_health，不启用未经验证来源。`python scripts/test_discovery_sources.py`只测试6个探测入口；详细结果见docs/MULTISOURCE_DISCOVERY_TEST.md。403、登录、验证码、超时/代理连接失败均不得归因于“企业无招聘”。
+
+手动运行 `company_pool_discovery.yml` 时默认额外执行上述6入口探测，并把 `outputs/multisource_probe.json` 与候选池状态一起上传为诊断 artifact；定时任务不执行 pending 探测。异常分类保留 `proxy_connect_403`、目标站 HTTP 403、连接/DNS、TLS、超时、无可解析线索和解析错误的区别，不能用其中任何访问错误推断企业停止招聘。

@@ -115,8 +115,20 @@ def fetch_public(url, session):
                 return None,'BLOCKED','login/captcha/access challenge'
             return content,'OK',''
     except requests.RequestException as exc:
-        reason = 'CONNECT 403 Forbidden' if '403 Forbidden' in str(exc) else type(exc).__name__
-        return None,'BLOCKED',f'connection restricted or unavailable: {reason}'
+        message = str(exc)
+        if isinstance(exc, requests.exceptions.ProxyError):
+            failure = 'proxy_connect_403' if '403 Forbidden' in message else 'proxy_error'
+        elif isinstance(exc, requests.exceptions.ConnectTimeout):
+            failure = 'connect_timeout'
+        elif isinstance(exc, requests.exceptions.ReadTimeout):
+            failure = 'read_timeout'
+        elif isinstance(exc, requests.exceptions.SSLError):
+            failure = 'tls_error'
+        elif isinstance(exc, requests.exceptions.ConnectionError):
+            failure = 'dns_or_connect_error'
+        else:
+            failure = type(exc).__name__
+        return None,'BLOCKED',f'connection restricted or unavailable: {failure}'
 
 
 def discover_source(source, session=None):
@@ -138,7 +150,7 @@ def discover_source(source, session=None):
             if body:
                 new, _ = parse_html(body,link,source)
                 leads.extend(new)
-    except (ET.ParseError, ValueError) as exc:
+    except (ET.ParseError, ValueError, AttributeError, TypeError) as exc:
         return {'status':'PARSE_ERROR','reason':type(exc).__name__,'leads':[],'requests':requests_made}
     unique = {(lead['name'],lead['source_url'],lead['careers_url']):lead for lead in leads}
     return {'status':'OK' if unique else 'NO_PARSED_LEADS', 'leads':list(unique.values())[:50],

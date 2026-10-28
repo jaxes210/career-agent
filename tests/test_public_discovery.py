@@ -41,7 +41,18 @@ def test_unknown_url_identity_preserves_company_query_ids():
 def test_connection_failure_is_blocked_not_empty():
     class Session:
         def get(self,*a,**k):raise requests.ConnectionError('unavailable')
-    assert fetch_public('https://example.com',Session())[1]=='BLOCKED'
+    _, status, reason = fetch_public('https://example.com',Session())
+    assert status == 'BLOCKED'
+    assert reason.endswith('dns_or_connect_error')
+
+
+def test_proxy_connect_403_is_distinguished_from_target_http_403():
+    class Session:
+        def get(self,*a,**k):
+            raise requests.exceptions.ProxyError('Tunnel connection failed: 403 Forbidden')
+    _, status, reason = fetch_public('https://example.com',Session())
+    assert status == 'BLOCKED'
+    assert reason.endswith('proxy_connect_403')
 
 
 def test_captcha_page_is_blocked_without_parsing_or_bypass():
