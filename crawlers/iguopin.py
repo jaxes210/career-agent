@@ -30,6 +30,31 @@ class IGuopinCrawler(BaseCrawler):
     PAGE_SIZE = 100
     MAX_PAGES = 20
 
+    def __init__(self, company_name: str, careers_url: str):
+        super().__init__(company_name, careers_url)
+        self.request_failures: list[str] = []
+        self.pagination_complete = True
+
+    @staticmethod
+    def _safe_failure(exc: Exception) -> str:
+        """Classify request failures without persisting URLs, tokens or headers."""
+        message = str(exc)
+        if isinstance(exc, requests.exceptions.ProxyError):
+            return "proxy_connect_403" if "403 Forbidden" in message else "proxy_error"
+        if isinstance(exc, requests.exceptions.ConnectTimeout):
+            return "connect_timeout"
+        if isinstance(exc, requests.exceptions.ReadTimeout):
+            return "read_timeout"
+        if isinstance(exc, requests.exceptions.SSLError):
+            return "tls_error"
+        if isinstance(exc, requests.exceptions.ConnectionError):
+            return "dns_or_connect_error"
+        if isinstance(exc, requests.RequestException):
+            return type(exc).__name__
+        if isinstance(exc, ValueError):
+            return "invalid_json"
+        return "api_error"
+
     def _request_json(
         self,
         session: requests.Session,
@@ -47,6 +72,7 @@ class IGuopinCrawler(BaseCrawler):
                 raise RuntimeError(payload.get("msg") or "IGuopin API returned an error")
             except (requests.RequestException, ValueError, RuntimeError) as exc:
                 if attempt == self.REQUEST_ATTEMPTS:
+                    self.request_failures.append(self._safe_failure(exc))
                     logger.warning("[%s] 国聘接口请求失败 %s: %s", self.company_name, url, exc)
                     return None
                 time.sleep(0.5 * attempt)
@@ -115,6 +141,7 @@ class IGuopinCrawler(BaseCrawler):
                 },
             )
             if not isinstance(data, dict):
+                self.pagination_complete = False
                 break
             page_rows = data.get("list") or []
             rows.extend(row for row in page_rows if isinstance(row, dict))
@@ -124,6 +151,8 @@ class IGuopinCrawler(BaseCrawler):
                 total = None
             if not page_rows or (total is not None and len(rows) >= total):
                 break
+        else:
+            self.pagination_complete = total is not None and len(rows) >= total
 
         jobs = []
         seen_ids = set()

@@ -1,4 +1,5 @@
 from crawlers.iguopin import IGuopinCrawler
+import requests
 
 
 class FakeResponse:
@@ -52,3 +53,23 @@ def test_iguopin_crawler_uses_all_pages_and_direct_detail_url(monkeypatch):
     list_body = calls[1][2]["json"]
     assert list_body["page_size"] == 100
     assert list_body["nature"] == ["campus-a", "campus-b"]
+
+
+def test_iguopin_crawler_marks_incomplete_pagination(monkeypatch):
+    crawler = IGuopinCrawler("测试集团", "https://tenant.iguopin.com/jobCampus")
+    crawler.MAX_PAGES = 1
+    monkeypatch.setattr(crawler, "_site_config", lambda _session: ("company-1", ["campus"]))
+    monkeypatch.setattr(crawler, "_request_json", lambda *_args, **_kwargs: {
+        "total": 2,
+        "list": [{"job_id": "one", "job_name": "化工工艺岗"}],
+    })
+
+    assert len(crawler.fetch()) == 1
+    assert crawler.pagination_complete is False
+
+
+def test_iguopin_failure_diagnostics_do_not_persist_request_details():
+    failure = requests.exceptions.ProxyError(
+        'https://user:secret@proxy.invalid TOKEN=secret 403 Forbidden'
+    )
+    assert IGuopinCrawler._safe_failure(failure) == 'proxy_connect_403'

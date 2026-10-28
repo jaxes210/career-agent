@@ -7,7 +7,11 @@ from datetime import timedelta
 import yaml
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from scripts.public_discovery import discover_source
+from scripts.public_discovery import (
+    discover_iguopin_tenant,
+    discover_source,
+    discover_university_portal,
+)
 from scripts.company_pool import _merge_lead, load_state, save_state, _iso, _now
 
 
@@ -15,7 +19,12 @@ def _probe(source):
     """Keep one broken source from preventing diagnostics for the other five."""
     checked_at = _iso(_now())
     try:
-        result = discover_source(source)
+        if source.get('adapter') == 'iguopin_tenant':
+            result = discover_iguopin_tenant(source)
+        elif source.get('adapter') == 'university_portal':
+            result = discover_university_portal(source)
+        else:
+            result = discover_source(source)
     except Exception as exc:  # The bounded probe must report parser defects by source.
         result = {
             'status': 'PROBE_ERROR',
@@ -41,12 +50,15 @@ def _write_step_summary(payload):
         f"- 入口：{len(payload['sources'])}",
         f"- 招聘线索：{payload['lead_count']}",
         f"- 新企业：{payload['new_company_count']}", '',
-        '| 类别 | 来源 | 结果 | 原因 |',
-        '| --- | --- | --- | --- |',
+        '| 类别 | 来源 | 结果 | 岗位/目标/确认27届 | 原因 |',
+        '| --- | --- | --- | --- | --- |',
     ]
     for row in payload['sources']:
         reason = str(row.get('reason') or '').replace('|', '\\|').replace('\n', ' ')
-        lines.append(f"| {row['category']} | {row['id']} | {row['status']} | {reason} |")
+        counts = '/'.join(str(row.get(key, '-')) for key in (
+            'job_count', 'formal_target_count', 'confirmed_2027_count'
+        ))
+        lines.append(f"| {row['category']} | {row['id']} | {row['status']} | {counts} | {reason} |")
     with open(path, 'a', encoding='utf-8') as handle:
         handle.write('\n'.join(lines) + '\n')
 

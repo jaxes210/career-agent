@@ -140,3 +140,11 @@
 - 用户已配置仓库级 `DEEPSEEK_API_KEY`。受控运行 `40659880270` 为execute模式：选择20个岗位，`deepseek-flash`合并为1次批量请求，1次成功、0次失败；临时数据库，未写生产库。
 - `complete_analyses=0`：没有同时满足A档与JD完整的候选，因此 `deepseek-v4-pro` 未被调用，不能声称深度模型已验证。这不是Flash失败，也无需强行分析不相关岗位。
 - 新增 `docs/NEXT_SESSION_GUIDE.md`，包含可直接粘贴的新Codex提示词、6个受限/未适配来源处理表以及人机验证边界。用户不应向Codex提供账号、密码、Cookie、验证码或API Key；只需提供公开URL。
+
+## 2026-10-28 国聘与高校来源专用适配续作
+
+- 本地 `HEAD` 与 `origin/main` 均为 `652c775`，开始时工作区干净。Git fetch 成功；`gh run list` 和无认证 GitHub Actions REST 均返回 Forbidden，近期已知运行仍以本文件和 `NEXT_SESSION_GUIDE.md` 记录的 #2 与受控 DeepSeek 运行作为证据，未伪称取得新运行结果。
+- 国投和中国电科两个 pending 来源改用 `iguopin_tenant`，复用公开 API 爬虫并输出岗位总数、正式目标岗位数和明确 2027 届数。爬虫新增请求失败与分页完整性状态；失败或部分结果不会当成空来源，也不会合入候选或正式池。
+- 华东理工和北京化工新增 `university_portal`：只从学校官网页面实际链接发现就业导航，最多跟随2页；不猜 URL，高校转载只作线索。fixture 覆盖跨子域就业导航和公告提取。
+- 当前环境对 `gp-api.iguopin.com` 和两校官网均返回代理 CONNECT 403，真实限量验证未完成；国家能源和兵器集团也未绕过访问挑战。本轮未运行 main.py、未调用 DeepSeek、未修改 jobs.db 或正式 config。
+- 下一步先在 GitHub Actions 手动运行 pending probe（limit 3）确认两个专用适配器的真实结果，再根据 artifact 中的国聘岗位/高校导航样例修正选择器；随后继续集团公开替代来源、来源轮换和小批健康检查。

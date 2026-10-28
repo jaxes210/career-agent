@@ -73,26 +73,28 @@ pending_sources:
     enabled: false
     provenance: config.yaml（可能需现有北森API而非静态HTML）
   - id: ecust_portal_probe
-    adapter: public_html
+    adapter: university_portal
     category: university
     source_url: https://www.ecust.edu.cn/
     enabled: false
     provenance: 华东理工大学门户待探测就业导航，尚未获得就业公告URL
   - id: buct_portal_probe
-    adapter: public_html
+    adapter: university_portal
     category: university
     source_url: https://www.buct.edu.cn/
     enabled: false
     provenance: 北京化工大学门户待探测就业导航，尚未获得就业公告URL
   - id: iguopin_sdic
-    adapter: public_html
+    adapter: iguopin_tenant
     category: platform
+    company_name: 国家开发投资集团
     source_url: https://sdic1.iguopin.com/jobCampus
     enabled: false
     provenance: config.yaml（可能需国聘适配器）
   - id: iguopin_cetc
-    adapter: public_html
+    adapter: iguopin_tenant
     category: platform
+    company_name: 中国电科
     source_url: https://cetc.iguopin.com/job-campus
     enabled: false
     provenance: config.yaml（可能需国聘适配器）

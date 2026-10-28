@@ -52,6 +52,13 @@
 
 Python 3.11下345项测试通过，涵盖HTML/RSS提取、独立子单位去重、国聘查询ID、未知届别保留、验证码/连接失败分类、来源重试节流及腾讯文档工业催化候选准入。配置、招聘数据库和投递记录字节核对通过。
 
+## 2026-10-28 专用适配器续作
+
+- 国投和中国电科两个 pending 入口已从通用 HTML 探测切换为 `iguopin_tenant`。它复用现有国聘公开 API 爬虫，检查租户、完整分页、岗位详情链接、正式校招、目标方向和明确 2027 届证据；仅输出诊断，不写招聘数据库或正式池。
+- 国聘爬虫现在显式记录请求失败和分页未完成。代理 CONNECT 403 继续记为 `BLOCKED`，部分分页会丢弃并记为解析错误，不再把两者解释成 0 岗。
+- 华东理工和北京化工 pending 入口切换为 `university_portal`。适配器只跟随学校官网 HTML 中实际出现的最多两个“就业/招聘”导航链接，不猜测就业站 URL；高校公告仍只作企业线索。
+- 本地真实复验中，`gp-api.iguopin.com`、`www.ecust.edu.cn`、`www.buct.edu.cn` 均被当前云代理 CONNECT 403 拒绝。本轮没有新增企业、官方认证、2027 届岗位或配置 PR。需由 GitHub runner 再手动运行限量 pending probe 验证真实响应。
+
 ## GitHub Actions 真实复验结果
 
 2026-10-28用户手动运行 [Discover and validate employer sources #1](https://github.com/jaxes210/career-agent/actions/runs/40657312891)，实际探测6个入口。国家能源与兵器集团页面完成网络连接后返回登录/验证码/访问挑战；华东理工、北京化工门户和国投、电科国聘页均成功返回页面，但通用HTML解析未发现匹配公告。由此可确认此前全量CONNECT 403属于Codex云环境，GitHub runner能够访问其中至少4个入口；BLOCKED的2个入口属于目标页面挑战。

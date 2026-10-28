@@ -14,6 +14,7 @@ MAX_BYTES = 2 * 1024 * 1024
 RECRUIT = re.compile(r'招聘|校招|毕业生|人才引进')
 RELEVANT = re.compile(r'催化|化工|材料|化学|生产|工艺|理化|检测|质量|环保|水处理|日化|配方|能源|石油|石化|煤|研究院|生物')
 COMPANY = re.compile(r'([\u4e00-\u9fffA-Za-z0-9·（）()]{2,60}(?:股份有限公司|有限责任公司|有限公司|集团|研究院|研究所|技术中心))')
+EMPLOYMENT_NAV = re.compile(r'就业(?:信息|指导|服务|创业)?|招聘信息|招聘公告|毕业生就业')
 
 
 def http_url(value, base):
@@ -155,3 +156,80 @@ def discover_source(source, session=None):
     unique = {(lead['name'],lead['source_url'],lead['careers_url']):lead for lead in leads}
     return {'status':'OK' if unique else 'NO_PARSED_LEADS', 'leads':list(unique.values())[:50],
             'requests':requests_made,'reason':'' if unique else 'No matching public announcement parsed; may need a site-specific adapter'}
+
+
+def discover_iguopin_tenant(source):
+    """Probe one public IGuopin tenant without writing jobs or calling AI."""
+    from crawlers.iguopin import IGuopinCrawler
+    import job_cohorts
+    import job_filters
+
+    crawler = IGuopinCrawler(source['company_name'], source['source_url'])
+    jobs = crawler.fetch()
+    request = {'url': source['source_url'], 'status': 'OK', 'reason': ''}
+    if crawler.request_failures:
+        reason = f"IGuopin public API unavailable: {crawler.request_failures[-1]}"
+        request.update(status='BLOCKED', reason=reason)
+        return {'status': 'BLOCKED', 'reason': reason, 'leads': [],
+                'requests': [request], 'job_count': 0, 'formal_target_count': 0,
+                'confirmed_2027_count': 0, 'samples': []}
+    if not crawler.pagination_complete:
+        reason = 'IGuopin pagination did not complete; partial results discarded'
+        request.update(status='PARSE_ERROR', reason=reason)
+        return {'status': 'PARSE_ERROR', 'reason': reason, 'leads': [],
+                'requests': [request], 'job_count': len(jobs),
+                'formal_target_count': 0, 'confirmed_2027_count': 0, 'samples': []}
+
+    formal, _ = job_filters.filter_formal_campus_jobs(jobs)
+    target, _ = job_filters.filter_target_direction_jobs(formal)
+    confirmed = [job for job in target if job_cohorts.is_confirmed_current(
+        job_cohorts.explicit_job_cohort(job)
+    )]
+    samples = [{
+        'title': job.get('title', ''), 'city': job.get('city', ''),
+        'jd_url': job.get('jd_url', ''),
+        'has_requirements': bool(re.search(r'任职要求|任职资格|岗位要求|专业要求',
+                                           str(job.get('jd_raw') or ''))),
+    } for job in target[:3]]
+    status = 'OK' if jobs else 'NO_PARSED_LEADS'
+    reason = '' if jobs else 'Public tenant API returned no campus jobs'
+    return {'status': status, 'reason': reason, 'leads': [], 'requests': [request],
+            'job_count': len(jobs), 'formal_target_count': len(target),
+            'confirmed_2027_count': len(confirmed), 'samples': samples}
+
+
+def discover_university_portal(source, session=None):
+    """Follow only employment links present in an official university portal."""
+    session = session or requests.Session()
+    session.headers.update({'User-Agent': 'career-agent public-source-monitor/1.0'})
+    url = source['source_url']
+    text, status, reason = fetch_public(url, session)
+    requests_made = [{'url': url, 'status': status, 'reason': reason}]
+    if text is None:
+        return {'status': status, 'reason': reason, 'leads': [],
+                'requests': requests_made, 'navigation_candidates': []}
+    soup = BeautifulSoup(text, 'html.parser')
+    candidates = []
+    for anchor in soup.select('a[href]'):
+        label = ' '.join(filter(None, [anchor.get_text(' ', strip=True), anchor.get('title', '')]))
+        target = http_url(anchor.get('href', ''), url)
+        if target and EMPLOYMENT_NAV.search(label):
+            candidates.append({'label': label[:100], 'url': target})
+    candidates = list({row['url']: row for row in candidates}.values())[:2]
+    leads = []
+    for candidate in candidates:
+        body, state, detail = fetch_public(candidate['url'], session)
+        requests_made.append({'url': candidate['url'], 'status': state, 'reason': detail})
+        if body:
+            parsed, _ = parse_html(body, candidate['url'], source)
+            leads.extend(parsed)
+    unique = {(lead['name'], lead['source_url'], lead['careers_url']): lead for lead in leads}
+    if unique:
+        final_status, final_reason = 'OK', ''
+    elif candidates:
+        final_status, final_reason = 'NO_PARSED_LEADS', 'Employment navigation found, but no matching announcement parsed'
+    else:
+        final_status, final_reason = 'NO_NAVIGATION', 'No employment navigation link found on the official portal'
+    return {'status': final_status, 'reason': final_reason,
+            'leads': list(unique.values())[:50], 'requests': requests_made,
+            'navigation_candidates': candidates}

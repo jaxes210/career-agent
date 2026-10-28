@@ -1129,3 +1129,8 @@
 | 鸿擎科技 | candidate | `feishu` | 待验证 |  | https://qcnhg4ksaiwt.jobs.feishu.cn/257870/m/?external_referral_code=92AJ8US |
 | 黑白调-傲风 | candidate | `moka` | 待验证 |  | https://app.mokahr.com/campus_apply/heibaidiao/54126?recommendCode=DSBjx3ZQ#/jobs |
 <!-- COMPANY_POOL_AUTOMATION_END -->
+# 2026-10-28 限量来源适配续作
+
+- 国投、中国电科 pending 探测已使用国聘公开 API 专用适配器；新增网络失败与分页完整性诊断，以及正式目标岗位/确认 2027 届计数。当前 Codex 云代理拒绝 `gp-api.iguopin.com`，本轮未作来源失效裁决。
+- 华东理工、北京化工门户新增官网就业导航发现适配器，只跟随页面中真实链接。当前云代理拒绝两校官网，尚未取得真实就业公告样例，来源保持 pending/disabled。
+- 国家能源和兵器集团访问挑战未绕过，未使用账号、Cookie 或验证码，也未编造替代入口。

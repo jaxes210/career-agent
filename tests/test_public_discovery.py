@@ -1,5 +1,12 @@
 import requests
-from scripts.public_discovery import parse_html, parse_rss, fetch_public, discover_source
+from scripts.public_discovery import (
+    discover_iguopin_tenant,
+    discover_source,
+    discover_university_portal,
+    fetch_public,
+    parse_html,
+    parse_rss,
+)
 from scripts.company_pool import _merge_lead, _url_key
 
 SOURCE={'id':'test','adapter':'public_html'}
@@ -72,6 +79,69 @@ def test_captcha_page_is_blocked_without_parsing_or_bypass():
 def test_shared_iguopin_company_pages_keep_distinct_ids():
     from scripts.qq_docs_27_autumn_monitor import recruitment_source_identity
     assert recruitment_source_identity('https://www.iguopin.com/company?id=1') != recruitment_source_identity('https://www.iguopin.com/company?id=2')
+
+
+def test_iguopin_tenant_probe_checks_target_and_confirmed_cohort(monkeypatch):
+    def fake_fetch(self):
+        return [
+            self._make_job(
+                title='2027届化工工艺技术岗', city='北京',
+                jd_url='https://www.iguopin.com/job/detail?id=1',
+                jd_raw='岗位职责：负责催化工艺优化。任职要求：工业催化、化学相关专业。',
+            ),
+            self._make_job(
+                title='2027届软件工程师', city='北京',
+                jd_url='https://www.iguopin.com/job/detail?id=2',
+                jd_raw='任职要求：计算机专业。',
+            ),
+        ]
+    monkeypatch.setattr('crawlers.iguopin.IGuopinCrawler.fetch', fake_fetch)
+    result = discover_iguopin_tenant({
+        'company_name': '测试集团', 'source_url': 'https://tenant.iguopin.com/jobCampus',
+    })
+    assert result['status'] == 'OK'
+    assert result['job_count'] == 2
+    assert result['formal_target_count'] == 1
+    assert result['confirmed_2027_count'] == 1
+    assert result['samples'][0]['has_requirements'] is True
+    assert result['leads'] == []
+
+
+def test_iguopin_tenant_probe_preserves_network_failure(monkeypatch):
+    def failed_fetch(self):
+        self.request_failures.append('proxy CONNECT 403')
+        return []
+    monkeypatch.setattr('crawlers.iguopin.IGuopinCrawler.fetch', failed_fetch)
+    result = discover_iguopin_tenant({
+        'company_name': '测试集团', 'source_url': 'https://tenant.iguopin.com/jobCampus',
+    })
+    assert result['status'] == 'BLOCKED'
+    assert result['job_count'] == 0
+
+
+def test_university_portal_follows_only_real_employment_navigation():
+    class Response:
+        status_code = 200
+        encoding = 'utf-8'
+        def __init__(self, text): self.text = text
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+        def iter_content(self, _size): yield self.text.encode()
+    class Session:
+        headers = {}
+        def get(self, url, **_kwargs):
+            if url == 'https://university.example/':
+                return Response('<a href="/about">学校概况</a><a href="https://career.university.example/notices">就业信息</a>')
+            return Response('<a href="/notice/1">某化工有限公司2027届校园招聘</a>')
+    result = discover_university_portal({
+        **SOURCE, 'source_url': 'https://university.example/',
+    }, Session())
+    assert result['status'] == 'OK'
+    assert result['navigation_candidates'] == [{
+        'label': '就业信息', 'url': 'https://career.university.example/notices',
+    }]
+    assert result['leads'][0]['name'] == '某化工有限公司'
+    assert all(row['url'] != 'https://university.example/about' for row in result['requests'])
 
 
 def test_configured_public_source_uses_persistent_retry_health(tmp_path, monkeypatch):
