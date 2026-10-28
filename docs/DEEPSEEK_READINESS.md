@@ -30,3 +30,9 @@ python scripts/deepseek_preflight.py --execute   # 明确允许受控付费测�
 - 配置GitHub Secret：Settings → Secrets and variables → Actions → New repository secret，名称DEEPSEEK_API_KEY；已有则无需重建。
 - 远端工作流是否真正执行最新SHA、密钥是否存在、账号余额/模型权限/实际响应仍须通过上述云端预检核实。干跑不证明余额或模型可用。
 - CI日志新增HEAD SHA、企业数及预算日志，以供核对执行版本。
+
+## 部署追踪
+
+- 8154565已快进同步main，含67家企业池和工业催化画像；推送触发Tests和无AI报告同步，均确认使用8154565。
+- 首次CI失败：Python3.11不允许旧HTML f-string表达式中的反斜杠。已改为普通字符串拼接；在独立Python3.11环境下333项测试通过，企业池报告及API零调用干跑通过。
+- GitHub Actions REST接口Forbidden，但公开Actions网页可读，可用网页确认最新提交的运行状态。Secret存在性仍需云端干跑确认。

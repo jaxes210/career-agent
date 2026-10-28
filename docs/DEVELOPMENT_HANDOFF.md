@@ -90,3 +90,5 @@
 - 新增deepseek_preflight.py与Controlled DeepSeek preflight工作流，默认dry-run；--execute明确付费，临时DB、不爬取/不通知/不改生产库。最多20Flash岗位+5Pro岗位，HTTP不重试，总请求上限6。
 - 本地干跑20条，API0次，key_present=false（只指本地）。GitHub Actions/Secret名称API返回Forbidden，无法确认云端密钥、运行日志、实际模型可用。
 - 离线测试333 passed；说明docs/DEEPSEEK_READINESS.md。同步main后应先execute=false，再人工确认execute=true，不要用main.py做首次连通测试。
+- 8154565已成功非强制推送main（本地/远端SHA一致）；真实触发Tests 40642332641及Sync report 40642332642，网页确认执行8154565但因Python3.11旧f-string语法失败。
+- 修复company_pool HTML表达式反斜杠；独立安装临时Python3.11.17复现旧错误，修复后333 passed、预检dry-run0调用、池报告生成成功。继续推送修复并检查新CI；不要误以为本地3.12通过即可证明云端3.11可用。

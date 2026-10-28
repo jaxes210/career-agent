@@ -650,7 +650,8 @@ def generate_reports(
     )
     body_rows = "".join(
         "<tr>" + "".join(
-            f"<td>{('<a rel=\"noopener\" href=\"' + html.escape(row[10], quote=True) + '\">原始入口</a>') if index == 10 and row[10] else html.escape(str(value))}</td>"
+            "<td>" + ('<a rel="noopener" href="' + html.escape(row[10], quote=True) + '">原始入口</a>'
+                      if index == 10 and row[10] else html.escape(str(value))) + "</td>"
             for index, value in enumerate(row)
         ) + "</tr>"
         for row in rows
