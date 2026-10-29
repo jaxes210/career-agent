@@ -156,12 +156,12 @@ def test_intern_filter_does_not_match_international():
     assert not reporter._is_intern("International E-commerce Engineer")
 
 
-def test_report_shows_all_real_analyses(tmp_path):
-    """所有真实 AI 分析的岗位都应展示，无论 recommendation 是什么。"""
+def test_report_hides_unrelated_historical_analysis(tmp_path):
+    """旧 AI 分析不能让无关岗位继续出现在工业催化报告中。"""
     path = reporter.generate_report("2026-05-13", MOCK_DATA, reports_dir=str(tmp_path))
     content = Path(path).read_text(encoding="utf-8")
     assert "环境工程师" in content      # 88 推荐 → 大卡片
-    assert "机械臂控制工程师" in content    # 70 考虑 → 高匹配
+    assert "机械臂控制工程师" not in content
     assert "材料研发工程师" in content    # 55 不推荐，但是真实分析 → 仍展示
 
 

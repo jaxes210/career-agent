@@ -310,7 +310,7 @@ def _filter_items(all_items: list) -> tuple[list, list, list, int]:
         if not job_filters.is_formal_campus_job(it["job"]):
             hidden += 1
             continue
-        if job_filters.is_direction_out_job(it["job"], profile):
+        if not job_filters.is_report_relevant_job(it["job"], profile):
             hidden += 1
             continue
         if a and (a.get("summary") or "") == _FAIL_SUMMARY:

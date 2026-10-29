@@ -56,6 +56,18 @@ def test_explicit_software_exclusions_cannot_be_overridden_by_model(profile, tit
     call.assert_not_called()
 
 
+@pytest.mark.parametrize(('title', 'body', 'expected'), [
+    ('SRE工程师【2027届】', '', False),
+    ('推荐研发工程师【2027届】', '', False),
+    ('基础架构研发工程师【2027届】', '', False),
+    ('化工工艺工程师', '', True),
+    ('研发工程师', '招聘工业催化、化学工程专业硕士', True),
+    ('研发工程师', '负责服务器运维与网络安全', False),
+])
+def test_report_requires_industrial_profile_evidence(profile, title, body, expected):
+    assert job_filters.is_report_relevant_job({'title': title, 'jd_raw': body}, profile) is expected
+
+
 def test_profile_directions_and_configured_roles_override_generic_rejections(profile):
     profile = {**profile, 'target_roles': [{'name': '工业技术运营', 'keywords': ['技术运营']}],
                'directions': ['工业技术运营'], 'excluded_title_keywords': []}

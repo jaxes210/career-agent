@@ -392,6 +392,35 @@ def filter_target_direction_jobs(jobs: list[dict], profile: dict | None = None) 
     return kept, dropped
 
 
+_REPORT_DIRECT_RE = re.compile(
+    r"催化|化工|化学|煤化工|石油化工|精细化工|高分子|材料(?:研发|工程|制备|表征|技术)|"
+    r"电池材料|新能源材料|日化|表面活性剂|配方|胶体|界面|纳米材料|"
+    r"环保|环境工程|水处理|污水|废水|污染治理|三废|理化分析|化学分析|"
+    r"分析检测|质量检测|工艺(?:工程|技术|研发|优化|设计)|生产技术|实验室技术",
+    re.I,
+)
+_REPORT_GENERIC_RE = re.compile(r"研发|研究|技术|生产|工艺|质量|检测|实验|分析|应用|工程师", re.I)
+_REPORT_MAJOR_RE = re.compile(
+    r"工业催化|化学工程|化学工艺|应用化学|化工|化学|材料科学|材料工程|"
+    r"高分子|环境工程|环境科学|生物工程|生物化工|表面活性剂|催化剂",
+    re.I,
+)
+
+
+def is_report_relevant_job(job: dict, profile: dict | None = None) -> bool:
+    """Conservative report visibility; never alters historical job records."""
+    profile = profile if profile is not None else current_profile()
+    if is_direction_out_job(job, profile):
+        return False
+    if profile.get("major") != "工业催化":
+        return True
+    title = unicodedata.normalize("NFKC", str(job.get("title") or ""))
+    body = unicodedata.normalize("NFKC", str(job.get("jd_raw") or ""))
+    if _REPORT_DIRECT_RE.search(title):
+        return True
+    return bool(_REPORT_GENERIC_RE.search(title) and _REPORT_MAJOR_RE.search(body))
+
+
 def english_eligibility(job: dict, profile: dict) -> dict:
     """Conservative JD-only eligibility; unknown alternatives need verification."""
     candidate = profile.get("english") or {}
