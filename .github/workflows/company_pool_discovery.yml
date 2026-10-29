@@ -1,9 +1,6 @@
 name: Discover and validate employer sources
 
 on:
-  schedule:
-    # 每周一、三、五北京时间 09:30。只发现与验证来源，不调用 DeepSeek。
-    - cron: "30 1 * * 1,3,5"
   workflow_dispatch:
     inputs:
       validation_limit:

@@ -1,9 +1,6 @@
 name: Weekly employer pool quality report
 
 on:
-  schedule:
-    # 每周日北京时间 10:00 生成企业池增长与数据质量报告。
-    - cron: "0 2 * * 0"
   workflow_dispatch:
 
 permissions:

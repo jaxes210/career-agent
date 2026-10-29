@@ -3,22 +3,6 @@ name: Sync report (applications)
 # 本地录入投递（data/applications.json）push 后，只重新生成报告并部署，
 # 不爬取、不调 DeepSeek（零 token），让手机上几分钟内就能看到最新投递记录。
 on:
-  push:
-    branches: [main]
-    paths:
-      - "data/applications.json"
-      - "data/jobs.db"
-      - "reporter.py"
-      - "scripts/company_pool.py"
-      - "data/company_pool.json"
-      - "data/company_discovery_sources.yaml"
-      - "view_all.py"
-      - "job_filters.py"
-      - "db.py"
-      - "profile.yaml"
-      - "profile_config.py"
-      - "config.yaml"
-      - ".github/workflows/sync_report.yml"
   workflow_dispatch:
 
 permissions:
